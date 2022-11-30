@@ -11,12 +11,12 @@ function createBall() {
     ball.style.top = Math.random() * image.clientHeight - diameter + "px";
     ball.style.left = "0";
     function move() {
-        ball.style.left = ball.offsetLeft + scrollX + hSpeed + "px";
-        ball.style.top = ball.offsetTop + scrollY + vSpeed + "px";
-        if (ball.offsetTop + scrollY + diameter >= image.clientHeight || ball.offsetTop + scrollY <= 0) {
+        ball.style.left = ball.offsetLeft + hSpeed + "px";
+        ball.style.top = ball.offsetTop + vSpeed + "px";
+        if (ball.offsetTop + diameter >= image.clientHeight || ball.offsetTop <= 0) {
             vSpeed = -vSpeed;
         }
-        if (ball.offsetLeft + scrollX > image.clientWidth) {
+        if (ball.offsetLeft > image.clientWidth) {
             ball.remove();
         }
         requestAnimationFrame(move);

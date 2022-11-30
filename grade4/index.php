@@ -13,13 +13,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 <script src="index.js" defer></script>
-<link rel="stylesheet" href="../assets/css/fontawesome.css"/>
-<link href="../assets/css/brands.css" rel="stylesheet"/>
-<link href="../assets/css/solid.css" rel="stylesheet"/>
 </head>
 <body>
+<header>
+
+    <nav>
+        <a href="../">home</a><!--
+     --><a href="./">Grade 4</a><!--
+     --><a href="../grade5">Grade 5</a>
+    </nav>
+
+</header>
+<main>
 
 <h1>Welcome to The Science Lab Grade 4!</h1>
+<p>
+    Here you can find a lot of different games and activities on all grade 4 science lessons. Enjoy!
+</p>
+<div class="games">
+    <a href="choose">
+        <figure>
+            <img src="../images/choose/choose.webp" alt="choose"/>
+            <figcaption>Choose</figcaption>
+        </figure>
+    </a>
+</div>
+</main>
+
+<footer>
+    All rights reserved for The Science Lab <span class="current-date">2022</span><span class="date"></span>
+</footer>
 
 </body>
 </html>

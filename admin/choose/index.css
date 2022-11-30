@@ -1,0 +1,60 @@
+/*********** General Styles ***************/
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+/***************** Header *************************/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+header nav {
+    background-color: blue;
+    color: white;
+}
+header nav a {
+    display: inline-block;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    border-left: 2px solid black;
+}
+header nav a:hover {
+    background-color: white;
+    color: black;
+}
+/************ First Section *********************/
+main {
+    font-family: 'Roboto', sans-serif;
+    min-height: 80vh;
+    padding: 10px;
+}
+h1 {
+    text-align: center;
+}
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.buttons button {
+    background-color: blue;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    word-wrap: break-word;
+}
+/*********** other devices ***********/
+@media only screen and (max-width: 440px) {
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+}

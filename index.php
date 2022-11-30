@@ -21,8 +21,9 @@
 
 <header>
     <nav>
-        <span class="disabled">home</span><!--
-     --><a href="grade4">Grade 4</a>
+        <a href="./">home</a><!--
+     --><a href="grade4">Grade 4</a><!--
+     --><a href="grade5">Grade 5</a>
     </nav>
 </header>
 <main>

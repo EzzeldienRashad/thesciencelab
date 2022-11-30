@@ -19,18 +19,12 @@ header nav {
     background-color: blue;
     color: white;
 }
-header nav * {
+header nav a {
     display: inline-block;
     padding: 10px;
     color: white;
     font-size: 20px;
     text-decoration: none;
-}
-header nav span.disabled {
-    color: black;
-    background-color: white;
-}
-header nav a {
     border-left: 2px solid black;
 }
 header nav a:hover {
@@ -124,12 +118,14 @@ section:nth-child(3) h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 35px;
 }
+/************ footer ************/
 footer {
     padding: 10px 30px;
     background-color: blue;
     color: white;
     text-align: center;
 }
+/**************** other devices ************/
 @media only screen and (max-width: 950px) {
     section:first-child {
         height: 300px;
