@@ -6,8 +6,8 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
     exit;
 }
 if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
-    // header("location: index.php");
-    // exit;
+    header("location: index.php");
+    exit;
 } elseif (isset($_GET["grade"]) && isset($_GET["unit"]) && isset($_POST["submit"])) {
     $path = "../../" . $_GET["grade"] . "/choose/" . $_GET["unit"] . ".json";
     $arr = json_decode(file_get_contents($path));
@@ -24,52 +24,57 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
-    <style>
-        h3 {
-            text-align: center;
-            background-color: darkgreen;
-            color: white;
-            padding: 20px;
-        }
-    </style>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+	onerror="this.onerror=null;this.href='../node_modules/bootstrap/dist/css/bootstrap.min.css';this.removeAttribute('integrity');this.removeAttribute('crossorigin');"
+    integrity="..." 
+    crossorigin="...">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		if (!window.bootstrap) {
+			var newScript = document.createElement("script");
+			newScript.setAttribute("src", "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+			document.getElementsByTagName("head")[0].appendChild(newScript);
+		}
+	</script>
 </head>
 <body>
 <header>
-    <?php if ($msg != "") echo "<h3>" . $msg . "</h3>"; ?>
+    <?php if ($msg != "") echo "<h3 class='text-bg-success text-center p-3 pt-4 bg-gradient bg-opacity-75'>" . $msg . "</h3>"; ?>
 </header>
-<main>
+<main class="container pt-3">
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?grade=" . $_GET["grade"] . "&unit=" . $_GET["unit"] ?>">
-        <label>
-            Question: <input type="text" name="question" required/>
-        </label>
+        <div class="row">
+            <label class="form-label">
+                Question: <input type="text" name="question" class="form-control" required/>
+            </label>
+        </div>
         <br/>
         <br/>
-        <label>
-            First answer: <input type="text" name="first" required/>
-        </label>
+        <fieldset class="row">
+            <legend>Answers:</legend>
+            <label class="form-label col-md-6">
+                First answer: <input type="text" name="first" class="form-control" required/>
+            </label>
+            <label class="form-label col-md-6">
+                Second answer: <input type="text" name="second" class="form-control" required/>
+            </label>
+            <label class="form-label col-md-6">
+                Third answer: <input type="text" name="third" class="form-control" required/>
+            </label>
+            <label class="form-label col-md-6">
+                Fourth answer: <input type="text" name="fourth" class="form-control" required/>
+            </label>
+        </fieldset>
         <br/>
         <br/>
-        <label>
-            Second answer: <input type="text" name="second" required/>
-        </label>
+        <div class="row">
+            <label class="form-label col-6 col-md-5 col-lg-3">
+                Number of the right answer: <input type="number" name="number" max="4" min="1" class="form-control" required/>
+            </label>
+        </div>
         <br/>
         <br/>
-        <label>
-            Third answer: <input type="text" name="third" required/>
-        </label>
-        <br/>
-        <br/>
-        <label>
-            Fourth answer: <input type="text" name="fourth" required/>
-        </label>
-        <br/>
-        <br/>
-        <label>
-            Number of the right answer: <input type="number" name="number" max="4" min="1" required/>
-        </label>
-        <br/>
-        <br/>
-        <input type="submit" name="submit" value="submit"/>
+        <input type="submit" name="submit" value="submit" class="btn btn-info"/>
     </form>
     <br/>
     <br/>

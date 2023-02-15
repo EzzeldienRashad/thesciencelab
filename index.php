@@ -52,6 +52,8 @@
     <section>
         <h2>Grades:</h2>
         <a href="grade4">4th Grade <i class="fa-solid fa-right-long"></i></a>
+        <br/>
+        <a href="grade5">5th Grade <i class="fa-solid fa-right-long"></i></a>
     </section>
 </main>
 

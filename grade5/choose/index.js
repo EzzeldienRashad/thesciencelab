@@ -3,7 +3,6 @@ let lessons = document.getElementsByTagName("section")[0];
 lessons.addEventListener("click", function (event) {
     if (event.target.tagName == "BUTTON") {     
         let filename = event.target.dataset.unit;
-        console.log(filename);
         let buttonsCont = document.getElementsByClassName("buttons")[1];
         fetch("choose.php?filename=" + filename)
         .then(number => number.text())
@@ -24,8 +23,11 @@ lessons.addEventListener("click", function (event) {
                 button.setAttribute("data-num", number);
                 buttonsCont.append(button);
             }
-            lessons.style.height = "0";
-            document.getElementsByTagName("section")[1].style.height = "500px";
+            lessons.style.height = lessons.offsetHeight + "px";
+            setTimeout(function () {
+                lessons.style.height = "0";
+                document.getElementsByTagName("section")[1].style.height = "500px";
+            }, 10);
             buttonsCont.addEventListener("click", function (event) {
                 if (event.target.tagName == "BUTTON" && event.target.dataset.num <= number) {
                         fetch("choose.php?filename=" + filename + "&number=" + number)
