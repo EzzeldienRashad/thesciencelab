@@ -38,7 +38,6 @@ main {
     overflow-x: hidden;
     position: relative;
     min-height: 90vh;
-    padding: 10px;
 }
 h1 {
     text-align: center;
@@ -61,9 +60,6 @@ p {
 section {
     transition-duration: 1s;
     overflow: hidden;
-}
-section:first-child {
-    height: 500px;
 }
 section:nth-child(2) {
     height: 0;
