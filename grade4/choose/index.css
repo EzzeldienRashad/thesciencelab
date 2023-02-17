@@ -38,7 +38,6 @@ main {
     overflow-x: hidden;
     position: relative;
     min-height: 90vh;
-    padding: 10px;
 }
 h1 {
     text-align: center;

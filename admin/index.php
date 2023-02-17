@@ -2,10 +2,6 @@
     session_start();
     if (isset($_POST["password"]) && $_POST["password"] == "1t2h3e4s5c@G") {
         $_SESSION["isAdmin"] = true;
-        header("location: choose");
-    }
-    if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
-        header("location: choose");
     }
 ?>
 <!DOCTYPE html>
@@ -26,7 +22,11 @@
 		}
 	</script>
 </head>
-<body class="container">
+<body class="container p-3">
+
+<?php
+if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
+?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
     <label class="form-label">
@@ -34,6 +34,27 @@
     </label>
     <input type="submit" value="submit" class="btn btn-info"/>
 </form>
+
+<?php
+} else {
+?>
+
+<h1 class="text-center pb-3">Choose a Game</h1>
+<div class="row">
+    <div class="col-6 col-md-4">
+        <a href="choose" class="text-decoration-none text-dark">
+            <figure class="text-center">
+                <img src="../images/choose/choose.webp" alt="choose" class="w-100 border border-3"/>
+                <figcaption>Choose</figcaption>
+            </figure>
+        </a>
+    </div>
+</div>
+
+<?php
+}
+?>
+
 <br/>
 <br/>
 <a href="../">Go to main page</a>

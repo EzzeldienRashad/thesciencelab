@@ -16,6 +16,7 @@ lessons.addEventListener("click", function (event) {
                 for (i = 5; i < number - (number % 5); i += 5) {
                     let button = document.createElement("button");
                     button.textContent = i;
+                    button.setAttribute("data-num", i);
                     buttonsCont.append(button);
                 }
                 let button = document.createElement("button");
@@ -29,8 +30,8 @@ lessons.addEventListener("click", function (event) {
                 document.getElementsByTagName("section")[1].style.height = "500px";
             }, 10);
             buttonsCont.addEventListener("click", function (event) {
-                if (event.target.tagName == "BUTTON" && event.target.dataset.num <= number) {
-                        fetch("choose.php?filename=" + filename + "&number=" + number)
+                if (event.target.tagName == "BUTTON" && Number(event.target.dataset.num) <= number) {
+                        fetch("choose.php?filename=" + filename + "&number=" + event.target.dataset.num)
                         .then(response => response.json())
                         .then(function (questions) {
                             document.getElementsByTagName("section")[1].style.opacity = 0;
