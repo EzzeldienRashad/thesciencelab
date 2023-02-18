@@ -22,7 +22,7 @@ document.getElementsByClassName("buttons")[0].addEventListener("click", function
             document.getElementsByTagName("main")[0].append(buttons);
             buttons.addEventListener("click", function (event) {
                 if (event.target.tagName == "BUTTON") {
-                    location.href = "add.php?grade=" + grade + "&unit=" + event.target.dataset.unit;
+                    location.href = "manage.php?grade=" + grade + "&unit=" + event.target.dataset.unit;
                 }
             });
         });

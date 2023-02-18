@@ -28,7 +28,7 @@ if (isset($_GET["grade"])) {
     <link href="../../assets/css/brands.css" rel="stylesheet"/>
     <link href="../../assets/css/solid.css" rel="stylesheet"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-	onerror="this.onerror=null;this.href='../node_modules/bootstrap/dist/css/bootstrap.min.css';this.removeAttribute('integrity');this.removeAttribute('crossorigin');"
+	onerror="this.onerror=null;this.href='../../node_modules/bootstrap/dist/css/bootstrap.min.css';this.removeAttribute('integrity');this.removeAttribute('crossorigin');"
     integrity="..." 
     crossorigin="...">
     <script src="index.js" defer></script>
@@ -36,15 +36,14 @@ if (isset($_GET["grade"])) {
 	<script>
 		if (!window.bootstrap) {
 			var newScript = document.createElement("script");
-			newScript.setAttribute("src", "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+			newScript.setAttribute("src", "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
 			document.getElementsByTagName("head")[0].appendChild(newScript);
 		}
 	</script>
 </head>
 <body class="container">
 <header>
-    <h1 class="text-center"><i class="fa-solid fa-rotate-left float-start pt-1" role="button"></i>Control Panel</h1>
-    
+    <h1 class="text-center"><i class="fa-solid fa-rotate-left float-start pt-1" role="button"></i>Control Panel</h1>   
 </header>
 <main>
     <section>
