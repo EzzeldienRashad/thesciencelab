@@ -41,7 +41,7 @@ section:first-child {
     width: 100%;
 }
 .image {
-    background-image: url("images/mainImages/scienceBackground.webp");
+    background-image: url("images/scienceBackground.webp");
     background-size: cover;
     opacity: 0.9;
     filter: blur(3px);

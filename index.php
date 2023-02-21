@@ -7,7 +7,7 @@
 <meta name="keywords" content="4th grade, 5th grade, 6th grade, games, science, problems"/>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<link rel="icon" href="images/mainImages/logo.webp"/>
+<link rel="icon" href="images/logo.webp"/>
 <link rel="stylesheet" href="index.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,7 @@
                 Science<br/>
                 Lab<br/>
             </h1>
-            <img src="images/mainImages/logo.webp" alt="science logo" width="203" height="305"/>
+            <img src="images/logo.webp" alt="science logo" width="203" height="305"/>
         </div>
     </section>
     <section>

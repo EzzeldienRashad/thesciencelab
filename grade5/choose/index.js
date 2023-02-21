@@ -57,14 +57,14 @@ function startTest(questions) {
     next.className = "next fa-solid fa-right-long";
     test.append(next);
     let rightPic = document.createElement("img");
-    rightPic.src = "../../images/choose/right.webp";
+    rightPic.src = "../../images/right.webp";
     rightPic.alt = "RIGHT!";
     rightPic.className = "right-wrong";
     rightPic.width = "200";
     rightPic.height = "200";
     test.append(rightPic);
     let wrongPic = document.createElement("img");
-    wrongPic.src = "../../images/choose/wrong.webp";
+    wrongPic.src = "../../images/wrong.webp";
     wrongPic.alt = "WRONG!";
     wrongPic.className = "right-wrong";
     wrongPic.width = "200";

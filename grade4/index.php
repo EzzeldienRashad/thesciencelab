@@ -7,7 +7,7 @@
 <meta name="keywords" content="4th grade, games, science, problems"/>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<link rel="icon" href="../images/mainImages/logo.webp"/>
+<link rel="icon" href="../images/logo.webp"/>
 <link rel="stylesheet" href="index.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
 <div class="games">
     <a href="choose">
         <figure>
-            <img src="../images/choose/choose.webp" alt="choose"/>
+            <img src="../images/choose.webp" alt="choose"/>
             <figcaption>Choose</figcaption>
         </figure>
     </a>

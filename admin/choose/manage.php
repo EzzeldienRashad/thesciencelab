@@ -10,6 +10,7 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="icon" href="../../images/logo.webp"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
@@ -38,14 +39,15 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
 <main>
     <a href="add.php?grade=<?php echo $_GET["grade"] ?>&unit=<?php echo $_GET["unit"] ?>" class="btn btn-success mb-3">+ add</a>
     <?php
-        $questions = json_decode(file_get_contents("../../" . $_GET["grade"] . "/choose/" . $_GET["unit"] . ".json"));
-        for ($i = 0; $i < count($questions); $i++) {
+        $questions = array_reverse(json_decode(file_get_contents("../../" . $_GET["grade"] . "/choose/" . $_GET["unit"] . ".json")));
+        $questionsNum = count($questions);
+        for ($i = 0; $i < $questionsNum; $i++) {
             $question = $questions[$i];
             echo "
                 <div class='card'>
                     <div class='card-header'>
                         $question[0]
-                        <button class='btn btn-danger btn-close float-end delete-question' data-question-num='$i' onclick='deleteQuestion(this)'></button>
+                        <button class='btn btn-danger btn-close float-end' data-question-num='" . $questionsNum - $i - 1 . "' onclick='deleteQuestion(this)'></button>
                     </div>
                     <div class='card-body'>
                         <div class='row'>";

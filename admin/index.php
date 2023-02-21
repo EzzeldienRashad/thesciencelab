@@ -44,7 +44,7 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
     <div class="col-6 col-md-4">
         <a href="choose" class="text-decoration-none text-dark">
             <figure class="text-center">
-                <img src="../images/choose/choose.webp" alt="choose" class="w-100 border border-3"/>
+                <img src="../images/choose.webp" alt="choose" class="w-100 border border-3"/>
                 <figcaption>Choose</figcaption>
             </figure>
         </a>
