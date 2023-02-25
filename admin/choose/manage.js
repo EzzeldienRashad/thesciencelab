@@ -1,6 +1,11 @@
+let url = new URL(location.href);
+let searchUrl = url.searchParams;
+if (searchUrl.has("scroll")) {
+    scrollTo(0, searchUrl.get("scroll"));
+}
 async function deleteQuestion(element) {
-    let url = new URL(location).searchParams;
-    await fetch("delete.php?grade=" + url.get("grade") +
-    "&unit=" + url.get("unit") + "&questionnum=" + element.dataset.questionNum);
-    location.reload();
+    await fetch("delete.php?grade=" + searchUrl.get("grade") +
+    "&unit=" + searchUrl.get("unit") + "&questionnum=" + element.dataset.questionNum);
+    searchUrl.set("scroll", scrollY);
+    window.location.href = url.href;
 }

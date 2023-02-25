@@ -1,6 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
+$isAdmin = false;
+$isMember = false;
+if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
+    $isAdmin = true;
+} elseif (isset($_SESSION["isMember"]) && $_SESSION["isMember"] == true) {
+    $isMember = true;
+}
+if (!$isAdmin && !$isMember) {
     header("location: ../");
     exit;
 }
@@ -22,9 +29,6 @@ if (isset($_GET["grade"])) {
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link rel="icon" href="../../images/logo.webp"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <link href="../../assets/css/fontawesome.css" rel="stylesheet"/>
     <link href="../../assets/css/brands.css" rel="stylesheet"/>
     <link href="../../assets/css/solid.css" rel="stylesheet"/>
@@ -47,6 +51,14 @@ if (isset($_GET["grade"])) {
     <h1 class="text-center"><i class="fa-solid fa-rotate-left float-start pt-1" role="button"></i>Control Panel</h1>   
 </header>
 <main>
+
+    <?php 
+    if ($isAdmin) {
+    ?>
+        <a href="approve.php?" class="btn btn-warning mb-3">... Approve!</a>
+    <?php
+    }
+    ?>
     <section>
         <div class="buttons row g-2">
             <?php
@@ -68,8 +80,15 @@ if (isset($_GET["grade"])) {
         </div>
     </section>
 </main>
-<footer>
-    <a href="../../">Go to main page</a>
+<footer class="pt-3">
+    <ul class="pagination">
+        <li class="page-item">
+            <a href="../" class="page-link">go back</a>
+        </li>
+        <li class="page-item">
+            <a href="../../" class="page-link">main page</a>
+        </li>
+    </ul>
 </footer>
 </body>
 </html>

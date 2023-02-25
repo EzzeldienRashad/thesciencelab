@@ -2,6 +2,14 @@
     session_start();
     if (isset($_POST["password"]) && $_POST["password"] == "1t2h3e4s5c@G") {
         $_SESSION["isAdmin"] = true;
+    } elseif (isset($_POST["password"]) && $_POST["password"] == "1r2e3s4t5r!F") {
+        $_SESSION["isMember"] = true;
+    }
+    //logout
+    if (isset($_GET["logout"])) {
+        unset($_SESSION["isAdmin"]);
+        unset($_SESSION["isMember"]);
+        header("location:" . htmlspecialchars($_SERVER["PHP_SELF"]));
     }
 ?>
 <!DOCTYPE html>
@@ -25,7 +33,14 @@
 <body class="container p-3">
 
 <?php
-if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
+$isAdmin = false;
+$isMember = false;
+if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
+    $isAdmin = true;
+} elseif (isset($_SESSION["isMember"]) && $_SESSION["isMember"] == true) {
+    $isMember = true;
+}
+if (!$isAdmin && !$isMember) {
 ?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
@@ -38,25 +53,34 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
 <?php
 } else {
 ?>
-
-<h1 class="text-center pb-3">Choose a Game</h1>
-<div class="row">
-    <div class="col-6 col-md-4">
-        <a href="choose" class="text-decoration-none text-dark">
-            <figure class="text-center">
-                <img src="../images/choose.webp" alt="choose" class="w-100 border border-3"/>
-                <figcaption>Choose</figcaption>
-            </figure>
-        </a>
+<header>
+    <h1 class="text-center pb-3">Choose a Game</h1>
+</header>
+<main>
+    <div class="row">
+        <div class="col-6 col-md-4">
+            <a href="choose" class="text-decoration-none text-dark">
+                <figure class="text-center">
+                    <img src="../images/choose.webp" alt="choose" class="w-100 border border-3"/>
+                    <figcaption>Choose</figcaption>
+                </figure>
+            </a>
+        </div>
     </div>
-</div>
 
-<?php
-}
-?>
-
-<br/>
-<br/>
-<a href="../">Go to main page</a>
+    <?php
+    }
+    ?>
+</main>
+<footer class="pt-3">
+    <ul class="pagination">
+        <li class="page-item">
+            <a href="../" class="page-link">main page</a>
+        </li>
+        <li class="page-item">
+            <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>?logout=true" class="page-link">logout</a>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>

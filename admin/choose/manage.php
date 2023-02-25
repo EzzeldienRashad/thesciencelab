@@ -1,6 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET["grade"]) || !isset($_GET["unit"])) {
+$isAdmin = false;
+$isMember = false;
+if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
+    $isAdmin = true;
+} elseif (isset($_SESSION["isMember"]) && $_SESSION["isMember"] == true) {
+    $isMember = true;
+}
+if ((!$isAdmin && !$isMember) || !isset($_GET["grade"]) || !isset($_GET["unit"])) {
     header("location: index.php");
     exit;
 }
@@ -11,9 +18,6 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link rel="icon" href="../../images/logo.webp"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <link href="../../assets/css/fontawesome.css" rel="stylesheet"/>
     <link href="../../assets/css/brands.css" rel="stylesheet"/>
     <link href="../../assets/css/solid.css" rel="stylesheet"/>
@@ -21,7 +25,7 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
 	onerror="this.onerror=null;this.href='../../node_modules/bootstrap/dist/css/bootstrap.min.css';this.removeAttribute('integrity');this.removeAttribute('crossorigin');"
     integrity="..." 
     crossorigin="...">
-    <script src="manage.js"></script>
+    <script src="manage.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		if (!window.bootstrap) {
@@ -30,6 +34,11 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
 			document.getElementsByTagName("head")[0].appendChild(newScript);
 		}
 	</script>
+    <style>
+        html {
+            scroll-behavior: auto !important;
+        }
+    </style>
 </head>
 <body class="container-fluid p-2">
 <header>
@@ -47,7 +56,13 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true || !isset($_GET
                 <div class='card'>
                     <div class='card-header'>
                         $question[0]
-                        <button class='btn btn-danger btn-close float-end' data-question-num='" . $questionsNum - $i - 1 . "' onclick='deleteQuestion(this)'></button>
+                ";
+            if ($isAdmin) {
+                echo "
+                        <button class='btn btn-danger btn-close float-end' data-question-num='" . ($questionsNum - $i - 1) . "' onclick='deleteQuestion(this)'></button>
+                ";
+            }
+            echo "
                     </div>
                     <div class='card-body'>
                         <div class='row'>";

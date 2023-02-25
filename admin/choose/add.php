@@ -1,19 +1,29 @@
 <?php
 $msg = "";
 session_start();
-if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
+$isAdmin = false;
+$isMember = false;
+if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
+    $isAdmin = true;
+} elseif (isset($_SESSION["isMember"]) && $_SESSION["isMember"] == true) {
+    $isMember = true;
+}
+if (!$isAdmin && !$isMember) {
     header("location: ../");
     exit;
+}
+if (isset($_GET["sender"]) && $_GET["sender"] == "js") {
+    $_POST = json_decode(file_get_contents('php://input'), true);
 }
 if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     header("location: index.php");
     exit;
 } elseif (isset($_GET["grade"]) && isset($_GET["unit"]) && isset($_POST["submit"])) {
-    $path = "../../" . $_GET["grade"] . "/choose/" . $_GET["unit"] . ".json";
+    $path = "../../" . $_GET["grade"] . "/choose/" . ($isAdmin ? "" : "approval/") . $_GET["unit"] . ".json";
     $arr = json_decode(file_get_contents($path));
     array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
     file_put_contents($path, json_encode($arr));
-    $msg = "Added Succecfully!";
+    $msg = $isAdmin ? "Added Succecfully!" : "Awating Approval!";
 }
 ?>
 <!DOCTYPE html>
@@ -22,9 +32,6 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link rel="icon" href="../../images/logo.webp"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" 
 	onerror="this.onerror=null;this.href='../node_modules/bootstrap/dist/css/bootstrap.min.css';this.removeAttribute('integrity');this.removeAttribute('crossorigin');"
     integrity="..." 
@@ -40,9 +47,9 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
 </head>
 <body>
 <header>
-    <?php if ($msg != "") echo "<h3 class='text-bg-success text-center p-3 pt-4 bg-gradient bg-opacity-75'>" . $msg . "</h3>"; ?>
+    <?php if ($msg != "") echo "<h3 class='" . ($isAdmin ? "text-bg-success" : "text-bg-warning") . " text-center p-3 pt-4 bg-gradient bg-opacity-75'>" . $msg . "</h3>"; ?>
 </header>
-<main class="container pt-3">
+<main class="container py-3">
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?grade=" . $_GET["grade"] . "&unit=" . $_GET["unit"] ?>">
         <div class="row">
             <label class="form-label">
@@ -79,7 +86,16 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     </form>
     <br/>
     <br/>
-    <a href="index.php">Go Back</a>
 </main>
+<footer class="p-3">
+    <ul class="pagination">
+        <li class="page-item">
+            <a href="index.php" class="page-link">go back</a>
+        </li>
+        <li class="page-item">
+            <a href="../../" class="page-link">main page</a>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>

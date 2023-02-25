@@ -29,6 +29,8 @@ document.getElementsByClassName("buttons")[0].addEventListener("click", function
     }
 });
 //reload on button click
-document.getElementsByClassName("fa-rotate-left")[0].addEventListener("click", function () {
-    location.reload();
-});
+if (document.getElementsByClassName("fa-rotate-left")) {
+    document.getElementsByClassName("fa-rotate-left")[0].addEventListener("click", function () {
+        location.reload();
+    });
+}
