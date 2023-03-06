@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>4th grade science problems</title>
+<title>The Science Lab</title>
 <meta name="description" content="Games for all grades on science lessons"/>
 <meta name="author" content="Ali Ebn Abi Taleb science group"/>
-<meta name="keywords" content="4th grade, 5th grade, 6th grade, games, science, problems"/>
+<meta name="keywords" content="grade, games, science, problems, thesciencelab, laboratory"/>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="icon" href="images/logo.webp"/>
@@ -21,9 +21,7 @@
 
 <header>
     <nav>
-        <a href="./">home</a><!--
-     --><a href="grade4">Grade 4</a><!--
-     --><a href="grade5">Grade 5</a>
+        <a href="./">home</a>
     </nav>
 </header>
 <main>
@@ -38,7 +36,7 @@
             <img src="images/logo.webp" alt="science logo" width="203" height="305"/>
         </div>
     </section>
-    <section>
+    <section class="welcome">
         <h2>Welcome to the science lab!</h2>
         <p>
             Welcome to The Science Lab! The best place for learning science! 
@@ -49,11 +47,12 @@
             here in The Science Lab! 
         </p>
     </section>
-    <section>
+    <section class="grades">
         <h2>Grades:</h2>
-        <a href="grade4">4th Grade <i class="fa-solid fa-right-long"></i></a>
-        <br/>
-        <a href="grade5">5th Grade <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade%204%201st%20term">Grade 4 first term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade%204%202nd%20term">Grade 4 second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade%205%201st%20term">Grade 5 first term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade%205%202nd%20term">Grade 5 second term <i class="fa-solid fa-right-long"></i></a>
     </section>
 </main>
 

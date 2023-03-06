@@ -1,5 +1,6 @@
 //create balls
 function createBall() {
+    if (document.querySelectorAll(".ball").length > 15) return;
     let ball = document.createElement("div");
     let image = document.getElementsByClassName("image")[0];
     let diameter = 20;
@@ -25,13 +26,6 @@ function createBall() {
 }
 createBall();
 let interval = setInterval(createBall, 1000);
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState == "visible") {
-        interval = setInterval(createBall, 1000);
-    } else {
-        clearInterval(interval);
-    }
-});
 
 //add date to footer
 document.getElementsByClassName("date")[0].innerHTML = 

@@ -8,7 +8,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
 if (!$isAdmin || !isset($_GET["grade"]) || !isset($_GET["unit"]) || !isset($_GET["questionnum"])) {
     exit;
 }
-$file = "../../" . $_GET["grade"] . (isset($_GET["approval"]) && $_GET["approval"] == "true" ? "/choose/approval/" : "/choose/") . $_GET["unit"] . ".json";
+$file = "../../games/choose/" . $_GET["grade"] . (isset($_GET["approval"]) && $_GET["approval"] == "true" ? "/approval/" : "/") . $_GET["unit"] . ".json";
 $arr = json_decode(file_get_contents($file));
 if ((int) $_GET["questionnum"] < count($arr)) {
     array_splice($arr, $_GET["questionnum"], 1);

@@ -48,7 +48,7 @@ if ((!$isAdmin && !$isMember) || !isset($_GET["grade"]) || !isset($_GET["unit"])
 <main>
     <a href="add.php?grade=<?php echo $_GET["grade"] ?>&unit=<?php echo $_GET["unit"] ?>" class="btn btn-success mb-3">+ add</a>
     <?php
-        $questions = array_reverse(json_decode(file_get_contents("../../" . $_GET["grade"] . "/choose/" . $_GET["unit"] . ".json")));
+        $questions = array_reverse(json_decode(file_get_contents("../../games/choose/" . $_GET["grade"] . "/" . $_GET["unit"] . ".json")));
         $questionsNum = count($questions);
         for ($i = 0; $i < $questionsNum; $i++) {
             $question = $questions[$i];

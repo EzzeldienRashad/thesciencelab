@@ -1,10 +1,17 @@
+<?php
+if (!isset($_GET["grade"])) {
+    header("location: ../../");
+    exit;
+}
+$grade = $_GET["grade"];
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Grade 5 games</title>
-<meta name="description" content="Games for grade 5 on science lessons"/>
+<title>Grade <?php echo $_GET["grade"]; ?> choose game</title>
+<meta name="description" content="Games for <?php echo $grade; ?> on science lessons"/>
 <meta name="author" content="Ali Ebn Abi Taleb science group"/>
-<meta name="keywords" content="5th grade, games, science, problems"/>
+<meta name="keywords" content="grade, games, science, problems, thesciencelab, laboratory"/>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="icon" href="../../images/logo.webp"/>
@@ -21,9 +28,7 @@
 <header>
 
     <nav>
-        <a href="../../">home</a><!--
-     --><a href="../../grade4">Grade 4</a><!--
-     --><a href="../">Grade 5</a>
+        <a href="../../">home</a>
     </nav>
 
 </header>
@@ -33,11 +38,11 @@
     Welcome to the CHOOSE game!
 </h1>
     <p>
-        Choose a unit:
+        Please choose a unit:
     </p>
     <div class="buttons">
         <?php
-        $files = scandir("./");
+        $files = scandir($grade);
         foreach ($files as $file) {
             $fileInfo = pathinfo($file);
             if (isset($fileInfo["extension"]) && $fileInfo["extension"] == "json") {

@@ -19,7 +19,7 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     header("location: index.php");
     exit;
 } elseif (isset($_GET["grade"]) && isset($_GET["unit"]) && isset($_POST["submit"])) {
-    $path = "../../" . $_GET["grade"] . "/choose/" . ($isAdmin ? "" : "approval/") . $_GET["unit"] . ".json";
+    $path = "../../games/choose/" . $_GET["grade"] . ($isAdmin ? "/" : "/approval/") . $_GET["unit"] . ".json";
     $arr = json_decode(file_get_contents($path), true);
     array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
     file_put_contents($path, json_encode($arr));

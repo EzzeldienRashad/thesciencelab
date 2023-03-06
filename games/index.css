@@ -33,18 +33,17 @@ header nav a:hover {
 }
 /************ First Section *********************/
 main {
-    margin-top: 42px;
-    font-family: 'Roboto', sans-serif;
+    margin-top: 45px;
     min-height: 90vh;
-    padding: 10px;
+    font-family: 'Roboto', sans-serif;
 }
-h1 {
+h1, h2 {
     text-align: center;
 }
 .games {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 20px;
+    padding: 30px;
     gap: 10px;
 }
 .games a {
@@ -71,7 +70,7 @@ footer {
     color: white;
     text-align: center;
 }
-/*********** other devices ***********/
+/*********** other devices *************/
 @media only screen and (max-width: 800px) {
     .games {
         grid-template-columns: 1fr 1fr;
@@ -83,5 +82,12 @@ footer {
     }
     .games a img {
         height: 25vh;
+    }
+}@media only screen and (max-width: 450px) {
+    section:nth-child(2) p {
+        font-size: 17px;
+    }
+    section:nth-child(3) a {
+        font-size: 25px;
     }
 }

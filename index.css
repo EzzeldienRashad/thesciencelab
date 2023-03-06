@@ -33,7 +33,7 @@ header nav a:hover {
 }
 /************ First Section *********************/
 main {
-    margin-top: 42px;
+    margin-top: 45px;
 }
 section:first-child {
     position: relative;
@@ -62,6 +62,7 @@ section:first-child {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 10px;
 }
 .main h1 {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -90,15 +91,15 @@ section:first-child {
     border-radius: 50%;
     position: absolute;
 }
-section:nth-child(2) {
+.welcome {
     padding: 40px 40px 20px;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
 }
-section:nth-child(3) {
+.grades {
     padding: 0 40px 20px;
 }
-section:nth-child(3) a {
+.grades a {
     padding: 20px;
     border: 2px solid black;
     display: block;
@@ -106,15 +107,16 @@ section:nth-child(3) a {
     color: black;
     font-size: 30px;
     border-radius: 5px;
+    margin: 5px;
 }
-section:nth-child(3) a:hover {
+.grades a:hover {
     box-shadow: -3px 3px 7px 2px black;
     border: 2px solid blue;
 }
-section:nth-child(3) a i {
+.grades a i {
     float: right;
 }
-section:nth-child(3) h2 {
+.grades h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 35px;
 }

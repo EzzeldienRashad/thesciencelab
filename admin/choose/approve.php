@@ -40,16 +40,16 @@ function startsWith( $haystack, $needle ) {
     return substr( $haystack, 0, $length ) === $needle;
 }
 $questions = array();
-$grades = array_values(array_filter(scandir("../../"), function ($file) {
+$grades = array_values(array_filter(scandir("../../games/choose/"), function ($file) {
     return startsWith($file, "grade");
 }));
 foreach ($grades as $grade) {
     $gradeAppended = false;
-    $lessons = array_values(array_filter(scandir("../../" . $grade . "/choose/approval"), function ($file) {
+    $lessons = array_values(array_filter(scandir("../../games/choose/" . $grade . "/approval"), function ($file) {
         return isset(pathinfo($file)["extension"]) && pathinfo($file)["extension"] == "json";
     }));
     foreach ($lessons as $lesson) {
-        $lessonQuestions = json_decode(file_get_contents("../../" . $grade . "/choose/approval/" . $lesson));
+        $lessonQuestions = json_decode(file_get_contents("../../games/choose/" . $grade . "/approval/" . $lesson));
         if (!empty($lessonQuestions)) {
             if (!$gradeAppended) {
                 $gradeAppended = true;

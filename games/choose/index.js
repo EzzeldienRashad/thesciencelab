@@ -1,10 +1,11 @@
 //import questions
 let lessons = document.getElementsByTagName("section")[0];
+let grade = new URL(location.href).searchParams.get("grade");
 lessons.addEventListener("click", function (event) {
     if (event.target.tagName == "BUTTON") {     
         let filename = event.target.dataset.unit;
         let buttonsCont = document.getElementsByClassName("buttons")[1];
-        fetch("choose.php?filename=" + filename)
+        fetch("choose.php?grade=" + grade + "&filename=" + filename)
         .then(number => number.text())
         .then(function (number) {
             if (Number(number) < 5) {
@@ -31,7 +32,7 @@ lessons.addEventListener("click", function (event) {
             }, 10);
             buttonsCont.addEventListener("click", function (event) {
                 if (event.target.tagName == "BUTTON" && Number(event.target.dataset.num) <= number) {
-                        fetch("choose.php?filename=" + filename + "&number=" + event.target.dataset.num)
+                        fetch("choose.php?grade=" + grade + "&filename=" + filename + "&number=" + event.target.dataset.num)
                         .then(response => response.json())
                         .then(function (questions) {
                             document.getElementsByTagName("section")[1].style.opacity = 0;
@@ -166,7 +167,7 @@ function startTest(questions) {
             description.textContent = descriptions[scoreInt];
             resultPage.append(description);
             let continueBtn = document.createElement("a");
-            continueBtn.href = "index.php";
+            continueBtn.href = "index.php?grade=" + grade;
             continueBtn.className = "continue-btn";
             continueBtn.textContent = "continue"
             resultPage.append(continueBtn);

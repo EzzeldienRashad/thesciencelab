@@ -1,0 +1,5 @@
+Prevent form resubmittion on back button
+bootstrap hide "Awaiting Approval!" after a timeout
+Change password, make it secret
+Add "Wrong password" and prevent enumeration
+Add to navbar: "grades"

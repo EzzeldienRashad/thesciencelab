@@ -9,7 +9,7 @@
     if (isset($_GET["logout"])) {
         unset($_SESSION["isAdmin"]);
         unset($_SESSION["isMember"]);
-        header("location:" . htmlspecialchars($_SERVER["PHP_SELF"]));
+        header("location: " . htmlspecialchars($_SERVER["PHP_SELF"]));
     }
 ?>
 <!DOCTYPE html>
@@ -67,19 +67,20 @@ if (!$isAdmin && !$isMember) {
             </a>
         </div>
     </div>
-
-    <?php
-    }
-    ?>
 </main>
+<?php
+}
+?>
 <footer class="pt-3">
     <ul class="pagination">
         <li class="page-item">
             <a href="../" class="page-link">main page</a>
         </li>
-        <li class="page-item">
-            <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>?logout=true" class="page-link">logout</a>
-        </li>
+        <?php if ($isAdmin || $isMember) { ?>
+            <li class="page-item">
+                <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>?logout=true" class="page-link">logout</a>
+            </li>
+        <?php } ?>
     </ul>
 </footer>
 </body>

@@ -13,7 +13,7 @@ if (!$isAdmin && !$isMember) {
 }
 if (isset($_GET["grade"])) {
     $arr = array();
-    foreach (scandir("../../" . $_GET["grade"] . "/choose") as $file) {
+    foreach (scandir("../../games/choose/" . $_GET["grade"]) as $file) {
         $fileInfo = pathinfo($file);
         if (isset($fileInfo["extension"]) && $fileInfo["extension"] == "json") {
             array_push($arr, $fileInfo["filename"]);
@@ -55,7 +55,7 @@ if (isset($_GET["grade"])) {
     <?php 
     if ($isAdmin) {
     ?>
-        <a href="approve.php?" class="btn btn-warning mb-3">... Approve!</a>
+        <a href="approve.php" class="btn btn-warning mb-3">... Approve!</a>
     <?php
     }
     ?>
@@ -66,7 +66,7 @@ if (isset($_GET["grade"])) {
                 $length = strlen( $needle );
                 return substr( $haystack, 0, $length ) === $needle;
             }
-            $files = array_values(array_filter(scandir("../../"), function ($file) {
+            $files = array_values(array_filter(scandir("../../games/choose"), function ($file) {
                 return startsWith($file, "grade");
             }));
             for ($i = 0; $i < count($files); $i++) {

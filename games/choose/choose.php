@@ -1,6 +1,6 @@
 <?php
-if (!$_GET["filename"]) exit;
-$array = json_decode(file_get_contents($_GET["filename"] . ".json"));
+if (!isset($_GET["filename"], $_GET["grade"])) exit;
+$array = json_decode(file_get_contents($_GET["grade"] . "/" . $_GET["filename"] . ".json"));
 if (isset($_GET["number"])) {
     $newArray = array();
     $max = $_GET["number"] < count($array) ? $_GET["number"] : count($array);
