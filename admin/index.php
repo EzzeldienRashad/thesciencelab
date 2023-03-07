@@ -29,6 +29,11 @@
 			document.getElementsByTagName("head")[0].appendChild(newScript);
 		}
 	</script>
+    <style>
+        img {
+            height: 23vh;
+        }
+    </style>
 </head>
 <body class="container p-3">
 
@@ -58,11 +63,19 @@ if (!$isAdmin && !$isMember) {
 </header>
 <main>
     <div class="row">
-        <div class="col-6 col-md-4">
+        <div class="col-12 col-sm-6 col-md-4">
             <a href="choose" class="text-decoration-none text-dark">
                 <figure class="text-center">
                     <img src="../images/choose.webp" alt="choose" class="w-100 border border-3"/>
-                    <figcaption>Choose</figcaption>
+                    <figcaption>choose</figcaption>
+                </figure>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="right_or_wrong" class="text-decoration-none text-dark">
+                <figure class="text-center">
+                    <img src="../images/right_or_wrong.webp" alt="right or wrong" class="w-100 border border-3"/>
+                    <figcaption>right or wrong</figcaption>
                 </figure>
             </a>
         </div>

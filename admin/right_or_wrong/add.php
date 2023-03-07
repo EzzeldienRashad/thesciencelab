@@ -19,9 +19,9 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
     header("location: index.php");
     exit;
 } elseif (isset($_GET["grade"]) && isset($_GET["unit"]) && isset($_POST["submit"])) {
-    $path = "../../games/choose/" . $_GET["grade"] . ($isAdmin ? "/" : "/approval/") . $_GET["unit"] . ".json";
+    $path = "../../games/right_or_wrong/" . $_GET["grade"] . ($isAdmin ? "/" : "/approval/") . $_GET["unit"] . ".json";
     $arr = json_decode(file_get_contents($path), true);
-    array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
+    $arr[trim($_POST["question"])] = $_POST["answer"];
     file_put_contents($path, json_encode($arr));
     $msg = $isAdmin ? "Added Succecfully!" : "Awating Approval!";
 }
@@ -61,29 +61,9 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
                 Question: <input type="text" name="question" class="form-control" required/>
             </label>
         </div>
-        <br/>
-        <br/>
-        <fieldset class="row">
-            <legend>Answers:</legend>
-            <label class="form-label col-md-6">
-                First answer: <input type="text" name="first" class="form-control" required/>
-            </label>
-            <label class="form-label col-md-6">
-                Second answer: <input type="text" name="second" class="form-control" required/>
-            </label>
-            <label class="form-label col-md-6">
-                Third answer: <input type="text" name="third" class="form-control" required/>
-            </label>
-            <label class="form-label col-md-6">
-                Fourth answer: <input type="text" name="fourth" class="form-control" required/>
-            </label>
-        </fieldset>
-        <br/>
-        <br/>
-        <div class="row">
-            <label class="form-label col-6 col-md-5 col-lg-3">
-                Number of the right answer: <input type="number" name="number" max="4" min="1" class="form-control" required/>
-            </label>
+        <div class="row px-3">
+            <div class="col-6 form-check"><input id="right" type="radio" class="form-check-input" name="answer" value="1"/><label for="right" class="form-check-label">right</label></div>
+            <div class="col-6 form-check"><input id="wrong" type="radio" class="form-check-input" name="answer" value="0"/><label for="wrong" class="form-check-label">wrong</label></div>
         </div>
         <br/>
         <br/>

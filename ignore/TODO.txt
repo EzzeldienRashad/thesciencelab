@@ -1,5 +1,6 @@
+Make "Added succesfully" message real by adding "Error" for errors in admin
 Prevent form resubmittion on back button
-bootstrap hide "Awaiting Approval!" after a timeout
+Add a list at the top to show how many right / wrong answers he did
 Change password, make it secret
 Add "Wrong password" and prevent enumeration
 Add to navbar: "grades"

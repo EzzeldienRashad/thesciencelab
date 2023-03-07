@@ -44,8 +44,8 @@ foreach (array_values(array_filter(scandir("./"), function($file) {
     echo "
     <a href='$game?grade=" . $_GET["grade"] . "'>
         <figure>
-            <img src='../images/$game.webp' alt='$game'/>
-            <figcaption>$game</figcaption>
+            <img src='../images/$game.webp' alt='" . str_replace("_", " ", $game) . "'/>
+            <figcaption>" . str_replace("_", " ", $game) . "</figcaption>
         </figure>
     </a>
     ";
