@@ -49,6 +49,7 @@ $grade = $_GET["grade"];
                 echo "<button class='button' data-unit='" . $fileInfo["filename"] . "'>" . $fileInfo["filename"] . "</button>";
             }
         }
+        echo "<button class='button' data-unit='all'>The whole term</button>"
         ?>
     </div>
 </section>

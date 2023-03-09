@@ -31,7 +31,7 @@ if (!isset($_GET["grade"])) {
     </nav>
 </header>
 <main>
-<h1>Welcome to <?php echo $_GET["grade"]; ?>!</h1>
+<h1>Welcome to <?php echo str_replace("_", " ", $_GET["grade"]); ?>!</h1>
 <h2>Please choose a game:</h2>
 <section class="games">
 <?php

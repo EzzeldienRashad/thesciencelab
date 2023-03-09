@@ -1,6 +1,6 @@
+make grade 4 grade_4 (with underscore)
 Make "Added succesfully" message real by adding "Error" for errors in admin
-Prevent form resubmittion on back button
 Add a list at the top to show how many right / wrong answers he did
 Change password, make it secret
 Add "Wrong password" and prevent enumeration
-Add to navbar: "grades"
+Add happy and sad faces when he solves right or wrong answers

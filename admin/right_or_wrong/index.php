@@ -73,7 +73,7 @@ if (isset($_GET["grade"])) {
                 $file = $files[$i];
                 echo "
                     <div class='col-md-6'>
-                        <button class='btn btn-primary p-3 w-100 h-100' data-grade='" . $file . "'>$file</button>
+                        <button class='btn btn-primary p-3 w-100 h-100' data-grade='" . $file . "'>" . str_replace("_", " ", $file) . "</button>
                     </div>";
             }
             ?>

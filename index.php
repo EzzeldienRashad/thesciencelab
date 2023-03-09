@@ -49,10 +49,10 @@
     </section>
     <section class="grades">
         <h2>Grades:</h2>
-        <a href="games?grade=grade%204%201st%20term">Grade 4 first term <i class="fa-solid fa-right-long"></i></a>
-        <a href="games?grade=grade%204%202nd%20term">Grade 4 second term <i class="fa-solid fa-right-long"></i></a>
-        <a href="games?grade=grade%205%201st%20term">Grade 5 first term <i class="fa-solid fa-right-long"></i></a>
-        <a href="games?grade=grade%205%202nd%20term">Grade 5 second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_4_1st_term">Grade 4 first term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_4_2nd_term">Grade 4 second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_5_1st_term">Grade 5 first term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_5_2nd_term">Grade 5 second term <i class="fa-solid fa-right-long"></i></a>
     </section>
 </main>
 
