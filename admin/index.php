@@ -66,7 +66,7 @@ if (!$isAdmin && !$isMember) {
         <div class="col-12 col-sm-6 col-md-4">
             <a href="choose" class="text-decoration-none text-dark">
                 <figure class="text-center">
-                    <img src="../images/choose.webp" alt="choose" class="w-100 border border-3"/>
+                    <img src="../images/choose.webp" alt="choose" class="w-100 h-auto border border-3"/>
                     <figcaption>choose</figcaption>
                 </figure>
             </a>
@@ -74,8 +74,16 @@ if (!$isAdmin && !$isMember) {
         <div class="col-12 col-sm-6 col-md-4">
             <a href="right_or_wrong" class="text-decoration-none text-dark">
                 <figure class="text-center">
-                    <img src="../images/right_or_wrong.webp" alt="right or wrong" class="w-100 border border-3"/>
+                    <img src="../images/right_or_wrong.webp" alt="right or wrong" class="w-100 h-auto border border-3"/>
                     <figcaption>right or wrong</figcaption>
+                </figure>
+            </a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+            <a href="complete" class="text-decoration-none text-dark">
+                <figure class="text-center">
+                    <img src="../images/complete.webp" alt="complete" class="w-100 h-auto border border-3"/>
+                    <figcaption>complete</figcaption>
                 </figure>
             </a>
         </div>

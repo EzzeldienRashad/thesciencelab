@@ -5,24 +5,13 @@ lessons.addEventListener("click", function (event) {
     if (event.target.tagName == "BUTTON") {     
         let filename = event.target.dataset.unit;
         let buttonsCont = document.getElementsByClassName("buttons")[1];
-        fetch("choose.php?grade=" + grade + "&filename=" + filename)
+        fetch("complete.php?grade=" + grade + "&filename=" + filename)
         .then(number => number.text())
         .then(function (number) {
-            if (Number(number) < 5) {
+            for (i = 1; i <= Math.floor(number / 5); i++) {
                 let button = document.createElement("button");
-                button.textContent = number;
-                button.setAttribute("data-num", number);
-                buttonsCont.append(button);
-            } else {
-                for (i = 5; i < number - (number % 5); i += 5) {
-                    let button = document.createElement("button");
-                    button.textContent = i;
-                    button.setAttribute("data-num", i);
-                    buttonsCont.append(button);
-                }
-                let button = document.createElement("button");
-                button.textContent = number;
-                button.setAttribute("data-num", number);
+                button.textContent = i;
+                button.setAttribute("data-num", i);
                 buttonsCont.append(button);
             }
             lessons.style.height = lessons.offsetHeight + "px";
@@ -32,7 +21,7 @@ lessons.addEventListener("click", function (event) {
             }, 10);
             buttonsCont.addEventListener("click", function (event) {
                 if (event.target.tagName == "BUTTON" && Number(event.target.dataset.num) <= number) {
-                        fetch("choose.php?grade=" + grade + "&filename=" + filename + "&number=" + event.target.dataset.num)
+                        fetch("complete.php?grade=" + grade + "&filename=" + filename + "&number=" + event.target.dataset.num)
                         .then(response => response.json())
                         .then(function (questions) {
                             document.getElementsByTagName("section")[1].style.opacity = 0;
@@ -49,6 +38,10 @@ lessons.addEventListener("click", function (event) {
 });
 
 function startTest(questions) {
+    let availableWordsArr = [];
+    let score = 0;
+    let maxScore = 0;
+    let questionsNumber = 0;
     let rightAudio = document.getElementById("rightAudio");
     let wrongAudio = document.getElementById("wrongAudio");
     let test = document.createElement("div");
@@ -57,71 +50,80 @@ function startTest(questions) {
     let next = document.createElement("i");
     next.className = "next fa-solid fa-right-long";
     test.append(next);
-    let rightPic = document.createElement("img");
-    rightPic.src = "../../images/right.webp";
-    rightPic.alt = "RIGHT!";
-    rightPic.className = "right-wrong";
-    rightPic.width = "200";
-    rightPic.height = "200";
-    test.append(rightPic);
-    let wrongPic = document.createElement("img");
-    wrongPic.src = "../../images/wrong.webp";
-    wrongPic.alt = "WRONG!";
-    wrongPic.className = "right-wrong";
-    wrongPic.width = "200";
-    wrongPic.height = "200";
-    test.append(wrongPic);
-    let score = 0;
-    let maxScore = questions.length;
     let currentQuestionNumber = 1;
-    for (let question of questions) {
-        let currentQuestion = document.createElement("div");
-        currentQuestion.className = "question";
-        test.append(currentQuestion);
-        let title = document.createElement("h2");
-        title.textContent = question[0];
-        currentQuestion.append(title);
-        let answers = document.createElement("div");
-        answers.className = "answers";
-        currentQuestion.append(answers);
-        let letters = ["a) ", "b) ", "c) ", "d) "]
-        for (let i = 0; i < 4; i++) {
-            let answer = document.createElement("button");
-            answer.className = "answer";
-            answer.textContent = letters[i] + question[1][i];
-            answer.setAttribute("data-number", i + 1)
-            answers.append(answer);
-        }
-        //check answer
-        answers.addEventListener("click", function answerClick(event) {
-            if (event.target.tagName == "BUTTON") {
-                if (event.target.getAttribute("data-number") == question[2]) { // If answer is right
-                    score++;
-                    rightPic.style.display = "inline";
-                    rightAudio.play();
-                    event.target.style.border = "5px solid green";
-                } else {
-                    wrongPic.style.display = "inline";
-                    wrongAudio.play();
-                    event.target.style.border = "5px solid red";
-                    answers.querySelector(".answer:nth-child(" + Number(question[2]) + ")").style.border = "5px solid green";
+    for (let i = 0; i < Math.floor(questions.length / 5); i++) {
+        questionsNumber++;
+        let questionsGroup = document.createElement("div");
+        questionsGroup.className = "questions-group";
+        test.append(questionsGroup);
+        let answersZone = document.createElement("ol");
+        answersZone.className = "answers-zone";
+        questionsGroup.append(answersZone);
+        for (let c = 0; c < (5 > questions.length ? questions.length : 5); c++) {
+            let counter = i * 5 + c;
+            let question = questions[counter];
+            let currentQuestion = document.createElement("li");
+            currentQuestion.className = "question";
+            answersZone.append(currentQuestion);
+            for (let [questionPart, questionAnswers] of Object.entries(question)) {
+                currentQuestion.append(questionPart + " ");
+                if (questionAnswers.length) {
+                    availableWordsArr.push(...questionAnswers);
+                    let input = document.createElement("input");
+                    input.setAttribute("type", "text");
+                    input.dataset.questionNum = counter;
+                    input.dataset.questionPart = questionPart;
+                    currentQuestion.append(input);
+                    maxScore++;
                 }
-                answers.removeEventListener("click", answerClick);
+            }
+        }
+        let availableWords = document.createElement("div");
+        availableWords.className = "available-words";
+        questionsGroup.prepend(availableWords);
+        for (let word of shuffle(availableWordsArr)) {
+            let wordCont = document.createElement("span");
+            wordCont.className = "word";
+            wordCont.append(word);
+            availableWords.append(wordCont);
+        }
+        availableWordsArr = [];
+        let submit = document.createElement("button");
+        submit.className = "submit";
+        submit.textContent = "check answers";
+        questionsGroup.append(submit);
+        //check answer
+        submit.addEventListener("click", function submitAnswers() {
+            let foundWrongAnswer = 0;
+            for (let finalAnswer of questionsGroup.querySelectorAll("input")) {
+                if (finalAnswer.value.toLowerCase().trim() == questions[finalAnswer.dataset.questionNum][finalAnswer.dataset.questionPart][0].toLowerCase().trim()) { //right answer
+                    if (finalAnswer.dataset.checked != "true") score++;
+                    finalAnswer.style.border = "5px solid green";
+                    finalAnswer.setAttribute("disabled", true);
+                } else {
+                    finalAnswer.style.border = "5px solid red";
+                    foundWrongAnswer++;
+                }
+                finalAnswer.dataset.checked = "true";
+            }
+            if (foundWrongAnswer) {
+                wrongAudio.play();
+            } else {
+                rightAudio.play();
+                submit.addEventListener("click", submitAnswers);
                 next.style.width = "auto";
                 next.style.height = "auto";
                 next.addEventListener("click", function toNextQuestion() {
                     next.removeEventListener("click", toNextQuestion);
-                    if (currentQuestionNumber >= maxScore) {
+                    if (currentQuestionNumber >= questionsNumber) {
                         result();
                         return;
                     }
-                    for (let answersCont of document.getElementsByClassName("answers")) {
-                        answersCont.style.pointerEvents = "none";
-                        setTimeout(() => answersCont.style.pointerEvents = "", 1000)
+                    for (let submitBtn of document.getElementsByClassName("submit")) {
+                        submitBtn.style.pointerEvents = "none";
+                        setTimeout(() => submitBtn.style.pointerEvents = "", 1000)
                     }
                     test.style.marginLeft = test.offsetLeft - document.documentElement.clientWidth + "px";
-                    rightPic.style.display = "";
-                    wrongPic.style.display = "";
                     next.style.width = "";
                     next.style.height = "";
                     currentQuestionNumber++;
@@ -177,6 +179,16 @@ function startTest(questions) {
             resultPage.append(continueBtn);
         }, 1000);
     }
+}
+//functions
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
 }
 //add date to footer
 document.getElementsByClassName("date")[0].innerHTML = 

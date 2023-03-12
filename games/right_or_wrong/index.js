@@ -103,15 +103,19 @@ function startTest(questions) {
                 next.style.width = "auto";
                 next.style.height = "auto";
                 next.addEventListener("click", function toNextQuestion() {
+                    next.removeEventListener("click", toNextQuestion);
                     if (currentQuestionNumber >= maxScore) {
                         result();
                         return;
+                    }
+                    for (let answersCont of document.getElementsByClassName("answers")) {
+                        answersCont.style.pointerEvents = "none";
+                        setTimeout(() => answersCont.style.pointerEvents = "", 1000)
                     }
                     test.style.marginLeft = test.offsetLeft - document.documentElement.clientWidth + "px";
                     next.style.width = "";
                     next.style.height = "";
                     currentQuestionNumber++;
-                    next.removeEventListener("click", toNextQuestion);
                 });
             }
         });

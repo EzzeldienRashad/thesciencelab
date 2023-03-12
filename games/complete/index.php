@@ -8,7 +8,7 @@ $grade = $_GET["grade"];
 <!DOCTYPE html>
 <html>
 <head>
-<title>Grade <?php echo str_replace("_", " ", $_GET["grade"]); ?> choose game</title>
+<title>Grade <?php echo str_replace("_", " ", $_GET["grade"]); ?> complete game</title>
 <meta name="description" content="Games for <?php echo $grade; ?> on science lessons"/>
 <meta name="author" content="Ali Ebn Abi Taleb science group"/>
 <meta name="keywords" content="grade, games, science, problems, thesciencelab, laboratory"/>
@@ -35,15 +35,14 @@ $grade = $_GET["grade"];
 <main>
 <section>
 <h1>
-    Welcome to the CHOOSE game!
+    Welcome to the COMPLETE game!
 </h1>
     <p>
         Please choose a unit:
     </p>
     <div class="buttons">
         <?php
-        $files = scandir($grade);
-        foreach ($files as $file) {
+        foreach (scandir($grade) as $file) {
             $fileInfo = pathinfo($file);
             if (isset($fileInfo["extension"]) && $fileInfo["extension"] == "json") {
                 echo "<button class='button' data-unit='" . $fileInfo["filename"] . "'>" . $fileInfo["filename"] . "</button>";
@@ -55,7 +54,7 @@ $grade = $_GET["grade"];
 </section>
 <section>
     <p>
-        How many questions do you want?
+        How many question groups do you want?
     </p>
     <div class="buttons">
         

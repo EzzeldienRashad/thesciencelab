@@ -1,0 +1,209 @@
+/*********** General Styles ***************/
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+/***************** Header *************************/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+header nav {
+    background-color: blue;
+    color: white;
+}
+header nav a {
+    display: inline-block;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    border-left: 2px solid black;
+}
+header nav a:hover {
+    background-color: white;
+    color: black;
+}
+/************ First Section *********************/
+main {
+    margin-top: 45px;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 90vh;
+}
+h1 {
+    text-align: center;
+}
+p {
+    font-size: 20px;
+}
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.buttons button {
+    background-color: blue;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    word-wrap: break-word;
+}
+section {
+    transition-duration: 1s;
+    overflow: hidden;
+}
+section:nth-child(2) {
+    height: 0;
+    border-top: 2px solid black;
+}
+.questions-group {
+    display: inline-block;
+    width: 100vw;
+    height: 100%;
+    padding: 30px;
+}
+.test {
+    display: flex;
+    width: max-content;
+    overflow-x: hidden;
+    transition-property: margin-left, opacity;
+    transition-duration: 1s;
+}
+.answers-zone {
+    padding: 30px 20px;
+    background-color: whitesmoke;
+    line-height: 2;
+    margin: 30px;
+    display: block;
+    border-radius: 15px;
+    padding-left: revert;
+}
+.available-words {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: beige;
+}
+.word {
+    display: inline-block;
+    padding: 20px;
+}
+input {
+    background-color: inherit;
+    border: none;
+    border-bottom: 2px dotted black;
+    outline: none;
+    width: 170px;
+}
+.next {
+    position: absolute;
+    color: blue;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 50px;
+    cursor: pointer;
+}
+.next:hover {
+    text-shadow: -3px 3px black;
+}
+.submit {
+    background-color: palegreen;
+    padding: 20px;
+    width: 100%;
+}
+#rightAudio, #wrongAudio {
+    display: none;
+}
+.result-page {
+    padding: 50px;
+}
+.c-outer {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin: 20px auto;
+    position: relative;
+}
+.c-inner {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: ghostwhite;
+    display: table;
+    font-size: 25px;
+    text-align: center;
+}
+.c-inner span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.continue-btn {
+    padding: 30px;
+    width: 300px;;
+    text-align: center;
+    margin: 30px auto;
+    display: block;
+    font-size: 25px;
+    background-color: blue;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.continue-btn:hover {
+    background-color: lightblue;
+    color: black;
+}
+/************ footer ************/
+footer {
+    padding: 10px 30px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+}
+/*************** other devices ****************/
+@media only screen and (max-width: 800px) {
+    .questions-group {
+        padding: 5px;
+    }
+    .answers-zone {
+        padding: 10px 15px;
+        margin: 5px;
+        padding-left: revert;
+    }
+    .word {
+        padding: 10px;
+    }    
+}
+@media only screen and (max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+}
+@media only screen and (max-width: 440px) {
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+    .question, .answer {
+        padding: 20px 5px;
+    }
+    .result-page {
+        padding: 10px;
+    }
+}

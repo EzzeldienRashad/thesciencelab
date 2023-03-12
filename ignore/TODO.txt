@@ -1,4 +1,3 @@
-make grade 4 grade_4 (with underscore)
 Make "Added succesfully" message real by adding "Error" for errors in admin
 Add a list at the top to show how many right / wrong answers he did
 Change password, make it secret

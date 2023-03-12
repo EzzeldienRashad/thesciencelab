@@ -1,1 +1,2 @@
 Before uploading, DOWNLOAD ALL THE UPLOADED ANSWERS!!!!!!!!!!!!!!!!!!!!!!!!!!!
+If downloaded from github: npm i bootstrap, download fontawesome

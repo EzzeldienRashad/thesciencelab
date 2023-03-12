@@ -8,7 +8,7 @@ $grade = $_GET["grade"];
 <!DOCTYPE html>
 <html>
 <head>
-<title>Grade <?php echo $_GET["grade"]; ?> right or wrong game</title>
+<title>Grade <?php echo str_replace("_", " ", $_GET["grade"]); ?> right or wrong game</title>
 <meta name="description" content="Games for <?php echo $grade; ?> on science lessons"/>
 <meta name="author" content="Ali Ebn Abi Taleb science group"/>
 <meta name="keywords" content="grade, games, science, problems, thesciencelab, laboratory"/>
