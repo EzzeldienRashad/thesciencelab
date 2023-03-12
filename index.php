@@ -53,6 +53,9 @@
         <a href="games?grade=grade_4_2nd_term">Grade 4 second term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=grade_5_1st_term">Grade 5 first term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=grade_5_2nd_term">Grade 5 second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_1_preparatory_2nd_term">Grade 1 preparatory second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_2_preparatory_2nd_term">Grade 2 preparatory second term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=grade_3_preparatory_2nd_term">Grade 3 preparatory second term <i class="fa-solid fa-right-long"></i></a>
     </section>
 </main>
 
