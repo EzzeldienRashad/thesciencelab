@@ -7,6 +7,9 @@ html, body {
     padding: 0;
     overflow-x: hidden;
 }
+body {
+    background-color: ghostwhite;
+}
 /***************** Header *************************/
 header {
     position: fixed;
@@ -87,14 +90,14 @@ section:nth-child(2) {
 }
 .answer {
     border: none;
-    background-color: ghostwhite;
+    background-color: #dcdcdc;
     font-size: 20px;
     padding: 20px;
     cursor: pointer;
     word-wrap: break-word;
 }
 .answer:hover {
-    background-color: lightgrey;
+    background-color: #d3d3d3;
 }
 .next {
     position: absolute;

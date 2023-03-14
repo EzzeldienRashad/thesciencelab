@@ -45,6 +45,11 @@ if (isset($_GET["grade"])) {
 			document.getElementsByTagName("head")[0].appendChild(newScript);
 		}
 	</script>
+    <style>
+        body {
+            background-color: ghostwhite;
+        }
+    </style>
 </head>
 <body class="container">
 <header>
@@ -67,7 +72,7 @@ if (isset($_GET["grade"])) {
                 return substr( $haystack, 0, $length ) === $needle;
             }
             $files = array_values(array_filter(scandir("../../games/choose"), function ($file) {
-                return startsWith($file, "grade");
+                return is_dir("../../games/choose/" . $file) && !startsWith($file, ".");
             }));
             for ($i = 0; $i < count($files); $i++) {
                 $file = $files[$i];

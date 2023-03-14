@@ -31,6 +31,9 @@ header nav a:hover {
     background-color: white;
     color: black;
 }
+body {
+    background-color: ghostwhite;
+}
 /************ First Section *********************/
 main {
     margin-top: 45px;

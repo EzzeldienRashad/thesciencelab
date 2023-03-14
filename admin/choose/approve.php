@@ -31,6 +31,9 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
         html {
             scroll-behavior: auto !important;
         }
+        body {
+            background-color: ghostwhite;
+        }
     </style>
 </head>
 <body>

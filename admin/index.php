@@ -33,6 +33,9 @@
         img {
             height: 23vh;
         }
+        body {
+            background-color: ghostwhite;
+        }
     </style>
 </head>
 <body class="container p-3">

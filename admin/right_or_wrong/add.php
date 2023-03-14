@@ -44,6 +44,11 @@ if (!isset($_GET["grade"]) || !isset($_GET["unit"])) {
 			document.getElementsByTagName("head")[0].appendChild(newScript);
 		}
 	</script>
+    <style>
+        body {
+            background-color: ghostwhite;
+        }
+    </style>
 </head>
 <body>
 <header>

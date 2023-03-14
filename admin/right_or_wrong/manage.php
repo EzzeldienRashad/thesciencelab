@@ -38,6 +38,9 @@ if ((!$isAdmin && !$isMember) || !isset($_GET["grade"]) || !isset($_GET["unit"])
         html {
             scroll-behavior: auto !important;
         }
+        body {
+            background-color: ghostwhite;
+        }
     </style>
 </head>
 <body class="container-fluid p-2">
