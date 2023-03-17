@@ -29,6 +29,7 @@ $grade = $_GET["grade"];
 
     <nav>
         <a href="../../">home</a>
+        <a href="https://youtube.com/playlist?list=PLKh5SX-fHsw8wRpfB-eU8DkWKVM5fuRBF">How to use</a>
     </nav>
 
 </header>

@@ -1,8 +1,9 @@
 //import questions
 let lessons = document.getElementsByTagName("section")[0];
 let grade = new URL(location.href).searchParams.get("grade");
-lessons.addEventListener("click", function (event) {
+lessons.addEventListener("click", function displayQuestionsNumber(event) {
     if (event.target.tagName == "BUTTON") {     
+        lessons.removeEventListener("click", displayQuestionsNumber);
         let filename = event.target.dataset.unit;
         let buttonsCont = document.getElementsByClassName("buttons")[1];
         fetch("choose.php?grade=" + grade + "&filename=" + filename)

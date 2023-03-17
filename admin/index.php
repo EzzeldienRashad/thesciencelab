@@ -4,6 +4,8 @@
         $_SESSION["isAdmin"] = true;
     } elseif (isset($_POST["password"]) && $_POST["password"] == "1r2e3s4t5r!F") {
         $_SESSION["isMember"] = true;
+    } elseif (isset($_POST["password"])) {
+        $msg = "Wrong password!";
     }
     //logout
     if (isset($_GET["logout"])) {
@@ -57,7 +59,7 @@ if (!$isAdmin && !$isMember) {
     </label>
     <input type="submit" value="submit" class="btn btn-info"/>
 </form>
-
+<?php if (isset($msg)) echo $msg; ?>
 <?php
 } else {
 ?>

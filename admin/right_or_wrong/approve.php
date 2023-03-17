@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
-    echo "You don't have permission to do this operation.";
+    header("Location: ../");
     exit;
 }
 ?>
@@ -38,13 +38,9 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
 </head>
 <body>
 <?php
-function startsWith( $haystack, $needle ) {
-    $length = strlen( $needle );
-    return substr( $haystack, 0, $length ) === $needle;
-}
 $questions = array();
 $grades = array_values(array_filter(scandir("../../games/right_or_wrong/"), function ($file) {
-    return startsWith($file, "grade");
+    return is_dir("../../games/right_or_wrong/" . $file) && $file != "." && $file != "..";
 }));
 foreach ($grades as $grade) {
     $gradeAppended = false;

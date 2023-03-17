@@ -22,6 +22,7 @@
 <header>
     <nav>
         <a href="./">home</a>
+        <a href="https://youtube.com/playlist?list=PLKh5SX-fHsw8wRpfB-eU8DkWKVM5fuRBF">How to use</a>
     </nav>
 </header>
 <main>
@@ -53,7 +54,7 @@
         <a href="games?grade=grade_4_2nd_term">Grade 4 second term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=grade_5_1st_term">Grade 5 first term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=grade_5_2nd_term">Grade 5 second term <i class="fa-solid fa-right-long"></i></a>
-        <a href="games?grade=1st_preparatory_2nd_term">1st preparatory 2nc term <i class="fa-solid fa-right-long"></i></a>
+        <a href="games?grade=1st_preparatory_2nd_term">1st preparatory 2nd term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=2nd_preparatory_2nd_term">2nd preparatory 2nd term <i class="fa-solid fa-right-long"></i></a>
         <a href="games?grade=3rd_preparatory_2nd_term">3rd preparatory 2nd term <i class="fa-solid fa-right-long"></i></a>
     </section>

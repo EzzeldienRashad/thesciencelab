@@ -28,6 +28,7 @@ if (!isset($_GET["grade"])) {
 <header>
     <nav>
         <a href="../">home</a>
+        <a href="https://youtube.com/playlist?list=PLKh5SX-fHsw8wRpfB-eU8DkWKVM5fuRBF">How to use</a>
     </nav>
 </header>
 <main>
@@ -35,9 +36,6 @@ if (!isset($_GET["grade"])) {
 <h2>Please choose a game:</h2>
 <section class="games">
 <?php
-function startsWith($haystack, $needle) {
-    return substr($haystack, 0, strlen($needle)) === $needle;
-}
 foreach (array_values(array_filter(scandir("./"), function($file) {
     return is_dir("./" . $file) && $file != "." && $file != "..";
 })) as $game) {

@@ -1,6 +1,5 @@
+Add "Wrong password" and prevent enumeration
+Add a list at the top to show how many right / wrong answers he did
 Allow any number of question not just groups of five in complete game
 Make "Added succesfully" message real by adding "Error" for errors in admin
-Add a list at the top to show how many right / wrong answers he did
 Change password, make it secret
-Add "Wrong password" and prevent enumeration
-Add happy and sad faces when he solves right or wrong answers
