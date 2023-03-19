@@ -55,7 +55,7 @@ $grade = $_GET["grade"];
 </section>
 <section>
     <p>
-        How many question groups do you want?
+        How many questions do you want?
     </p>
     <div class="buttons">
         

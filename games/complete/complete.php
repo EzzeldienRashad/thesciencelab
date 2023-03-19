@@ -9,9 +9,8 @@ if ($_GET["filename"] == "all") {
         }
     }
     if (isset($_GET["number"])) {
-        $number = $_GET["number"] * 5;
         $newQuestions = array();
-        $max = $number < count($allQuestions) ? $number : count($allQuestions);
+        $max = $_GET["number"] < count($allQuestions) ? $_GET["number"] : count($allQuestions);
         for ($i = 0; $i < $max; $i++) {
             $randomNumber = floor(rand(0, count($allQuestions) - 1));
             array_push($newQuestions, $allQuestions[$randomNumber]);
@@ -25,9 +24,8 @@ if ($_GET["filename"] == "all") {
 }
 $array = json_decode(file_get_contents($_GET["grade"] . "/" . $_GET["filename"] . ".json"), true);
 if (isset($_GET["number"])) {
-    $number = $_GET["number"] * 5;
     $newArray = array();
-    $max = $number < count($array) ? $number : count($array);
+    $max = $_GET["number"] < count($array) ? $_GET["number"] : count($array);
     for ($i = 0; $i < $max; $i++) {
         $randomNumber = floor(rand(0, count($array) - 1));
         array_push($newArray, $array[$randomNumber]);

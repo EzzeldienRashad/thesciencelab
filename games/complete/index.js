@@ -9,10 +9,21 @@ lessons.addEventListener("click", function displayQuestionsNumber(event) {
         fetch("complete.php?grade=" + grade + "&filename=" + filename)
         .then(number => number.text())
         .then(function (number) {
-            for (i = 1; i <= Math.floor(number / 5); i++) {
+            if (Number(number) < 5) {
                 let button = document.createElement("button");
-                button.textContent = i;
-                button.setAttribute("data-num", i);
+                button.textContent = number;
+                button.setAttribute("data-num", number);
+                buttonsCont.append(button);
+            } else {
+                for (i = 5; i < number - (number % 5); i += 5) {
+                    let button = document.createElement("button");
+                    button.textContent = i;
+                    button.setAttribute("data-num", i);
+                    buttonsCont.append(button);
+                }
+                let button = document.createElement("button");
+                button.textContent = number;
+                button.setAttribute("data-num", number);
                 buttonsCont.append(button);
             }
             lessons.style.height = lessons.offsetHeight + "px";
@@ -39,10 +50,11 @@ lessons.addEventListener("click", function displayQuestionsNumber(event) {
 });
 
 function startTest(questions) {
+    let questionsArr = [];
     let availableWordsArr = [];
     let score = 0;
     let maxScore = 0;
-    let questionsNumber = 0;
+    let questionsNumber = 1;
     let rightAudio = document.getElementById("rightAudio");
     let wrongAudio = document.getElementById("wrongAudio");
     let test = document.createElement("div");
@@ -52,17 +64,27 @@ function startTest(questions) {
     next.className = "next fa-solid fa-right-long";
     test.append(next);
     let currentQuestionNumber = 1;
-    for (let i = 0; i < Math.floor(questions.length / 5); i++) {
+    let n = 0;
+    for (n; n < Math.floor(questions.length / 5) - 1; n++) {
         questionsNumber++;
+        questionsArr[n] = [];
+        for (let c = 0; c < 5; c++) {
+            questionsArr[n].push(questions[n * 5 + c]);
+        }
+    }
+    questionsArr[n] = [];
+    for (let counter = (Math.floor(questions.length / 5) - 1) * 5; counter < questions.length; counter++) {
+        questionsArr[n].push(questions[counter]);
+    }
+    for (let i = 0; i < questionsArr.length; i++) {
         let questionsGroup = document.createElement("div");
         questionsGroup.className = "questions-group";
         test.append(questionsGroup);
         let answersZone = document.createElement("ol");
         answersZone.className = "answers-zone";
         questionsGroup.append(answersZone);
-        for (let c = 0; c < (5 > questions.length ? questions.length : 5); c++) {
-            let counter = i * 5 + c;
-            let question = questions[counter];
+        for (let c = 0; c < questionsArr[i].length; c++) {
+            let question = questionsArr[i][c];
             let currentQuestion = document.createElement("li");
             currentQuestion.className = "question";
             answersZone.append(currentQuestion);
@@ -72,7 +94,7 @@ function startTest(questions) {
                     availableWordsArr.push(...questionAnswers);
                     let input = document.createElement("input");
                     input.setAttribute("type", "text");
-                    input.dataset.questionNum = counter;
+                    input.dataset.questionNum = i * 5 + c;
                     input.dataset.questionPart = questionPart;
                     currentQuestion.append(input);
                     maxScore++;
