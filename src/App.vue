@@ -1,27 +1,41 @@
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, onBeforeUnmount, provide} from "vue";
 
 const nav = ref(null);
 const navbarCollapse = ref(null);
 const navbarToggler = ref(null);
 const navHeight = ref(50);
+const documentWidth = ref(document.body.clientWidth);
+const theme = ref("primary")
+
+provide("documentWidth", documentWidth);
 
 function hideNav() {
     if (navbarCollapse.value.classList.contains("show")) navbarToggler.value.click()
 }
+function assignDocumentWidth() {
+    documentWidth.value = document.body.clientWidth;
+}
+function changeTheme(newTheme) {
+    theme.value = newTheme;
+}
 
 onMounted(() => {
     navHeight.value = nav.value.offsetHeight;
+    addEventListener("resize", assignDocumentWidth);
+});
+onBeforeUnmount(() => {
+    removeEventListener("resize", assignDocumentWidth);
 });
 </script>
 
 <template>
     <header>
-        <nav ref="nav" class="navbar navbar-expand-sm navbar-light bg-primary fixed-top p-0">
+        <nav ref="nav" class="navbar navbar-expand-sm navbar-light fixed-top p-0" :class="'bg-' + theme">
             <div class="container-fluid">
-                <a href="/" class="navbar-brand p-0">
+                <RouterLink to="/" class="navbar-brand p-0">
                     <img src="/favicon.ico" alt="lab" width="50" height="50">
-                </a>
+                </RouterLink>
                 <button ref="navbarToggler" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -39,9 +53,9 @@ onMounted(() => {
         </nav>
     </header>
     <main @click="hideNav" class="min-vh-100" :style="{marginTop: navHeight + 'px'}">
-        <RouterView />
+        <RouterView @changeTheme="newTheme => changeTheme(newTheme)" />
     </main>
-    <footer @click="hideNav" class="text-center text-bg-primary p-2">
+    <footer @click="hideNav" class="text-center p-2" :class="'text-bg-' + theme">
         All right reserved for The Science Lab 2022 - {{ new Date().getFullYear() }}
     </footer>
 </template>

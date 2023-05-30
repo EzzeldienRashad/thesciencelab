@@ -1,6 +1,6 @@
 <script setup>
 import {RouterLink} from 'vue-router';
-import {onMounted, ref, defineProps} from "vue";
+import {onMounted, ref, defineProps, inject} from "vue";
 
 const props = defineProps({
     grade: {
@@ -9,15 +9,16 @@ const props = defineProps({
     }
 });
 let gradeName = ref("");
+const documentWidth = inject("documentWidth");
 
 onMounted(() => {
-    gradeName.value = props.grade.replaceAll("_", " ");//capitalize first letter
+    gradeName.value = props.grade.charAt(0).toUpperCase() + props.grade.slice(1).replaceAll("_", " ");
 });
 </script>
 
 <template>
-    <RouterLink class="m-1 p-2 border-dark d-inline-block border border-3 text-decoration-none text-dark w-100" :to="grade">
+    <RouterLink :class="{'fs-4': documentWidth > 500}" class="m-1 p-2 border-dark d-inline-block border border-3 text-decoration-none text-dark w-100" :to="grade">
         {{ gradeName }}
-        <font-awesome-icon class="float-end" icon="fa-solid fa-right-long" size="2x"></font-awesome-icon>
+        <font-awesome-icon class="float-end" icon="fa-solid fa-right-long" size="2x"/>
     </RouterLink>
 </template>

@@ -32,10 +32,28 @@ npm run build
 
 ## Before upload
 
-* Fetch remote json file
+* Fetch remote json files
 * Change "http://127.0.0.1/htdocs" to "http://thesciencelab.byethost22.com"
 * Change "header("Access-Control-Allow-Origin: http://localhost:5173");" to ""
 
 ## If you downloaded this from the repo
 
 * npm install
+
+## Hierarchy
+App.vue:
+|__HomePage
+|  |__GradeLink -> GradeGames
+|__GradeGames -> GameView
+|__GameView
+|  |__GameSettings
+|  |__TheTest
+|      |__TestQuestions
+|      |   |__ChooseQuestions
+|      |   |__RightOrWrongQuestions
+|      |   |__CompleteQuestions
+|      |__TestResults
+|
+|
+|
+|

@@ -63,7 +63,7 @@ function createBall() {
 
 <style scoped>
 .game {
-    height: 40vh;
+    height: 300px;
 }
 .image {
     background-image: url("@/assets/images/scienceBackground.webp");
