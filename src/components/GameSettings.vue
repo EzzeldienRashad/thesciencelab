@@ -2,6 +2,8 @@
 import {ref, nextTick} from "vue";
 import {useRoute} from "vue-router";
 
+defineEmits(["start"]);
+
 const routeParams = useRoute().params
 const game = routeParams.game;
 const gameName = game.replaceAll("_", " ");
