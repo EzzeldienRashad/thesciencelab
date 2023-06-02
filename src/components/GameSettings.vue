@@ -36,7 +36,7 @@ function scrollToTop() {
     <div>
         <h2 class="text-center p-2">Welcome to the {{ gameName }} game!</h2>
         <transition name="lessons">
-            <div class="border-top border-2 border-dark overflow-hidden" ref="trans" v-if="!questions.length">
+            <div class="border-top border-2 border-dark overflow-hidden" ref="trans" v-if="!Object.keys(questions).length">
                 <p class="display-6">Please choose a unit:</p>
                 <div class="row row-cols-1 row-cols-sm-2 g-2 p-2">
                     <div v-for="unit in units" :key="unit" class="col">
@@ -46,7 +46,7 @@ function scrollToTop() {
             </div>
         </transition>
         <transition name="levels" @before-enter="scrollToTop">
-            <div class="overflow-hidden border-top border-2 border-dark" v-if="questions.length">
+            <div class="overflow-hidden border-top border-2 border-dark" v-if="Object.keys(questions).length">
                 <p class="display-6">Please choose a level:</p>
                 <div class="d-flex flex-column align-items-center p2">        
                     <button @click="$emit('start', 'easy', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">easy</button>

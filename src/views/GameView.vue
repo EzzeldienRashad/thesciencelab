@@ -10,31 +10,60 @@ provide("level", level)
 provide("questions", questions)
 
 function startTest(levelStr, questionsArr) {
-    level.value = levelStr;
-    for (let i = questionsArr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [questionsArr[i], questionsArr[j]] = [questionsArr[j], questionsArr[i]];
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
     }
-    switch (levelStr) {
-        case "easy":
-            questions.value = questionsArr.slice(0, Math.floor(questionsArr.length / 3));
-            emit("changeTheme", "success");
-            break;
-        case "medium":
-            questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
-            emit("changeTheme", "warning");
-            break;
-        case "hard":
-            questions.value = questionsArr;
-            emit("changeTheme", "danger");
-            break;
+    level.value = levelStr;
+    if (Array.isArray(questionsArr)) {
+        questionsArr = shuffle(questionsArr);
+        switch (levelStr) {
+            case "easy":
+                questions.value = questionsArr.slice(0, Math.floor(questionsArr.length / 3));
+                emit("changeTheme", "success");
+                break;
+            case "medium":
+                questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
+                emit("changeTheme", "warning");
+                break;
+            case "hard":
+                questions.value = questionsArr;
+                emit("changeTheme", "danger");
+                break;
+        }
+    } else {
+        questions.value = {};
+        const keys = shuffle(Object.keys(questionsArr));   
+        switch (levelStr) {
+            case "easy":
+                for (let key of keys.slice(0, Math.floor(keys.length / 3))) {
+                    questions.value[key] = questionsArr[key];
+                }
+                emit("changeTheme", "success");
+                break;
+            case "medium":
+                for (let key of keys.slice(0, Math.floor(keys.length * 2 / 3))) {
+                    questions.value[key] = questionsArr[key];
+                }
+                emit("changeTheme", "warning");
+                break;
+            case "hard":
+                for (let key of keys) {
+                    questions.value[key] = questionsArr[key];
+                }
+                emit("changeTheme", "danger");
+                break;
+        }
     }
 }
 </script>
 
 <template>
     <transition mode="out-in">
-        <GameSettings @start="(level, questions) => startTest(level, questions)" v-if="!questions.length" />
+        <GameSettings @start="(level, questions) => startTest(level, questions)" v-if="!Object.keys(questions).length" />
         <TheTest @changeTheme="theme => $emit('changeTheme', theme)" v-else />
     </transition>
 </template>

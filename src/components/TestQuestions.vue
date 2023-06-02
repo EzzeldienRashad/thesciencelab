@@ -8,7 +8,7 @@ import CompleteQuestions from "@/components/CompleteQuestions.vue";
 const routeParams = useRoute().params;
 const emit = defineEmits(["result"]);
 const questions = inject("questions");
-const answer = ref("");
+const answerIsRight = ref("");
 const answered = ref(false);
 const transitioning = ref(false);
 const questionWidth = ref(document.documentElement.offsetWidth);
@@ -21,14 +21,14 @@ const inheritedVariables = {
     answeredQuestions: answeredQuestions,
     answered: answered, 
     questions: questions,
-    changeAnswer(value) {answer.value = value},
     changeRightAnswers(value) {rightAnswers.value = value},
     changeAnsweredQuestions(value) {answeredQuestions.value = value},
     changeAnswered(value) {answered.value = value}
 };
 
+function changeAnswerIsRight(value) {answerIsRight.value = value}
 function next() {
-    if (answeredQuestions.value >= questions.value.length) {
+    if (answeredQuestions.value >= Object.keys(questions.value).length) {
         emit("result", routeParams.game, rightAnswers.value, answeredQuestions.value);
         return;
     }
@@ -48,13 +48,13 @@ function next() {
 <template>
     <div>
         <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden">
-            <ChooseQuestions v-bind="inheritedVariables" @result="(game, score, total) => $emit('result', game, score, total)" v-if="routeParams.game == 'choose'" />
-            <RightOrWrongQuestions v-if="routeParams.game == 'right_or_wrong'" />
+            <ChooseQuestions v-bind="inheritedVariables" :changeAnswerIsRight="changeAnswerIsRight" v-if="routeParams.game == 'choose'" />
+            <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
             <CompleteQuestions v-if="routeParams.game == 'complete'" />
         </div>
-        <img v-if="answer == 'right'" src="@/assets/icons/right.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <img v-if="answerIsRight == 'right'" src="@/assets/icons/right.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="rightSound" src="/src/assets/audio/right.mp3"></audio>
-        <img v-if="answer == 'wrong'" src="@/assets/icons/wrong.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <img v-if="answerIsRight == 'wrong'" src="@/assets/icons/wrong.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="wrongSound" src="/src/assets/audio/wrong.mp3"></audio>
         <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="3x" role="button" class="position-fixed text-primary top-50 translate-middle-y"/>
     </div>
