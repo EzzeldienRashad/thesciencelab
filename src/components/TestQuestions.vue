@@ -8,6 +8,16 @@ import CompleteQuestions from "@/components/CompleteQuestions.vue";
 const routeParams = useRoute().params;
 const emit = defineEmits(["result"]);
 const questions = inject("questions");
+let questionsLength = Object.keys(questions.value).length;
+if (routeParams.game == "complete") {
+    questionsLength = questions.value.reduce(function (sum, obj) {
+        let questionsNum = 0;
+        for (let value of Object.values(obj)) {
+            if (value.length) questionsNum++;
+        }
+        return sum + questionsNum
+    }, 0);
+}
 const answerIsRight = ref("");
 const answered = ref(false);
 const transitioning = ref(false);
@@ -21,14 +31,14 @@ const inheritedVariables = {
     answeredQuestions: answeredQuestions,
     answered: answered, 
     questions: questions,
+    changeAnswerIsRight(value) {answerIsRight.value = value},
     changeRightAnswers(value) {rightAnswers.value = value},
     changeAnsweredQuestions(value) {answeredQuestions.value = value},
     changeAnswered(value) {answered.value = value}
 };
 
-function changeAnswerIsRight(value) {answerIsRight.value = value}
 function next() {
-    if (answeredQuestions.value >= Object.keys(questions.value).length) {
+    if (answeredQuestions.value >= questionsLength) {
         emit("result", routeParams.game, rightAnswers.value, answeredQuestions.value);
         return;
     }
@@ -48,9 +58,9 @@ function next() {
 <template>
     <div>
         <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden">
-            <ChooseQuestions v-bind="inheritedVariables" :changeAnswerIsRight="changeAnswerIsRight" v-if="routeParams.game == 'choose'" />
+            <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
             <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
-            <CompleteQuestions v-if="routeParams.game == 'complete'" />
+            <CompleteQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'complete'" />
         </div>
         <img v-if="answerIsRight == 'right'" src="@/assets/icons/right.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="rightSound" src="/src/assets/audio/right.mp3"></audio>

@@ -1,1 +1,2 @@
+add "The whole term" to the buttons
 add: right answers: ...., wrong answers: ..... to the top of each game

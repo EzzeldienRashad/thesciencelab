@@ -1,8 +1,8 @@
 <script setup>
 import {ref, defineProps, nextTick} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
+const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
+const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
 const rightBtns = ref([]);
 const wrongBtns = ref([]);
 const Btns = [wrongBtns, rightBtns];
