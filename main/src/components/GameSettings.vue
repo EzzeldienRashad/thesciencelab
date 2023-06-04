@@ -25,7 +25,7 @@ function getQuestions(unit) {
     fetch(encodeURI("http://127.0.0.1/htdocs/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit))
     .then(res => res.json())
-    .then(questionsJson => questions.value = JSON.parse(questionsJson));
+    .then(questionsArr => questions.value = questionsArr);
 }
 function scrollToTop() {
     scrollTo(0, 0);
@@ -41,6 +41,9 @@ function scrollToTop() {
                 <div class="row row-cols-1 row-cols-sm-2 g-2 p-2">
                     <div v-for="unit in units" :key="unit" class="col">
                         <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit }}</button>
+                    </div>
+                    <div class="col">
+                        <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3">The whole term</button>
                     </div>
                 </div>
             </div>
