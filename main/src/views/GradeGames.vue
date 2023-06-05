@@ -1,14 +1,26 @@
 <script setup>
 import {useRoute} from "vue-router";
 import {ref} from "vue";
+import chooseImg from "@/assets/images/choose.webp";
+import completeImg from "@/assets/images/complete.webp";
+import rightOrWrongImg from "@/assets/images/right_or_wrong.webp";
 
 const grade = useRoute().params.grade;
 const gradeName = grade.replaceAll("_", " ");
 const games = ref([]);
+const gamesImages = {
+    "choose": chooseImg,
+    "complete": completeImg,
+    "right_or_wrong": rightOrWrongImg,
+};
 
-fetch("http://127.0.0.1/htdocs/info/functions/printInfo.php?grade=" + grade)
+fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
     .then(gamesArray => games.value = gamesArray);
+
+const getImageUrl = (name) => {
+    return new URL(`../assets/images/${name}.webp`, import.meta.url).href
+}
 </script>
 
 <template>
@@ -19,7 +31,7 @@ fetch("http://127.0.0.1/htdocs/info/functions/printInfo.php?grade=" + grade)
             <div v-for="game in games" :key="game" class="col-12 col-sm-6 col-lg-4">
                 <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="grade + '/' + game">
                     <figure class="mb-0 w-75">
-                        <img class="w-100 border border-3 border-dark" :src="'/src/assets/images/' + game + '.webp'" :alt="game.replaceAll('_', ' ')">
+                        <img class="w-100 border border-3 border-dark" :src="gamesImages[game]" :alt="game.replaceAll('_', ' ')">
                         <figcaption class="text-center fs-4 mt-2">
                             {{ game.replaceAll("_", " ") }}
                         </figcaption>

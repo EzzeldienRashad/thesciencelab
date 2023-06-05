@@ -28,14 +28,40 @@ npm run dev
 npm run build
 ```
 ------------------------------
-# Important tips
+# Important tips:
 
-## Before upload
+# Before upload
 
 * Fetch remote json files
-* Change "http://127.0.0.1/htdocs" to "http://thesciencelab.byethost22.com"
-* Change "header("Access-Control-Allow-Origin: http://localhost:5173");" to ""
+* Change "http://127.0.0.1/TheScienceLab" to "http://thesciencelab.byethost22.com" or "http://localhost/test123"
 
+## change *info*:
+if (isset($_SERVER["HTTP_ORIGIN"])) {
+    $origin = $_SERVER["HTTP_ORIGIN"];
+    if ($origin == "http://localhost:5173" || $origin == "http://localhost:5174") {
+        header("Access-Control-Allow-Origin: " . $origin);
+    }
+}
+to
+//httporigin!
+and
+header("Access-Control-Allow-Credentials: true");
+to
+//httpaccess!
+### if working with admin:
+
+* Change 
+and
+ini_set('session.cookie_secure', "1"); 
+ini_set('session.cookie_httponly', "1"); 
+ini_set('session.cookie_samesite','None');
+to
+//iniset!
+and
+credentials: "include"
+to 
+//credentials!
+-----------------------------------------
 ## If you downloaded this from the repo
 
 * npm install

@@ -4,6 +4,10 @@ import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
 import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
 import CompleteQuestions from "@/components/CompleteQuestions.vue";
+import rightSound from "@/assets/audio/right.mp3";
+import wrongSound from "@/assets/audio/wrong.mp3";
+import rightImg from "@/assets/icons/right.webp";
+import wrongImg from "@/assets/icons/wrong.webp";
 
 const routeParams = useRoute().params;
 const emit = defineEmits(["result"]);
@@ -62,10 +66,10 @@ function next() {
             <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
             <CompleteQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'complete'" />
         </div>
-        <img v-if="answerIsRight == 'right'" src="@/assets/icons/right.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
-        <audio id="rightSound" src="/src/assets/audio/right.mp3"></audio>
-        <img v-if="answerIsRight == 'wrong'" src="@/assets/icons/wrong.webp" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
-        <audio id="wrongSound" src="/src/assets/audio/wrong.mp3"></audio>
+        <img v-if="answerIsRight == 'right'" :src="rightImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <audio id="rightSound" :src="rightSound"></audio>
+        <img v-if="answerIsRight == 'wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <audio id="wrongSound" :src="wrongSound"></audio>
         <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="3x" role="button" class="position-fixed text-primary top-50 translate-middle-y"/>
     </div>
 </template>
