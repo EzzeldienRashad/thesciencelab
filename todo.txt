@@ -1,2 +1,4 @@
-add "The whole term" to the buttons
+replace php: if !isAdmin exit; with send message (logout) and logout with js
+make "Added successfully!" messages real
+add breadcrumbs to the top of the admin pages like grade 4 1st term / choose / unit 2
 add: right answers: ...., wrong answers: ..... to the top of each game

@@ -9,7 +9,6 @@ const game = routeParams.game;
 const gameName = game.replaceAll("_", " ");
 const units = ref([]);
 const questions = ref([]);
-let questionsNum;
 const trans = ref(null);
 const lessonsMaxHeight = ref("");
 

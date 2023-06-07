@@ -7,7 +7,7 @@ const passwordField = ref(null);
 const error = ref("");
 
 async function login() {
-    let member = await fetch("http://localhost/test123/info/functions/login.php", {
+    let member = await fetch("http://127.0.0.1/TheScienceLab/info/functions/login.php", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -27,7 +27,7 @@ async function login() {
 </script>
 
 <template>
-    <form method="post" @submit.prevent="login" action="http://localhost/test123/info/functions/login.php">
+    <form method="post" @submit.prevent="login" action="http://127.0.0.1/TheScienceLab/info/functions/login.php">
         <label class="form-label">
             Password: <input type="password" name="password" ref="passwordField" class="form-control"/>
         </label>

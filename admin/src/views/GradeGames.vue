@@ -1,10 +1,11 @@
 <script setup>
-import {useRoute} from "vue-router";
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right_or_wrong.webp";
 
+const member = ref("");
 const grade = useRoute().params.grade;
 const gradeName = grade.charAt(0).toUpperCase() + grade.slice(1).replaceAll("_", " ");
 const games = ref([]);
@@ -14,6 +15,12 @@ const gamesImages = {
     "right_or_wrong": rightOrWrongImg,
 };
 
+fetch("http://127.0.0.1/TheScienceLab/info/functions/login.php", {
+        method: "get",
+        credentials: "include",
+    })
+    .then(res => res.text())
+    .then(memberValue => member.value = memberValue);
 fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
     .then(gamesArray => games.value = gamesArray);
@@ -21,8 +28,8 @@ fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + gra
 
 <template>
     <div>
-        <h1 class="text-center pt-2">Welcome to {{ gradeName }}!</h1>
-        <h4 class="p-2">Please choose a game:</h4>
+        <h1 class="text-center pt-2">{{ gradeName }}!</h1>
+        <h4 class="p-2 text-center">Please choose a game</h4>
         <div class="row row-cols-sm-2 row-cols-lg-3 p-2">
             <div v-for="game in games" :key="game" class="col-12 col-sm-6 col-lg-4">
                 <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="grade + '/' + game">
@@ -36,5 +43,8 @@ fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + gra
                 <hr/>
             </div>
         </div>
+        <RouterLink v-if="member == 'admin'" :to="'approve/grade=' + grade" class="text-decoration-none btn btn-warning w-100 p-3">
+            Approve!
+        </RouterLink>
     </div>
 </template>

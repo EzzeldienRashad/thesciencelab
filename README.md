@@ -58,7 +58,7 @@ ini_set('session.cookie_samesite','None');
 to
 //iniset!
 and
-credentials: "include"
+credentials: "include",
 to 
 //credentials!
 -----------------------------------------
@@ -67,19 +67,27 @@ to
 * npm install
 
 ## Hierarchy
+### main
 App.vue:
 |__HomePage
-|  |__GradeLink -> GradeGames
+|   |__GradeLink -> GradeGames
 |__GradeGames -> GameView
 |__GameView
-|  |__GameSettings
-|  |__TheTest
+|   |__GameSettings
+|   |__TheTest
 |      |__TestQuestions
 |      |   |__ChooseQuestions
 |      |   |__RightOrWrongQuestions
 |      |   |__CompleteQuestions
 |      |__TestResults
-|
-|
-|
-|
+### admin
+App.vue:
+|__LoginView
+|__HomeView
+|__GradeGames
+|__ControlPanel
+|   |__GradeUnits
+|   |__ControlPanelChoose
+|   |__ControlPanelComplete
+|   |__ControlPanelRightOrWrong
+|__ApprovalView
