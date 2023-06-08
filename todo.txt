@@ -1,5 +1,0 @@
-send an error if there something wrong with the post value
-handle different errors that may occur and change msg color accordingly
-make "Added successfully!" messages real
-add breadcrumbs to the top of the admin pages like grade 4 1st term / choose / unit 2
-add: right answers: ...., wrong answers: ..... to the top of each game
