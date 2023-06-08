@@ -3,7 +3,7 @@ import {ref} from "vue";
 
 const grades = ref([]);
 
-fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php")
+fetch("http://localhost/info/functions/printInfo.php")
     .then(res => res.json())
     .then(gradesArr => grades.value = gradesArr);
 </script>

@@ -15,13 +15,13 @@ const gamesImages = {
     "right_or_wrong": rightOrWrongImg,
 };
 
-fetch("http://127.0.0.1/TheScienceLab/info/functions/login.php", {
+fetch("http://localhost/info/functions/login.php", {
         method: "get",
-        credentials: "include",
+        //credentials!
     })
     .then(res => res.text())
     .then(memberValue => member.value = memberValue);
-fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + grade)
+fetch("http://localhost/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
     .then(gamesArray => games.value = gamesArray);
 </script>

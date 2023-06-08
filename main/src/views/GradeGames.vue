@@ -14,7 +14,7 @@ const gamesImages = {
     "right_or_wrong": rightOrWrongImg,
 };
 
-fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + grade)
+fetch("http://localhost/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
     .then(gamesArray => games.value = gamesArray);
 </script>

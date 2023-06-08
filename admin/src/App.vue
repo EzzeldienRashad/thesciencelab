@@ -4,7 +4,7 @@ import {useRouter, useRoute} from "vue-router";
 const router = useRouter();
 
 function logout() {
-    fetch("http://127.0.0.1/TheScienceLab/info/functions/logout.php", {
+    fetch("http://localhost/info/functions/logout.php", {
         method: "get",
         credentials: "include"
     })

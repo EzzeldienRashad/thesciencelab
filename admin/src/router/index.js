@@ -29,9 +29,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async to => {
-    let member = await fetch("http://127.0.0.1/TheScienceLab/info/functions/login.php", {
+    let member = await fetch("http://localhost/info/functions/login.php", {
         method: "get",
-        credentials: "include",
+        //credentials!
     });
     member = await member.text();
     if (member != "admin" && to.name != "login") {

@@ -6,7 +6,7 @@ import GradeLink from "@/components/GradeLink.vue";
 let grades = ref([]);
 const documentWidth = inject("documentWidth");
 
-fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php")
+fetch("http://localhost/info/functions/printInfo.php")
     .then(res => res.json())
     .then(gradesArr => grades.value = gradesArr);
 
