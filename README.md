@@ -51,7 +51,6 @@ to
 ### if working with admin:
 
 * Change 
-and
 ini_set('session.cookie_secure', "1"); 
 ini_set('session.cookie_httponly', "1"); 
 ini_set('session.cookie_samesite','None');
@@ -90,4 +89,3 @@ App.vue:
 |   |__ControlPanelChoose
 |   |__ControlPanelComplete
 |   |__ControlPanelRightOrWrong
-|__ApprovalView
