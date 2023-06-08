@@ -13,10 +13,10 @@ const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = pr
             <div class="text-end">
                 <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
             </div>
-            <div v-if="msg" class='alert alert-success text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
+            <div v-if="msg" class='alert alert-primary text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
             <div class="row">
                 <label class="form-label">
-                    Question: <input type="text" name="question" class="form-control" required/>
+                    Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
                 </label>
             </div>
             <div class="row px-3">

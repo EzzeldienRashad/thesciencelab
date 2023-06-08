@@ -59,7 +59,10 @@ function addQuestion() {
     .then(msgValue => {
         if (msgValue == "logout") {
             msg.value = "You are not logged in.";
-            router.push({name: "login"});
+            setTimeout(() => router.push({name: "login"}), 1000);
+        } else if (msgValue == "answernumerror") {
+            msg.value = "Wrong number of answers!";
+            setTimeout(() => msg.value = "", 1500);
         } else {
             form.reset();
             msg.value = msgValue;

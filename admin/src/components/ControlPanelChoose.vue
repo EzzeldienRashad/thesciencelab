@@ -19,32 +19,32 @@ const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = pr
     </div>
     <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">
         <form id="form" method="post" class="bg-light rounded-3 p-2" @submit.prevent="addQuestion">
-            <div v-if="msg" class='alert alert-success text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
+            <div v-if="msg" class='alert alert-primary text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
             <div class="text-end">
                 <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
             </div>
             <div class="row">
                 <label class="form-label">
-                    Question: <input type="text" name="question" class="form-control" required/>
+                    Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
                 </label>
             </div>
             <fieldset class="row">
                 <legend>Answers:</legend>
                 <label class="form-label col-md-6">
-                    First answer: <input type="text" name="first" class="form-control" required/>
+                    First answer: <input type="text" name="first" class="form-control" autocomplete="off" required/>
                 </label>
                 <label class="form-label col-md-6">
-                    Second answer: <input type="text" name="second" class="form-control" required/>
+                    Second answer: <input type="text" name="second" class="form-control" autocomplete="off" required/>
                 </label>
                 <label class="form-label col-md-6">
-                    Third answer: <input type="text" name="third" class="form-control" required/>
+                    Third answer: <input type="text" name="third" class="form-control" autocomplete="off" required/>
                 </label>
                 <label class="form-label col-md-6">
-                    Fourth answer: <input type="text" name="fourth" class="form-control" required/>
+                    Fourth answer: <input type="text" name="fourth" class="form-control" autocomplete="off" required/>
                 </label>
             </fieldset>
             <label>
-                Number of the right answer: <input type="number" name="number" max="4" min="1" class="form-control w-50" required/>
+                Number of the right answer: <input type="number" name="number" max="4" min="1" autocomplete="off" class="form-control w-50" required/>
             </label>
             <br/>
             <br/>
