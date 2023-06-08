@@ -31,10 +31,10 @@ const transitionDuration = "1s";
 const rightAnswers = ref(0);
 const answeredQuestions = ref(0);
 const inheritedVariables = {
-    rightAnswers: rightAnswers, 
-    answeredQuestions: answeredQuestions,
-    answered: answered, 
-    questions: questions,
+    rightAnswers, 
+    answeredQuestions,
+    answered, 
+    questions,
     changeAnswerIsRight(value) {answerIsRight.value = value},
     changeRightAnswers(value) {rightAnswers.value = value},
     changeAnsweredQuestions(value) {answeredQuestions.value = value},
