@@ -1,12 +1,12 @@
 <script setup>
-const props = defineProps(["member", "questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
-const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
+const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
     <div v-for="(answer, question) in questions" :key="question" class="p-3 m-3 rounded" :class="[parseInt(answer) ? 'text-bg-success' : 'text-bg-danger']">
         {{ question }}
-        <button v-if="member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)"></button>
+        <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)"></button>
     </div>
     <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">
         <form id="form" method="post" class="bg-light rounded-3 p-2" @submit.prevent="addQuestion">

@@ -14,7 +14,6 @@ const questions = ref([]);
 const addingQuestion = ref(false);
 const msg = ref("");
 const inheritedVariables = {
-    member,
     questions,
     addingQuestion,
     msg,
@@ -65,6 +64,7 @@ function addQuestion() {
             setTimeout(() => msg.value = "", 1500);
         } else {
             form.reset();
+            form.parentElement.scrollTo(0, 0);
             msg.value = msgValue;
             setTimeout(() => msg.value = "", 1000);
             loadQuestions();

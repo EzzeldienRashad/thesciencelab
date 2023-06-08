@@ -43,8 +43,5 @@ fetch("http://127.0.0.1/TheScienceLab/info/functions/printInfo.php?grade=" + gra
                 <hr/>
             </div>
         </div>
-        <RouterLink v-if="member == 'admin'" :to="'approve/grade=' + grade" class="text-decoration-none btn btn-warning w-100 p-3">
-            Approve!
-        </RouterLink>
     </div>
 </template>

@@ -1,13 +1,13 @@
 <script setup>
-const props = defineProps(["member", "questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
-const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
+const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
     <div v-for="(question, index) in questions" :key="question[0]" class="card mb-2 border-dark">
         <div class="card-header p-2 fw-bold">
             {{ question[0] }}
-            <button v-if="member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)"></button>
+            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)"></button>
         </div>
         <div class="card-body p-0">
             <div class="row g-0">

@@ -10,22 +10,14 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-$isAdmin = false;
-$isContributor = false;
-if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
-    $isAdmin = true;
-}
-if (isset($_SESSION["isContributor"]) && $_SESSION["isContributor"] == true) {
-    $isContributor = true;
-}
-if (!$isAdmin && !$isContributor) {
+if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
     echo "logout";
     exit;
 }
-if (!$isAdmin || !isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || (!isset($_GET["questionnum"]) && !isset($_GET["question"]))) {
+if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || (!isset($_GET["questionnum"]) && !isset($_GET["question"]))) {
     exit;
 }
-$file = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . (isset($_GET["approval"]) && $_GET["approval"] == "true" ? "/approval/" : "/") . $_GET["unit"];
+$file = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
 $arr = json_decode(file_get_contents($file), true);
 if (isset($_GET["questionnum"])) {
     if ((int) $_GET["questionnum"] < count($arr)) {

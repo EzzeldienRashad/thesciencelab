@@ -9,7 +9,7 @@ $path = "../grades/" . (isset($_GET["grade"]) ? $_GET["grade"] . (isset($_GET["g
 if (isset($_GET["grade"]) && isset($_GET["game"]) && isset($_GET["unit"])) {
     if ($_GET["unit"] == "whole") {
         $questions = [];
-        foreach (array_filter(scandir($path), function($file) {return $file != "." && $file != ".." && $file != "approval";}) as $unit) {
+        foreach (array_filter(scandir($path), function($file) {return $file != "." && $file != "..";}) as $unit) {
             $questions = array_merge($questions, json_decode(file_get_contents($path . "/" . $unit), true));
         }
         $questions = json_encode($questions);

@@ -18,7 +18,7 @@ async function login() {
         })
     });
     member = await member.text();
-    if (member == "admin" || member == "contributor") {
+    if (member == "admin") {
         router.push({name: "home"});
     } else {
         error.value = "Wrong password!";

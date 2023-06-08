@@ -10,23 +10,14 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-$msg = "";
-$isAdmin = false;
-$isContributor = false;
-if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
-    $isAdmin = true;
-}
-if (isset($_SESSION["isContributor"]) && $_SESSION["isContributor"] == true) {
-    $isContributor = true;
-}
-if (!$isAdmin && !$isContributor) {
+if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != true) {
     echo "logout";
     exit;
 }
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || empty($_POST)) {
     exit;
 }
-$path = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . ($isAdmin ? "/" : "/approval/") . $_GET["unit"];
+$path = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
 $arr = json_decode(file_get_contents($path), true);
 if ($_GET["game"] == "choose") {
     array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
@@ -47,19 +38,14 @@ if ($_GET["game"] == "choose") {
         echo "answernumerror";
         exit;
     } else {
-        if ($isAdmin) {
-            for ($i = 0; $i < $answersNum; $i++) {
-                $arr[count($arr) - 1][$question[$i]] = array($answers[$i * 2], $answers[$i * 2 + 1]);
-            }
-            if ($answersNum != count($question)) {
-                $arr[count($arr) - 1][$question[count($question) - 1]] = array();
-            }
-        } else {
-            $arr[count($arr) - 1] = array($_POST["question"], $_POST["answers"]);
+        for ($i = 0; $i < $answersNum; $i++) {
+            $arr[count($arr) - 1][$question[$i]] = array($answers[$i * 2], $answers[$i * 2 + 1]);
+        }
+        if ($answersNum != count($question)) {
+            $arr[count($arr) - 1][$question[count($question) - 1]] = array();
         }
     }
 }
 file_put_contents($path, json_encode($arr));
-$msg = $isAdmin ? "Added Succecfully!" : "Awating Approval!";
-echo $msg;
+echo "Added Succecfully!";
 ?>

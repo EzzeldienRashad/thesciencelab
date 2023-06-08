@@ -11,5 +11,4 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 $_SESSION["isAdmin"] = false;
-$_SESSION["isContributor"] = false;
 ?>

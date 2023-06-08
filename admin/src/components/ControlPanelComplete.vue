@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps(["member", "questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
-const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
+const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const {member, questions, addingQuestion, msg, deleteQuestion, addQuestion} = pr
                     <span class='badge text-bg-danger me-1'>{{ value[1] }}</span>
                 </template> 
             </template>
-            <button v-if="member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)"></button>
+            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)"></button>
         </div>
     </div>
     <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">

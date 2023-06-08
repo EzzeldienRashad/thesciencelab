@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import GradeGames from "@/views/GradeGames.vue";
-import ApprovalView from "@/views/ApprovalView.vue";
 import ControlPanel from "@/views/ControlPanel.vue";
 
 const router = createRouter({
@@ -26,10 +25,6 @@ const router = createRouter({
             path: "/:grade/:game",
             component: ControlPanel
         },
-        {
-            path: "/approve/:grade",
-            component: ApprovalView
-        }
     ],
 });
 
@@ -39,9 +34,9 @@ router.beforeEach(async to => {
         credentials: "include",
     });
     member = await member.text();
-    if (member != "admin" && member != "contributor" && to.name != "login") {
+    if (member != "admin" && to.name != "login") {
         return {name: "login"};
-    } else if ((member == "admin" || member == "contributor") && to.name == "login") {
+    } else if ((member == "admin") && to.name == "login") {
         return {name: "home"};
     }
 });
