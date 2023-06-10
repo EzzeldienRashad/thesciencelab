@@ -5,7 +5,7 @@ import {useRoute} from "vue-router";
 let units = ref([]);
 defineEmits(["setUnit"]);
 
-fetch("http://localhost/info/functions/printInfo.php?grade=" + useRoute().params.grade +
+fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params.grade +
     "&game=" + useRoute().params.game)
     .then(res => res.json())
     .then(unitsArr => units.value = unitsArr);

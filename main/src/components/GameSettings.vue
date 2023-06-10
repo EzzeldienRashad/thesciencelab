@@ -12,7 +12,7 @@ const questions = ref([]);
 const trans = ref(null);
 const lessonsMaxHeight = ref("");
 
-fetch(encodeURI("http://localhost/info/functions/printInfo.php?grade=" + routeParams.grade +
+fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game))
     .then(res => res.json())
     .then(unitsJson => {
@@ -21,7 +21,7 @@ fetch(encodeURI("http://localhost/info/functions/printInfo.php?grade=" + routePa
     });
 
 function getQuestions(unit) {
-    fetch(encodeURI("http://localhost/info/functions/printInfo.php?grade=" + routeParams.grade +
+    fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit))
     .then(res => res.json())
     .then(questionsArr => questions.value = questionsArr);

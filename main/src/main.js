@@ -2,6 +2,8 @@ import {createApp} from "vue";
 import App from "./App.vue";
 import "@/assets/main.css";
 import router from "@/router/index.js";
+import "@/assets/styles.scss";
+import * as bootstrap from "bootstrap";
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {faRightLong} from "@fortawesome/free-solid-svg-icons";

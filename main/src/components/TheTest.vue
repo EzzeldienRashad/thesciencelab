@@ -1,5 +1,5 @@
 <script setup>
-import {ref, defineEmits} from "vue";
+import {ref} from "vue";
 import {onBeforeRouteLeave} from "vue-router";
 import TestQuestions from "@/components/TestQuestions.vue";
 import TestResult from "@/components/TestResult.vue";

@@ -1,5 +1,5 @@
 <script setup>
-import {inject, ref, defineEmits} from "vue";
+import {inject, ref} from "vue";
 import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
 import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
@@ -70,7 +70,7 @@ function next() {
         <audio id="rightSound" :src="rightSound"></audio>
         <img v-if="answerIsRight == 'wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="wrongSound" :src="wrongSound"></audio>
-        <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="3x" role="button" class="position-fixed text-primary top-50 translate-middle-y"/>
+        <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="4x" role="button" class="position-fixed text-primary top-50 translate-middle-y"/>
     </div>
 </template>
 

@@ -30,7 +30,7 @@ const gradient = "conic-gradient(" + info[1] +
     props.score / props.total * 100 + "%, #f8f9fa 100%";
 
 function back() {
-    router.go(-1);
+    router.push({path: "/" + routeParams.grade});
 }
 </script>
 

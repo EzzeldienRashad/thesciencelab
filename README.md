@@ -33,10 +33,8 @@ npm run build
 # Before upload
 
 * Fetch remote json files
-* Change "http://127.0.0.1/thesciencelab" to "http://thesciencelab.byethost22.com" or "http://localhost/test123"
+* Change "http://127.0.0.1" to "http://thesciencelab.byethost22.com" or "http://localhost"
 
-ini_set('session.cookie_secure', "1"); 
-ini_set('session.cookie_httponly', "1"); 
 ini_set('session.cookie_samesite','None');
 if (isset($_SERVER["HTTP_ORIGIN"])) {
     $origin = $_SERVER["HTTP_ORIGIN"];

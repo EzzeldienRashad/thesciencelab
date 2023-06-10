@@ -21,21 +21,21 @@ const inheritedVariables = {
     addQuestion
 }
 
-fetch("http://localhost/info/functions/login.php", {
+fetch("http://127.0.0.1/info/functions/login.php", {
         method: "get",
-        //credentials!
+        credentials: "include",
     })
     .then(res => res.text())
     .then(memberValue => member.value = memberValue);
 
 function loadQuestions() {
-    fetch(encodeURI("http://localhost/info/functions/printInfo.php?grade=" + routeParams.grade +
+    fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value))
     .then(res => res.json())
     .then(questionsArr => questions.value = questionsArr);
 }
 async function deleteQuestion(questionData, byKey = false) {
-    fetch("http://localhost/info/functions/delete.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/info/functions/delete.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value + (byKey ? "&question=" + questionData : "&questionnum=" + questionData), {
         method: "get",
         credentials: "include"
@@ -48,10 +48,10 @@ async function deleteQuestion(questionData, byKey = false) {
 }
 function addQuestion() {
     const form = document.getElementById("form");
-    fetch("http://localhost/info/functions/add.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/info/functions/add.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value, {
         method: "post",
-        //credentials!
+        credentials: "include",
         body: new FormData(form)
     })
     .then(res => res.text())

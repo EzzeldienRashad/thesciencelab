@@ -20,7 +20,7 @@ function changeTheme(newTheme) {
     theme.value = newTheme;
 }
 
-onMounted(() => {
+addEventListener("load", () => {
     navHeight.value = nav.value.offsetHeight;
     addEventListener("resize", assignDocumentWidth);
 });

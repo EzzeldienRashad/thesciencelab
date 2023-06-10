@@ -14,7 +14,7 @@ const gamesImages = {
     "right_or_wrong": rightOrWrongImg,
 };
 
-fetch("http://localhost/info/functions/printInfo.php?grade=" + grade)
+fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
     .then(gamesArray => games.value = gamesArray);
 </script>
@@ -25,7 +25,7 @@ fetch("http://localhost/info/functions/printInfo.php?grade=" + grade)
         <h4 class="p-2">Please choose a game:</h4>
         <div class="row row-cols-sm-2 row-cols-lg-3 p-2">
             <div v-for="game in games" :key="game" class="col-12 col-sm-6 col-lg-4">
-                <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="grade + '/' + game">
+                <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="'/' + grade + '/' + game">
                     <figure class="mb-0 w-75">
                         <img class="w-100 border border-3 border-dark" :src="gamesImages[game]" :alt="game.replaceAll('_', ' ')">
                         <figcaption class="text-center fs-4 mt-2">

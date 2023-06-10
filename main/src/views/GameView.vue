@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide, defineEmits} from "vue";
+import {ref, provide} from "vue";
 import GameSettings from "@/components/GameSettings.vue";
 import TheTest from "@/components/TheTest.vue";
 const questions = ref([]);
