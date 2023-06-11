@@ -13,17 +13,17 @@ nextTick(() => {
     rightSound = document.getElementById("rightSound");
     wrongSound = document.getElementById("wrongSound");
 });
-
+//remove the right and wrong buttons from ref on checkanswer
 function checkAnswer(givenAnswer, rightAnswer) {
     Btns[parseInt(rightAnswer)].value[answeredQuestions.value].parentElement.style.border = "5px solid blue";
     Btns[Number(!parseInt(rightAnswer))].value[answeredQuestions.value].style.opacity = "0";
     if (givenAnswer == rightAnswer) {
         rightSound.play();
         changeRightAnswers(rightAnswers.value + 1);
-        document.querySelectorAll("h2")[answeredQuestions.value].classList.add("text-success");
+        document.querySelector("h2").classList.add("text-success");
     } else {
         wrongSound.play();
-        document.querySelectorAll("h2")[answeredQuestions.value].classList.add("text-danger");
+        document.querySelector("h2").classList.add("text-danger");
     }
     changeAnsweredQuestions(answeredQuestions.value + 1);
     changeAnswered(true);
@@ -32,6 +32,7 @@ function checkAnswer(givenAnswer, rightAnswer) {
 
 <template>
     <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="(answer, question) in questions" :key="question">
+        <div class="question">
             <h2 class="mb-5">{{ question }}</h2>
             <div class="answers row p-3 p-md-5">
                 <div
@@ -48,6 +49,7 @@ function checkAnswer(givenAnswer, rightAnswer) {
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <style scoped>

@@ -7,6 +7,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
+
 session_start();
 if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) || (isset($_POST["password"]) && password_verify($_POST["password"], '$2y$10$PWZp0FxpLcwgFDTE4SsBFOfif8K675xMibtCZ/I8VTmmNbdbNLl9q'))) {
     $_SESSION["isAdmin"] = true;

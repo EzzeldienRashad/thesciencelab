@@ -1,5 +1,5 @@
 <script setup>
-import {inject, ref} from "vue";
+import {inject, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
 import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
@@ -25,9 +25,10 @@ if (routeParams.game == "complete") {
 const answerIsRight = ref("");
 const answered = ref(false);
 const transitioning = ref(false);
-const questionWidth = ref(document.documentElement.offsetWidth);
+const documentWidth = inject("documentWidth");
+const questionPagesAnswered = ref(0);
 const questionsCont = ref(null);
-const transitionDuration = "1s";
+const transitionDuration = ref("1s");
 const rightAnswers = ref(0);
 const answeredQuestions = ref(0);
 const inheritedVariables = {
@@ -41,27 +42,39 @@ const inheritedVariables = {
     changeAnswered(value) {answered.value = value}
 };
 
+watch(() => -questionPagesAnswered.value * documentWidth.value + "px", newMarginLeft => {
+    if (!transitioning.value) {
+        transitionDuration.value = "0s";
+        questionsCont.value.style.marginLeft = newMarginLeft;
+        setTimeout(() => {
+            transitionDuration.value = "1s";
+        });
+    } else {
+        questionsCont.value.style.marginLeft = newMarginLeft;
+    }
+});
+
 function next() {
     if (answeredQuestions.value >= questionsLength) {
         emit("result", routeParams.game, rightAnswers.value, answeredQuestions.value);
         return;
+    } else {
+        questionPagesAnswered.value++;
     }
     transitioning.value = true;
-    questionWidth.value = questionsCont.value.firstElementChild.offsetWidth;
-    questionsCont.value.style.marginLeft = questionsCont.value.offsetLeft - questionWidth.value + "px";
     setTimeout(() => {
         transitioning.value = false;
         answered.value = false;
-        const answers = document.querySelector(".answers");
-        answers.parentElement.style.height = answers.parentElement.offsetHeight + "px";
-        answers.remove();
-    }, parseFloat(transitionDuration) * 1000);
+        const question = document.querySelector(".question");
+        question.parentElement.style.height = question.parentElement.offsetHeight + "px";
+        question.remove();
+    }, parseFloat(transitionDuration.value) * 1000);
 }
 </script>
 
 <template>
     <div>
-        <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden">
+        <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden" :style="{transition: 'margin-left ' + transitionDuration + ' ease'}">
             <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
             <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
             <CompleteQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'complete'" />
@@ -77,7 +90,6 @@ function next() {
 <style scoped>
 div#questions-cont {
     width: max-content;
-    transition: margin-left v-bind(transitionDuration) ease;
 }
 img {
     bottom: 50px;

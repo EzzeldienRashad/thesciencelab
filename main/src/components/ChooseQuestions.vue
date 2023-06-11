@@ -33,8 +33,9 @@ function checkAnswer(event, rightAnswer) {
 
 <template>
     <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="question in questions" :key="question[0]">
+        <div class="question">
             <h2 class="mb-5">{{ question[0] }}</h2>
-            <div :data-choices="JSON.stringify(question[1])" @click="$event => !answered && checkAnswer($event, question[2])" class="answers row gx-0">
+            <div :data-choices="JSON.stringify(question[1])" @click="$event => !answered && checkAnswer($event, question[2])" class="row gx-0">
                 <div 
                     v-for="choice in question[1]" 
                     :key="choice"
@@ -43,6 +44,7 @@ function checkAnswer(event, rightAnswer) {
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <style scoped>

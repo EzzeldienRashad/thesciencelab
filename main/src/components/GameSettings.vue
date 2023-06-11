@@ -39,7 +39,7 @@ function scrollToTop() {
                 <p class="display-6">Please choose a unit:</p>
                 <div class="row row-cols-1 row-cols-sm-2 g-2 p-2">
                     <div v-for="unit in units" :key="unit" class="col">
-                        <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit }}</button>
+                        <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit.replace(/\.[^/.]+$/, "") }}</button>
                     </div>
                     <div class="col">
                         <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3">The whole term</button>

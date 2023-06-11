@@ -74,21 +74,23 @@ function shuffle(arr) {
 
 <template>
     <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="n in questionGroups.length" :key="n">
-        <div class="text-bg-info rounded-1 p-1 p-md-5">
-            {{ choices[n - 1][0] }}
-            <template v-for="choice in choices[n - 1].slice(1)" :key="choice">
-                &nbsp;&nbsp;,&nbsp;&nbsp; {{ choice }} 
-            </template>
-        </div>
-        <ol class="answers border border-2 border-dark rounded-2 mt-3 py-2">
-            <li v-for="question in questionGroups[n - 1]" :key="question" class="pb-3">
-                <template v-for="(answers, statement) in question" :key="statement">
-                    <template v-if="statement.trim()">{{ statement }}</template>
-                    <input v-if="answers.length" :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>
+        <div class="question">
+            <div class="text-bg-info rounded-1 p-1 p-md-5">
+                {{ choices[n - 1][0] }}
+                <template v-for="choice in choices[n - 1].slice(1)" :key="choice">
+                    &nbsp;&nbsp;,&nbsp;&nbsp; {{ choice }} 
                 </template>
-            </li>
-        </ol>
-        <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">done</button>
+            </div>
+            <ol class="answers border border-2 border-dark rounded-2 mt-3 py-2">
+                <li v-for="question in questionGroups[n - 1]" :key="question" class="pb-3">
+                    <template v-for="(answers, statement) in question" :key="statement">
+                        <template v-if="statement.trim()">{{ statement }}</template>
+                        <input v-if="answers.length" :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>
+                    </template>
+                </li>
+            </ol>
+            <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">done</button>
+        </div>
     </div>
 </template>
 
