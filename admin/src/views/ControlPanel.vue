@@ -13,10 +13,12 @@ const member = ref("");
 const questions = ref([]);
 const addingQuestion = ref(false);
 const msg = ref("");
+const msgColor = ref("");
 const inheritedVariables = {
     questions,
     addingQuestion,
     msg,
+    msgColor,
     deleteQuestion,
     addQuestion
 }
@@ -56,18 +58,23 @@ function addQuestion() {
     })
     .then(res => res.text())
     .then(msgValue => {
+        form.parentElement.scrollTo(0, 0);
+        msgColor.value = "danger";
         if (msgValue == "logout") {
             msg.value = "You are not logged in.";
-            setTimeout(() => router.push({name: "login"}), 1000);
+            setTimeout(() => router.push({name: "login"}), 1500);
         } else if (msgValue == "answernumerror") {
             msg.value = "Wrong number of answers!";
             setTimeout(() => msg.value = "", 1500);
-        } else {
+        } else if (msgValue == "successful") {
+            msgColor.value = "success"
             form.reset();
-            form.parentElement.scrollTo(0, 0);
-            msg.value = msgValue;
+            msg.value = "Added successfully!";
             setTimeout(() => msg.value = "", 1000);
             loadQuestions();
+        } else {
+            msg.value = "An error occured.";
+            setTimeout(() => msg.value = "", 1500);            
         }
     });
 }

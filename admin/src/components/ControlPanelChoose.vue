@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps(["questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
-const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "addingQuestion", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
+const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
     </div>
     <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">
         <form id="form" method="post" class="bg-light rounded-3 p-2" @submit.prevent="addQuestion">
-            <div v-if="msg" class='alert alert-primary text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
+            <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
             <div class="text-end">
                 <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
             </div>

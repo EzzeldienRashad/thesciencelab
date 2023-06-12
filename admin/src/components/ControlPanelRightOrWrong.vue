@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps(["questions", "addingQuestion", "msg", "deleteQuestion", "addQuestion"]);
-const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "addingQuestion", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
+const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const {questions, addingQuestion, msg, deleteQuestion, addQuestion} = props;
             <div class="text-end">
                 <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
             </div>
-            <div v-if="msg" class='alert alert-primary text-center h3 p-2 d-flex align-items-center'>{{ msg }}</div>
+            <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
             <div class="row">
                 <label class="form-label">
                     Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>

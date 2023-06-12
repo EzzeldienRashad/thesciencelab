@@ -74,6 +74,9 @@ function next() {
 
 <template>
     <div>
+        <div class="progress">
+            <div class="progress-bar" :style="{width: answeredQuestions * 100 / questionsLength + '%'}"></div>
+        </div>
         <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden" :style="{transition: 'margin-left ' + transitionDuration + ' ease'}">
             <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
             <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
@@ -99,5 +102,9 @@ img {
 }
 #next-arrow:hover {
     filter: drop-shadow(-3px 3px black);
+}
+.progress {
+    border-radius: 0 !important;
+    height: 12px;
 }
 </style>

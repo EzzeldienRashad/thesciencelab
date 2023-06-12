@@ -46,5 +46,5 @@ if ($_GET["game"] == "choose") {
     }
 }
 file_put_contents($path, json_encode($arr));
-echo "Added Succecfully!";
+echo "successful";
 ?>
