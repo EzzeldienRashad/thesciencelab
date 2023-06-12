@@ -35,6 +35,7 @@ npm run build
 * Fetch remote json files
 * Change "http://127.0.0.1" to "http://thesciencelab.byethost22.com" or "http://localhost"
 
+*info:*
 ini_set('session.cookie_samesite','None');
 if (isset($_SERVER["HTTP_ORIGIN"])) {
     $origin = $_SERVER["HTTP_ORIGIN"];
@@ -46,11 +47,13 @@ header("Access-Control-Allow-Credentials: true");
 to
 //httpallow!
 
-and
+*admin:*
 credentials: "include",
 to 
 //credentials!
 -----------------------------------------
+
+To see changes after modifying info move it to the other server
 ## If you downloaded this from the repo
 
 * npm install

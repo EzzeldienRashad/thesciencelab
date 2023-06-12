@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, onBeforeUnmount, provide} from "vue";
+import {ref, onBeforeUnmount, provide} from "vue";
 
 const nav = ref(null);
 const navbarCollapse = ref(null);
@@ -33,16 +33,22 @@ onBeforeUnmount(() => {
     <header>
         <nav ref="nav" class="navbar navbar-expand-sm navbar-light fixed-top p-0" :class="'bg-' + theme">
             <div class="container-fluid">
-                <RouterLink to="/" class="navbar-brand p-0">
+                <a href="/" class="navbar-brand p-0">
                     <img src="/favicon.ico" alt="lab" width="50" height="50">
-                </RouterLink>
-                <button ref="navbarToggler" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navigation">
+                </a>
+                <button ref="navbarToggler" class="navbar-toggler" id="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div ref="navbarCollapse" class="collapse navbar-collapse" id="navigation">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <RouterLink :to="{name :'home'}" class="nav-link fw-bold">Home</RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink :to="{name :'about'}" class="nav-link fw-bold">About us</RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink :to="{name :'contact'}" class="nav-link fw-bold">Contact us</RouterLink>
                         </li>
                         <li class="nav-item">
                             <a href="https://www.youtube.com/@TheScienceLabGroup" class="nav-link fw-bold">Youtube channel</a>
