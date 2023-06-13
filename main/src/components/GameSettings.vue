@@ -50,10 +50,10 @@ function scrollToTop() {
         <transition name="levels" @before-enter="scrollToTop">
             <div class="overflow-hidden border-top border-2 border-dark" v-if="Object.keys(questions).length">
                 <p class="display-6">Please choose a level:</p>
-                <div class="d-flex flex-column align-items-center p2">        
-                    <button @click="$emit('start', 'easy', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">easy</button>
-                    <button @click="$emit('start', 'medium', questions)" class="btn btn-warning w-75 p-3 m-1 text-center">medium</button>
-                    <button @click="$emit('start', 'hard', questions)" class="btn btn-danger w-75 p-3 m-1 text-center">hard</button>
+                <div class="d-flex flex-column align-items-center p2">     
+                    <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">quick</button>
+                    <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-3 m-1 text-center">normal</button>
+                    <button @click="$emit('start', 'coprehensive', questions)" class="btn btn-danger w-75 p-3 m-1 text-center">coprehensive</button>
                 </div>
             </div>
         </transition>

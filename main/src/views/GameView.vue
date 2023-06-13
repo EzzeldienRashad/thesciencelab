@@ -6,8 +6,7 @@ const questions = ref([]);
 const level = ref("");
 const emit = defineEmits(["changeTheme"]);
 
-provide("level", level)
-provide("questions", questions)
+provide("questions", questions);
 
 function startTest(levelStr, questionsArr) {
     function shuffle(arr) {
@@ -21,15 +20,15 @@ function startTest(levelStr, questionsArr) {
     if (Array.isArray(questionsArr)) {
         questionsArr = shuffle(questionsArr);
         switch (levelStr) {
-            case "easy":
+            case "quick":
                 questions.value = questionsArr.slice(0, Math.floor(questionsArr.length / 3));
                 emit("changeTheme", "success");
                 break;
-            case "medium":
+            case "normal":
                 questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
                 emit("changeTheme", "warning");
                 break;
-            case "hard":
+            case "coprehensive":
                 questions.value = questionsArr;
                 emit("changeTheme", "danger");
                 break;
@@ -38,19 +37,19 @@ function startTest(levelStr, questionsArr) {
         questions.value = {};
         const keys = shuffle(Object.keys(questionsArr));   
         switch (levelStr) {
-            case "easy":
+            case "quick":
                 for (let key of keys.slice(0, Math.floor(keys.length / 3))) {
                     questions.value[key] = questionsArr[key];
                 }
                 emit("changeTheme", "success");
                 break;
-            case "medium":
+            case "normal":
                 for (let key of keys.slice(0, Math.floor(keys.length * 2 / 3))) {
                     questions.value[key] = questionsArr[key];
                 }
                 emit("changeTheme", "warning");
                 break;
-            case "hard":
+            case "coprehensive":
                 for (let key of keys) {
                     questions.value[key] = questionsArr[key];
                 }

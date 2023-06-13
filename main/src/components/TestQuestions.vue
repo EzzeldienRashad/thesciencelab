@@ -12,6 +12,7 @@ import wrongImg from "@/assets/icons/wrong.webp";
 const routeParams = useRoute().params;
 const emit = defineEmits(["result"]);
 const questions = inject("questions");
+const theme = inject("theme");
 let questionsLength = Object.keys(questions.value).length;
 if (routeParams.game == "complete") {
     questionsLength = questions.value.reduce(function (sum, obj) {
@@ -86,7 +87,7 @@ function next() {
         <audio id="rightSound" :src="rightSound"></audio>
         <img v-if="answerIsRight == 'wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="wrongSound" :src="wrongSound"></audio>
-        <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="4x" role="button" class="position-fixed text-primary top-50 translate-middle-y"/>
+        <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="4x" role="button" class="position-fixed top-50 translate-middle-y" :class="'text-' + theme"/>
     </div>
 </template>
 

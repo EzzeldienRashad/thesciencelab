@@ -9,6 +9,7 @@ const documentWidth = ref(document.body.clientWidth);
 const theme = ref("primary")
 
 provide("documentWidth", documentWidth);
+provide("theme", theme);
 
 function hideNav() {
     if (navbarCollapse.value.classList.contains("show")) navbarToggler.value.click()
@@ -72,5 +73,9 @@ onBeforeUnmount(() => {
 }
 .nav-link {
     padding: 10px;
+}
+.navbar {
+    transition-timing-function: ease;
+    transition-duration: 0.5s;
 }
 </style>

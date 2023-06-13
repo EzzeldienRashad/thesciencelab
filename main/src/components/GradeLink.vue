@@ -1,6 +1,6 @@
 <script setup>
 import {RouterLink} from 'vue-router';
-import {onMounted, ref, defineProps, inject} from "vue";
+import {onMounted, ref, inject} from "vue";
 
 const props = defineProps({
     grade: {

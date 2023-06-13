@@ -1,5 +1,5 @@
 <script setup>
-import {ref, defineProps, nextTick} from "vue";
+import {ref, nextTick} from "vue";
 
 const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
 const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
