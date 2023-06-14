@@ -36,7 +36,7 @@ function checkAnswer() {
     let foundWrongAnswer = false;
     for (let i = 0; i < inputs.length; i++) {
         if (!checked.value) changeAnsweredQuestions(answeredQuestions.value + 1);
-        if (questionsAnswers[i] !== false && inputs[i].value.trim() == questionsAnswers[i].trim()) {
+        if (questionsAnswers[i] !== false && inputs[i].value.trim().toLowerCase() == questionsAnswers[i].trim().toLowerCase()) {
             inputs[i].style.color = "green";
             inputs[i].style.borderBottom = "2px dotted green";
             inputs[i].disabled = true;
