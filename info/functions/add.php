@@ -44,6 +44,11 @@ if ($_GET["game"] == "choose") {
             $arr[count($arr) - 1][$question[count($question) - 1]] = array();
         }
     }
+} elseif($_GET["game"] == "match" && isset($_POST["questions"]) && isset($_POST["answers"]) && count($_POST["questions"]) == count($_POST["answers"])) {
+    array_push($arr, array());
+    for ($i = 0; $i < count($_POST["questions"]); $i++) {
+        $arr[count($arr) - 1][$_POST["questions"][$i]] = $_POST["answers"][$i];
+    }
 }
 file_put_contents($path, json_encode($arr));
 echo "successful";

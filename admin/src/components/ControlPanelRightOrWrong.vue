@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps(["questions", "addingQuestion", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
@@ -8,25 +8,29 @@ const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = 
         {{ question }}
         <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)"></button>
     </div>
-    <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">
-        <form id="form" method="post" class="bg-light rounded-3 p-2" @submit.prevent="addQuestion">
-            <div class="text-end">
-                <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
+    <div class="modal" id="overlay">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content bg-light">
+                <div class="modal-body">
+                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
+                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
+                    <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
+                        <div class="row">
+                            <label class="form-label">
+                                Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
+                            </label>
+                        </div>
+                        <div class="row px-3">
+                            <div class="col-6 form-check"><input id="right" type="radio" class="form-check-input" name="answer" value="1"/><label for="right" class="form-check-label">right</label></div>
+                            <div class="col-6 form-check"><input id="wrong" type="radio" class="form-check-input" name="answer" value="0"/><label for="wrong" class="form-check-label">wrong</label></div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <input type="submit" name="submit" value="add" class="btn btn-success"/>
+                    </form>
+                </div>
             </div>
-            <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
-            <div class="row">
-                <label class="form-label">
-                    Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
-                </label>
-            </div>
-            <div class="row px-3">
-                <div class="col-6 form-check"><input id="right" type="radio" class="form-check-input" name="answer" value="1"/><label for="right" class="form-check-label">right</label></div>
-                <div class="col-6 form-check"><input id="wrong" type="radio" class="form-check-input" name="answer" value="0"/><label for="wrong" class="form-check-label">wrong</label></div>
-            </div>
-            <br/>
-            <br/>
-            <input type="submit" name="submit" value="submit" class="btn btn-info"/>
-        </form>
+        </div>
     </div>
 </template>
 

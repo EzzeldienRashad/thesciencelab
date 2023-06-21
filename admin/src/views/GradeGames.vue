@@ -4,6 +4,7 @@ import {useRoute} from "vue-router";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right_or_wrong.webp";
+import matchImg from "@/assets/images/match.webp";
 
 const member = ref("");
 const grade = useRoute().params.grade;
@@ -13,6 +14,7 @@ const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
     "right_or_wrong": rightOrWrongImg,
+    "match": matchImg
 };
 
 fetch("http://127.0.0.1/info/functions/login.php", {

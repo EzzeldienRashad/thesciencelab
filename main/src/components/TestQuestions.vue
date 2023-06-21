@@ -2,8 +2,9 @@
 import {inject, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
-import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
 import CompleteQuestions from "@/components/CompleteQuestions.vue";
+import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
+import matchQuestions from "@/components/matchQuestions.vue";
 import rightSound from "@/assets/audio/right.mp3";
 import wrongSound from "@/assets/audio/wrong.mp3";
 import rightImg from "@/assets/icons/right.webp";
@@ -80,8 +81,9 @@ function next() {
         </div>
         <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden" :style="{transition: 'margin-left ' + transitionDuration + ' ease'}">
             <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
-            <RightOrWrongQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'right_or_wrong'" />
-            <CompleteQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'complete'" />
+            <RightOrWrongQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'right_or_wrong'" />
+            <CompleteQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
+            <matchQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />
         </div>
         <img v-if="answerIsRight == 'right'" :src="rightImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="rightSound" :src="rightSound"></audio>

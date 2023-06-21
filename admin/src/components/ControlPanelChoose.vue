@@ -1,6 +1,6 @@
 <script setup>
-const props = defineProps(["questions", "addingQuestion", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
@@ -17,45 +17,42 @@ const {questions, addingQuestion, msg, msgColor, deleteQuestion, addQuestion} = 
             </div>
         </div>
     </div>
-    <div v-if="addingQuestion" class="overlay position-fixed top-0 start-0 w-100 h-100 p-2 overflow-scroll">
-        <form id="form" method="post" class="bg-light rounded-3 p-2" @submit.prevent="addQuestion">
-            <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
-            <div class="text-end">
-                <button class='btn btn-danger btn-close' @click="addingQuestion = !addingQuestion"></button>
+    <div class="modal" id="overlay">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content bg-light">
+                <div class="modal-body">
+                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
+                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
+                    <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
+                        <div class="row g-0">
+                            <label class="form-label">
+                                Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
+                            </label>
+                        </div>
+                        <fieldset class="row">
+                            <legend>Answers:</legend>
+                            <label class="form-label col-md-6">
+                                First answer: <input type="text" name="first" class="form-control" autocomplete="off" required/>
+                            </label>
+                            <label class="form-label col-md-6">
+                                Second answer: <input type="text" name="second" class="form-control" autocomplete="off" required/>
+                            </label>
+                            <label class="form-label col-md-6">
+                                Third answer: <input type="text" name="third" class="form-control" autocomplete="off" required/>
+                            </label>
+                            <label class="form-label col-md-6">
+                                Fourth answer: <input type="text" name="fourth" class="form-control" autocomplete="off" required/>
+                            </label>
+                        </fieldset>
+                        <label>
+                            Number of the right answer: <input type="number" name="number" max="4" min="1" autocomplete="off" class="form-control w-50" required/>
+                        </label>
+                        <br/>
+                        <br/>
+                        <input type="submit" name="submit" value="add" class="btn btn-success"/>
+                    </form>
+                </div>
             </div>
-            <div class="row">
-                <label class="form-label">
-                    Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
-                </label>
-            </div>
-            <fieldset class="row">
-                <legend>Answers:</legend>
-                <label class="form-label col-md-6">
-                    First answer: <input type="text" name="first" class="form-control" autocomplete="off" required/>
-                </label>
-                <label class="form-label col-md-6">
-                    Second answer: <input type="text" name="second" class="form-control" autocomplete="off" required/>
-                </label>
-                <label class="form-label col-md-6">
-                    Third answer: <input type="text" name="third" class="form-control" autocomplete="off" required/>
-                </label>
-                <label class="form-label col-md-6">
-                    Fourth answer: <input type="text" name="fourth" class="form-control" autocomplete="off" required/>
-                </label>
-            </fieldset>
-            <label>
-                Number of the right answer: <input type="number" name="number" max="4" min="1" autocomplete="off" class="form-control w-50" required/>
-            </label>
-            <br/>
-            <br/>
-            <input type="submit" name="submit" value="add" class="btn btn-info"/>
-        </form>
+        </div>
     </div>
 </template>
-
-<style scoped>
-.overlay {
-    z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-</style>

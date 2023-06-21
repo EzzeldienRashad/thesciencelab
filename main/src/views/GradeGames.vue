@@ -4,6 +4,7 @@ import {ref} from "vue";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right_or_wrong.webp";
+import matchImg from "@/assets/images/match.webp";
 
 const grade = useRoute().params.grade;
 const gradeName = grade.charAt(0).toUpperCase() + grade.slice(1).replaceAll("_", " ");
@@ -12,6 +13,7 @@ const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
     "right_or_wrong": rightOrWrongImg,
+    "match": matchImg,
 };
 
 fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)

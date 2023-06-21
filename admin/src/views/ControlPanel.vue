@@ -4,6 +4,7 @@ import {useRoute, useRouter} from "vue-router";
 import ControlPanelChoose from "@/components/ControlPanelChoose.vue";
 import ControlPanelComplete from "@/components/ControlPanelComplete.vue";
 import ControlPanelRightOrWrong from "@/components/ControlPanelRightOrWrong.vue";
+import ControlPanelMatch from "@/components/ControlPanelMatch.vue";
 import GradeUnits from "@/components/GradeUnits.vue";
 
 const unit = ref("");
@@ -11,12 +12,10 @@ const routeParams = useRoute().params;
 const router = useRouter();
 const member = ref("");
 const questions = ref([]);
-const addingQuestion = ref(false);
 const msg = ref("");
 const msgColor = ref("");
 const inheritedVariables = {
     questions,
-    addingQuestion,
     msg,
     msgColor,
     deleteQuestion,
@@ -58,6 +57,7 @@ function addQuestion() {
     })
     .then(res => res.text())
     .then(msgValue => {
+        console.log(msgValue)
         form.parentElement.scrollTo(0, 0);
         msgColor.value = "danger";
         if (msgValue == "logout") {
@@ -87,12 +87,13 @@ function addQuestion() {
             <RouterLink to="/" class="text-dark">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
             </RouterLink>
-            <button @click="addingQuestion = !addingQuestion" class="btn btn-success">+ add</button>
+            <button data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
             <ControlPanelChoose v-if="useRoute().params.game == 'choose'" v-bind="inheritedVariables" />
-            <ControlPanelComplete v-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" />
-            <ControlPanelRightOrWrong v-if="useRoute().params.game == 'right_or_wrong'" v-bind="inheritedVariables" />
+            <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" />
+            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right_or_wrong'" v-bind="inheritedVariables" />
+            <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" />
         </main>
 </div>
 </template>

@@ -49,7 +49,7 @@ function scrollToTop() {
         </transition>
         <transition name="levels" @before-enter="scrollToTop">
             <div class="overflow-hidden border-top border-2 border-dark" v-if="Object.keys(questions).length">
-                <p class="display-6">Please choose a level:</p>
+                <p class="display-6">Please choose the test type:</p>
                 <div class="d-flex flex-column align-items-center p2">     
                     <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">quick</button>
                     <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-3 m-1 text-center">normal</button>

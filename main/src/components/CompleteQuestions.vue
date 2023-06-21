@@ -1,5 +1,5 @@
 <script setup>
-import {ref, nextTick, inject} from "vue";
+import {ref, nextTick} from "vue";
 
 const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
 const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
@@ -97,9 +97,6 @@ function shuffle(arr) {
 <style scoped>
 button {
     transition: opacity 0.5s ease;
-}
-.answers > div:first-child {
-    box-shadow: 2px 0 lightgrey;
 }
 img {
     max-width: 200px;
