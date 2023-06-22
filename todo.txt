@@ -1,13 +1,16 @@
-matching game
+matching game fix more than one circle stick on top of the same pin
 if choose game answer has a lot of text it's height becomes greater and columns' height aren't equal
+in CompleteQuestions: make checked not a ref and make checked.value checked
+change document getElementsByClassName to querySelector wherever possible
 add accessibility, performance and security
 only echo added successfully if added and isset necessary post info
 make homeballs part of homepage
-check using lighthouse
+If wrong password 3 times wait 2 minutes
 divide concepts by themes, ex: theme 3, theme 4
 add 404 page
 add testing
 add 3-column matching
+add option to toggle between sliding and writing numbers and letters in matching game
 
 When:
 Purchasing the new server: web crawling at google cloud
