@@ -3,6 +3,7 @@ import {ref} from "vue";
 import {useRoute} from "vue-router";
 
 let units = ref([]);
+let currentTheme = 0;
 defineEmits(["setUnit"]);
 
 fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params.grade +
@@ -13,11 +14,23 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params
 
 <template>
     <h1 class="text-center">Please choose a unit</h1>
-    <div class="row row-cols-1 row-cols-md-2 g-2">
-        <div v-for="unit in units" :key="unit" class="col">
-            <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 p-2 py-3">
-                {{ unit.replace(/\.[^/.]+$/, "") }}
-            </button>
-        </div>
+    <div class="row g-2">
+        <template v-for="unit in units" :key="unit">
+            <div v-if="parseInt(unit) && currentTheme != parseInt(unit)" class="col-12">
+                <h3>Theme {{ currentTheme = parseInt(unit) }}:</h3>
+                <hr/>
+            </div>
+            <div class="col-sm-6">
+                <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 p-2 py-3">
+                    {{ unit.replace(/\.[^/.]+$/, "") }}
+                </button>
+            </div>
+        </template>
     </div>
 </template>
+
+<style scoped>
+h3 {
+    color: darkred;
+}
+</style>

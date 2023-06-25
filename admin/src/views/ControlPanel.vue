@@ -63,8 +63,11 @@ function addQuestion() {
         if (msgValue == "logout") {
             msg.value = "You are not logged in.";
             setTimeout(() => router.push({name: "login"}), 1500);
-        } else if (msgValue == "answernumerror") {
-            msg.value = "Wrong number of answers!";
+        } else if (msgValue == "answernumerr") {
+            msg.value = "Please write the correct number of answers!";
+            setTimeout(() => msg.value = "", 1500);
+        } else if (msgValue == "infoerr") {
+            msg.value = "Please fill in all the fields!";
             setTimeout(() => msg.value = "", 1500);
         } else if (msgValue == "successful") {
             msgColor.value = "success"

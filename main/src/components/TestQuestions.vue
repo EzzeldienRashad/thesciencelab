@@ -23,6 +23,8 @@ if (routeParams.game == "complete") {
         }
         return sum + questionsNum
     }, 0);
+} else if (routeParams.game == "match") {
+    questionsLength = questions.value.reduce((sum, obj) => sum + Object.keys(obj).length, 0);
 }
 const answerIsRight = ref("");
 const answered = ref(false);

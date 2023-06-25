@@ -11,6 +11,7 @@ const units = ref([]);
 const questions = ref([]);
 const trans = ref(null);
 const lessonsMaxHeight = ref("");
+let currentTheme = 0;
 
 fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game))
@@ -37,10 +38,16 @@ function scrollToTop() {
         <transition name="lessons">
             <div class="border-top border-2 border-dark overflow-hidden" ref="trans" v-if="!Object.keys(questions).length">
                 <p class="display-6">Please choose a unit:</p>
-                <div class="row row-cols-1 row-cols-sm-2 g-2 p-2">
-                    <div v-for="unit in units" :key="unit" class="col">
-                        <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit.replace(/\.[^/.]+$/, "") }}</button>
-                    </div>
+                <div class="row g-2 p-2">
+                    <template v-for="unit in units" :key="unit">
+                        <div v-if="parseInt(unit) && currentTheme != parseInt(unit)" class="col-12">
+                            <h3>Theme {{ currentTheme = parseInt(unit) }}:</h3>
+                            <hr/>
+                        </div>
+                        <div class="col-sm-6">
+                            <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit.replace(/\.[^/.]+$/, "") }}</button>
+                        </div>
+                    </template>
                     <div class="col">
                         <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3">The whole term</button>
                     </div>
@@ -79,5 +86,8 @@ function scrollToTop() {
 }
 .levels-enter-to, .levels-leave-from {
     max-height: 270px;
+}
+h3 {
+    color: darkred;
 }
 </style>

@@ -39,10 +39,10 @@ const questionsNum = ref(3);
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
                         <template v-for="n in questionsNum">
-                            <label class="form-label">
+                            <label class="form-label w-100">
                                 Question: <input type="text" name="questions[]" class="form-control" autocomplete="off" required/>
                             </label>
-                            <label class="form-label">
+                            <label class="form-label w-100">
                                 answer: <input type="text" name="answers[]" class="form-control" autocomplete="off" required/>
                             </label>
                             <hr/>

@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 private_info
+todo.txt

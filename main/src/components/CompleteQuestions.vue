@@ -4,7 +4,7 @@ import {ref, nextTick} from "vue";
 const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
 const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
 const shuffledQuestions = shuffle(questions.value);
-const checked = ref(false);
+let checked = false;
 let questionGroups = [];
 for (let i = 0; i < shuffledQuestions.length; i += 5) {
     questionGroups.push(shuffledQuestions.slice(i, i + 5));
@@ -35,21 +35,21 @@ function checkAnswer() {
     const inputs = document.getElementsByClassName("answers")[0].getElementsByTagName("input");
     let foundWrongAnswer = false;
     for (let i = 0; i < inputs.length; i++) {
-        if (!checked.value) changeAnsweredQuestions(answeredQuestions.value + 1);
+        if (!checked) changeAnsweredQuestions(answeredQuestions.value + 1);
         if (questionsAnswers[i] !== false && inputs[i].value.trim().toLowerCase() == questionsAnswers[i].trim().toLowerCase()) {
             inputs[i].style.color = "green";
             inputs[i].style.borderBottom = "2px dotted green";
             inputs[i].disabled = true;
             questionsAnswers[i] = false;
-            if (!checked.value) changeRightAnswers(rightAnswers.value + 1);
+            if (!checked) changeRightAnswers(rightAnswers.value + 1);
         } else if (questionsAnswers[i] !== false && inputs[i].value.trim() != questionsAnswers[i].trim()) {
-            if (!checked.value) {
+            if (!checked) {
                 inputs[i].style.borderBottom = "2px solid red";
             }
             foundWrongAnswer = true;
         }
     }
-    checked.value = true;
+    checked = true;
     if (foundWrongAnswer) {
         wrongSound.play();
     } else {
@@ -57,7 +57,7 @@ function checkAnswer() {
         changeAnswerIsRight("right");
         setTimeout(() => changeAnswerIsRight(""), 750);
         if (!answered.value) changeAnswered(true);
-        checked.value = false;
+        checked = false;
         for (let input of inputs) {
             questionsAnswers.shift();
         }
@@ -89,7 +89,7 @@ function shuffle(arr) {
                     </template>
                 </li>
             </ol>
-            <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">done</button>
+            <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
         </div>
     </div>
 </template>

@@ -40,7 +40,7 @@ function checkAnswer(event, rightAnswer) {
                     v-for="choice in question[1]" 
                     :key="choice"
                     class="col-sm-6 p-2">
-                    <button class="btn w-100 p-2 py-3" :data-choice="choice">{{ choice }}</button>
+                    <button class="btn w-100 p-2 py-3 h-100" :data-choice="choice">{{ choice }}</button>
                 </div>
             </div>
         </div>

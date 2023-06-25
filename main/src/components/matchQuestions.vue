@@ -56,6 +56,11 @@ function checkAnswer(n) {
 function moveCircle(event) {
     event.preventDefault();
     const circle = event.currentTarget;
+    circle.classList.remove("d-flex");
+    circle.classList.add("d-none");
+    if (document.elementFromPoint(event.clientX, event.clientY)?.closest("td.droppable")) document.elementFromPoint(event.clientX, event.clientY)?.closest("td.droppable").classList.remove("busy");
+    circle.classList.remove("d-none");
+    circle.classList.add("d-flex");
     if (circle.dataset.disabled == "true") return;
     const startCircle = circle.parentElement.querySelector(".circle-start");
     const connectLine = startCircle.querySelector(".connect-line");
@@ -88,24 +93,29 @@ function moveCircle(event) {
         circle.classList.remove("d-flex");
         circle.classList.add("d-none");
         const droppableBelow = document.elementFromPoint(moveEvent.clientX, moveEvent.clientY)?.closest("td.droppable");
+        const droppableBelowAvailable = droppableBelow && !droppableBelow.classList.contains("busy");
         circle.classList.remove("d-none");
         circle.classList.add("d-flex");
         if (droppableBelow && currentDroppable != droppableBelow) {
             if (currentDroppable) currentDroppable.classList.remove("answer-active");
-            currentDroppable = droppableBelow;
-            droppableBelow.classList.add("answer-active");
+            if (droppableBelowAvailable) {
+                currentDroppable = droppableBelow;
+                droppableBelow.classList.add("answer-active");
+            }
         } else if (!droppableBelow && currentDroppable) {
+            currentDroppable.classList.remove("busy");
             currentDroppable.classList.remove("answer-active");
             currentDroppable = null;
         }
         positionCircle(moveEvent.clientX, moveEvent.clientY, shiftX, shiftY);
     }
     function leaveMouse() {
-        if (currentDroppable) {
+        if (currentDroppable && !currentDroppable.classList.contains("busy")) {
             currentDroppable.classList.remove("answer-active");
             const pin = currentDroppable.querySelector(".pin");
             positionCircle(pin.getBoundingClientRect().left - rem2px(0.25), pin.getBoundingClientRect().top - rem2px(0.25));
             circle.closest("td").querySelector(".question-text").dataset.answer = currentDroppable.closest("td").querySelector(".answer-text").dataset.text;
+            currentDroppable.classList.add("busy");
         } else {
             circle.style.top = "";
             circle.style.left = "";
@@ -174,7 +184,7 @@ function rem2px(rem) {
                 </tbody>
             </table>
         </div>
-        <button @click="!answered && checkAnswer(n - 1)" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">done</button>
+        <button @click="!answered && checkAnswer(n - 1)" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
     </div>
 </template>
 
