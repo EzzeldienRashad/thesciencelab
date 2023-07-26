@@ -57,6 +57,11 @@ To see changes after modifying info move it to the other server
 ## If you downloaded this from the repo
 
 * npm install
+* configure remote htaccess to redirect requests to index html or admin
+* copy info folder to the php server in local repo / upload info folder after build on host
+* make a shortcut of todo in onedrive in local repo
+* upload additional password.php with $password = "your password"
+* create a database thesciencelab with table login columns id date
 
 ## Hierarchy
 ### main

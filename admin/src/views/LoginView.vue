@@ -20,6 +20,8 @@ async function login() {
     member = await member.text();
     if (member == "admin") {
         router.push({name: "home"});
+    } else if (member == "lockout") {
+        error.value = "You tried too many passwords in a short time, try again after 5 minutes.";
     } else {
         error.value = "Wrong password!";
     }

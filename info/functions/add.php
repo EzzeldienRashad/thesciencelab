@@ -19,10 +19,22 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
 $path = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
 $arr = json_decode(file_get_contents($path), true);
 if ($_GET["game"] == "choose") {
+    if (!isset($_POST["question"]) || !isset($_POST["first"]) || !isset($_POST["second"]) || !isset($_POST["third"]) || !isset($_POST["fourth"]) || !isset($_POST["number"])) {
+        echo "infoerr";
+        exit;
+    }
     array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
 } elseif ($_GET["game"] == "right_or_wrong") {
+    if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
+        echo "infoerr";
+        exit;
+    }
     $arr[trim($_POST["question"])] = $_POST["answer"];
 } elseif ($_GET["game"] == "complete") {
+    if (!isset($_POST["question"]) || !isset($_POST["answers"])) {
+        echo "infoerr";
+        exit;
+    }
     array_push($arr, array());
     $question = preg_split('/\\.{3,}/', $_POST["question"], -1);
     $answersNum = preg_match_all('/\\.{3,}/', $_POST["question"]);
@@ -34,7 +46,7 @@ if ($_GET["game"] == "choose") {
         $question[0] = " ";
     }
     if ($answersNum * 2 != count($answers)) {
-        echo "answernumerror";
+        echo "answernumerr";
         exit;
     } else {
         for ($i = 0; $i < $answersNum; $i++) {
@@ -44,7 +56,14 @@ if ($_GET["game"] == "choose") {
             $arr[count($arr) - 1][$question[count($question) - 1]] = array();
         }
     }
-} elseif($_GET["game"] == "match" && isset($_POST["questions"]) && isset($_POST["answers"]) && count($_POST["questions"]) == count($_POST["answers"])) {
+} elseif ($_GET["game"] == "match") {
+    if (!isset($_POST["questions"]) || !isset($_POST["answers"])) {
+        echo "infoerr";
+        exit;
+    } elseif (count($_POST["questions"]) != count($_POST["answers"])) {
+        echo "answernumerr";
+        exit;
+    }
     array_push($arr, array());
     for ($i = 0; $i < count($_POST["questions"]); $i++) {
         $arr[count($arr) - 1][$_POST["questions"][$i]] = $_POST["answers"][$i];
