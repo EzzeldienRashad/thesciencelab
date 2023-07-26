@@ -47,10 +47,11 @@ header("Access-Control-Allow-Credentials: true");
 to
 //httpallow!
 
-*admin:*
-credentials: "include",
-to 
-//credentials!
+and
+    $dsn = "mysql:host=localhost;dbname=b22_32993975_TheScienceLab;";
+to
+    $dsn = "mysql:host=sql205.byethost22.com;dbname=b22_32993975_TheScienceLab;";
+
 -----------------------------------------
 
 To see changes after modifying info move it to the other server
@@ -61,7 +62,7 @@ To see changes after modifying info move it to the other server
 * copy info folder to the php server in local repo / upload info folder after build on host
 * make a shortcut of todo in onedrive in local repo
 * upload additional password.php with $password = "your password"
-* create a database thesciencelab with table login columns id date
+* create a database b22_32993975_TheScienceLab with table FailedLogins columns id date
 
 ## Hierarchy
 ### main

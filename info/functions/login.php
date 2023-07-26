@@ -15,13 +15,13 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
     require "password.php";
     $maxLoginAttempts = 5;
     $waitTime = "5 minutes";
-    $dsn = "mysql:host=localhost;dbname=TheScienceLab;";
-    $pdo = new PDO($dsn, "thesciencelab", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-    $getStmt = $pdo->query("SELECT id, date FROM TheScienceLab.logins");
+    $dsn = "mysql:host=localhost;dbname=b22_32993975_TheScienceLab;";
+    $pdo = new PDO($dsn, "b22_32993975", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+    $getStmt = $pdo->query("SELECT id, date FROM b22_32993975_TheScienceLab.FailedLogins");
     $dates = $getStmt->fetchAll();
     if (count($dates) >= $maxLoginAttempts) { 
         if (count($dates) > $maxLoginAttempts) {
-            $deleteStmt = $pdo->prepare("DELETE FROM TheScienceLab.logins WHERE id < ?");
+            $deleteStmt = $pdo->prepare("DELETE FROM b22_32993975_TheScienceLab.FailedLogins WHERE id < ?");
             $deleteStmt->bindParam(1, $dates[count($dates) - $maxLoginAttempts]["id"], PDO::PARAM_INT);
             $deleteStmt->execute();
         }
@@ -33,7 +33,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
                 $_SESSION["isAdmin"] = true;
                 echo "admin";
             } else {
-                $pdo->query("INSERT INTO TheScienceLab.logins (date) VALUES (" . time() . ")");
+                $pdo->query("INSERT INTO b22_32993975_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
             }
         }
     } else {
@@ -41,7 +41,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
             $_SESSION["isAdmin"] = true;
             echo "admin";
         } else {
-            $pdo->query("INSERT INTO TheScienceLab.logins (date) VALUES (" . time() . ")");
+            $pdo->query("INSERT INTO b22_32993975_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
         }
     }
 }

@@ -21,9 +21,11 @@ async function login() {
     if (member == "admin") {
         router.push({name: "home"});
     } else if (member == "lockout") {
-        error.value = "You tried too many passwords in a short time, try again after 5 minutes.";
+        error.value = "....";
+        setTimeout(() => {error.value = "You tried too many passwords in a short time, try again after 5 minutes."}, 500);
     } else {
-        error.value = "Wrong password!";
+        error.value = "....";
+        setTimeout(() => {error.value = "Wrong password!"}, 500);
     }
 }
 </script>
