@@ -21,7 +21,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params
                 <hr/>
             </div>
             <div class="col-sm-6">
-                <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 p-2 py-3">
+                <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 h-100 p-2 py-3">
                     {{ unit.replace(/\.[^/.]+$/, "") }}
                 </button>
             </div>

@@ -49,8 +49,8 @@
         <h1>Who we are</h1>
         <p>
             We are The Science Lab group at Ali Ebn Abi Taleb language school, El Qalyubiah, Egypt. The group contains of a number of professional
-            experts working on the development and maintainance of the project. It contains of supervisors, website developers, games developers,
-            photoshop designers, questions uploaders, and more!
+            experts working on the development and maintainance of the project. It consists of supervisors, website developers, games developers,
+            science teachers and photoshop designers. It also has many people who upload questions, make experiments, give resources, share insights and more!
         </p>
         <hr/>
         <strong>We wish you a happy journey here at The Science Lab.</strong>

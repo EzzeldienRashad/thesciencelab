@@ -1,5 +1,5 @@
 <script setup>
-import {inject, ref, watch} from "vue";
+import {inject, nextTick, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
 import CompleteQuestions from "@/components/CompleteQuestions.vue";
@@ -71,6 +71,12 @@ function next() {
         answered.value = false;
         const question = document.querySelector(".question");
         question.parentElement.style.height = question.parentElement.offsetHeight + "px";
+        const nextQuestion = question.parentElement.nextElementSibling;
+        nextQuestion.querySelectorAll("button").forEach((btn) => btn.tabIndex = 0);
+        nextQuestion.querySelectorAll("button").forEach((btn) => btn.style.pointerEvents = "all");
+        nextQuestion.querySelectorAll("input").forEach((btn) => btn.style.pointerEvents = "all");
+        nextQuestion.querySelectorAll("input").forEach((btn) => btn.tabIndex = 0);
+        nextTick(() => (nextQuestion.querySelector("input") || nextQuestion.querySelector("button")).focus());
         question.remove();
     }, parseFloat(transitionDuration.value) * 1000);
 }
@@ -83,7 +89,7 @@ function next() {
         </div>
         <div ref="questionsCont" id="questions-cont" class="d-flex overflow-hidden" :style="{transition: 'margin-left ' + transitionDuration + ' ease'}">
             <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
-            <RightOrWrongQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'right_or_wrong'" />
+            <RightOrWrongQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'right-or-wrong'" />
             <CompleteQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
             <matchQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />
         </div>
@@ -91,7 +97,17 @@ function next() {
         <audio id="rightSound" :src="rightSound"></audio>
         <img v-if="answerIsRight == 'wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <audio id="wrongSound" :src="wrongSound"></audio>
-        <font-awesome-icon v-if="answered && !transitioning" @click="!transitioning && answered && next()" id="next-arrow" icon="fa-solid fa-right-long" size="4x" role="button" class="position-fixed top-50 translate-middle-y" :class="'text-' + theme"/>
+        <button 
+        id="next-arrow" 
+        class="position-fixed top-50 translate-middle-y border-0 p-0 bg-transparent"
+        v-if="answered && !transitioning" 
+        @click="!transitioning && answered && next()">
+            <font-awesome-icon 
+                id="next-arrow-symbol"
+                icon="fa-solid fa-right-long" 
+                size="4x"  
+                :class="'text-' + theme"/>
+        </button>
     </div>
 </template>
 
@@ -105,8 +121,14 @@ img {
 #next-arrow {
     right: 20px;
 }
-#next-arrow:hover {
-    filter: drop-shadow(-3px 3px black);
+#next-arrow:focus {
+    outline: none;
+}
+#next-arrow:focus > #next-arrow-symbol {
+    filter: drop-shadow(-2px 2px black);
+}
+#next-arrow > #next-arrow-symbol:hover {
+    filter: drop-shadow(-3px 3px 2px black);
 }
 .progress {
     border-radius: 0 !important;

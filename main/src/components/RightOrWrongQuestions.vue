@@ -1,5 +1,5 @@
 <script setup>
-import {ref, nextTick} from "vue";
+import {ref, nextTick, inject} from "vue";
 
 const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
 const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
@@ -8,6 +8,8 @@ const wrongBtns = ref([]);
 const Btns = [wrongBtns, rightBtns];
 let rightSound;
 let wrongSound;
+const theme = inject("theme");
+const themeColor = theme.value == "success" ? "green" : theme.value == "warning" ? yellow : theme.value == "danger" ? "red" : "blue";
 
 nextTick(() => {
     rightSound = document.getElementById("rightSound");
@@ -27,23 +29,28 @@ function checkAnswer(givenAnswer, rightAnswer) {
     }
     changeAnsweredQuestions(answeredQuestions.value + 1);
     changeAnswered(true);
+    Array.from(document.querySelector(".question").querySelectorAll("button")).forEach((el) => {
+        el.style.pointerEvents = "none";
+        el.tabIndex = -1;
+    });
+    nextTick(() => document.getElementById("next-arrow").focus());
 }
 </script>
 
 <template>
-    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="(answer, question) in questions" :key="question">
+    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="(answer, question, index) in questions" :key="question">
         <div class="question">
             <h2 class="mb-5">{{ question }}</h2>
             <div class="answers row p-3 p-md-5">
                 <div
                     class="col-6">
-                    <button ref="rightBtns" @click="() => !answered && checkAnswer(1, answer)" class="btn w-100 p-2 py-3">
+                    <button :tabindex="index ? -1 : 0" :style="{pointerEvents: index ? 'none' : 'all'}" ref="rightBtns" @click="() => !answered && checkAnswer(1, answer)" class="btn w-100 p-2 py-3 border border-danger border-2">
                         <img class="w-100" src="@/assets/icons/right.webp" alt="right">
                     </button>
                 </div>
                 <div
                 class="col-6">
-                    <button ref="wrongBtns" @click="() => !answered && checkAnswer(0, answer)" class="btn w-100 p-2 py-3">
+                    <button :tabindex="index ? -1 : 0" :style="{pointerEvents: index ? 'none' : 'all'}" ref="wrongBtns" @click="() => !answered && checkAnswer(0, answer)" class="btn w-100 p-2 py-3 border border-danger border-2">
                         <img class="w-100" src="@/assets/icons/wrong.webp" alt="wrong">
                     </button>
                 </div>
@@ -55,6 +62,9 @@ function checkAnswer(givenAnswer, rightAnswer) {
 <style scoped>
 button {
     transition: opacity 0.5s ease;
+}
+button:not(:hover):not(:focus) {
+    border: none !important;
 }
 .answers > div:first-child {
     box-shadow: 2px 0 lightgrey;

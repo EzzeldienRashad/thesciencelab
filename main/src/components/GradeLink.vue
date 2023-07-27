@@ -1,6 +1,7 @@
 <script setup>
 import {RouterLink} from 'vue-router';
 import {onMounted, ref, inject} from "vue";
+import {removeDashes} from "@/modules.js";
 
 const props = defineProps({
     grade: {
@@ -12,7 +13,7 @@ let gradeName = ref("");
 const documentWidth = inject("documentWidth");
 
 onMounted(() => {
-    gradeName.value = props.grade.charAt(0).toUpperCase() + props.grade.slice(1).replaceAll("_", " ");
+    gradeName.value = removeDashes(props.grade);
 });
 </script>
 

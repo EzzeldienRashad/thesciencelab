@@ -24,7 +24,7 @@ if ($_GET["game"] == "choose") {
         exit;
     }
     array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
-} elseif ($_GET["game"] == "right_or_wrong") {
+} elseif ($_GET["game"] == "right-or-wrong") {
     if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
         echo "infoerr";
         exit;

@@ -1,19 +1,20 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute} from "vue-router";
+import {removeDashes} from "@/modules.js";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
-import rightOrWrongImg from "@/assets/images/right_or_wrong.webp";
+import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
 import matchImg from "@/assets/images/match.webp";
 
 const member = ref("");
 const grade = useRoute().params.grade;
-const gradeName = grade.charAt(0).toUpperCase() + grade.slice(1).replaceAll("_", " ");
+const gradeName = removeDashes(grade);
 const games = ref([]);
 const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
-    "right_or_wrong": rightOrWrongImg,
+    "right-or-wrong": rightOrWrongImg,
     "match": matchImg
 };
 
@@ -36,9 +37,9 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
             <div v-for="game in games" :key="game" class="col-12 col-sm-6 col-lg-4">
                 <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="'/' + grade + '/' + game">
                     <figure class="mb-0 w-75">
-                        <img class="w-100 border border-3 border-dark" :src="gamesImages[game]" :alt="game.replaceAll('_', ' ')">
+                        <img class="w-100 border border-3 border-dark" :src="gamesImages[game]" :alt="removeDashes(game)">
                         <figcaption class="text-center fs-4 mt-2">
-                            {{ game.replaceAll("_", " ") }}
+                            {{ removeDashes(game) }}
                         </figcaption>
                     </figure>
                 </RouterLink>

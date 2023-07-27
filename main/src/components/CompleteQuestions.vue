@@ -52,6 +52,9 @@ function checkAnswer() {
     checked = true;
     if (foundWrongAnswer) {
         wrongSound.play();
+        document.querySelector("input:not([disabled])").focus();
+        changeAnswerIsRight("wrong");
+        setTimeout(() => changeAnswerIsRight(""), 750);
     } else {
         rightSound.play();
         changeAnswerIsRight("right");
@@ -61,6 +64,7 @@ function checkAnswer() {
         for (let input of inputs) {
             questionsAnswers.shift();
         }
+        nextTick(() => document.getElementById("next-arrow").focus());
     }
 }
 function shuffle(arr) {
@@ -85,7 +89,7 @@ function shuffle(arr) {
                 <li v-for="question in questionGroups[n - 1]" :key="question" class="pb-3">
                     <template v-for="(answers, statement) in question" :key="statement">
                         <template v-if="statement.trim()">{{ statement }}</template>
-                        <input v-if="answers.length" :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>
+                        <input :tabindex="n == 1 ? 0 : -1" :style="{pointerEvents: n == 1 ? 'all' : 'none'}" v-if="answers.length" :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>
                     </template>
                 </li>
             </ol>

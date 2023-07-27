@@ -1,12 +1,12 @@
 <script setup>
 import {ref, nextTick} from "vue";
 import {useRoute} from "vue-router";
+import { removeDashes } from "@/modules.js";
 
 defineEmits(["start"]);
 
 const routeParams = useRoute().params
 const game = routeParams.game;
-const gameName = game.replaceAll("_", " ");
 const units = ref([]);
 const questions = ref([]);
 const trans = ref(null);
@@ -34,7 +34,7 @@ function scrollToTop() {
 
 <template>
     <div>
-        <h2 class="text-center p-2">Welcome to the {{ gameName }} game!</h2>
+        <h2 class="text-center p-2">Welcome to the {{ removeDashes(game) }} game!</h2>
         <transition name="lessons">
             <div class="border-top border-2 border-dark overflow-hidden" ref="trans" v-if="!Object.keys(questions).length">
                 <p class="display-6">Please choose a unit:</p>

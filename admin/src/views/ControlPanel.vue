@@ -95,7 +95,7 @@ function addQuestion() {
         <main class="d-flex flex-column-reverse pt-2">
             <ControlPanelChoose v-if="useRoute().params.game == 'choose'" v-bind="inheritedVariables" />
             <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" />
-            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right_or_wrong'" v-bind="inheritedVariables" />
+            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" />
             <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" />
         </main>
 </div>

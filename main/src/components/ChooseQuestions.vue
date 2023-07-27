@@ -27,12 +27,16 @@ function checkAnswer(event, rightAnswer) {
     }
     changeAnsweredQuestions(answeredQuestions.value + 1);
     changeAnswered(true);
-    Array.from(event.target.parentElement.parentElement.querySelectorAll("button")).forEach((el) => el.style.pointerEvents = "none");
+    Array.from(event.target.parentElement.parentElement.querySelectorAll("button")).forEach((el) => {
+        el.style.pointerEvents = "none";
+        el.tabIndex = -1;
+    });
+    nextTick(() => document.getElementById("next-arrow").focus());
 }
 </script>
 
 <template>
-    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="question in questions" :key="question[0]">
+    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="(question, index) in questions" :key="question">
         <div class="question">
             <h2 class="mb-5">{{ question[0] }}</h2>
             <div :data-choices="JSON.stringify(question[1])" @click="$event => !answered && checkAnswer($event, question[2])" class="row gx-0">
@@ -40,7 +44,7 @@ function checkAnswer(event, rightAnswer) {
                     v-for="choice in question[1]" 
                     :key="choice"
                     class="col-sm-6 p-2">
-                    <button class="btn w-100 p-2 py-3 h-100" :data-choice="choice">{{ choice }}</button>
+                    <button :tabindex="index ? -1 : 0" class="btn w-100 p-2 py-3 h-100" :style="{pointerEvents: index ? 'none' : 'all'}" :data-choice="choice">{{ choice }}</button>
                 </div>
             </div>
         </div>

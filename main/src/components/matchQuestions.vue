@@ -52,6 +52,7 @@ function checkAnswer(n) {
         if (!answered.value) changeAnswered(true);
         checked = false;
     }
+    nextTick(() => document.getElementById("next-arrow").focus());
 }
 function moveCircle(event) {
     event.preventDefault();
@@ -141,7 +142,7 @@ function rem2px(rem) {
 
 <template>
     <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="n in shuffledQuestions.length" :key="n">
-        <div class="question pb-3 table-responsive">
+        <div :tabindex="-1" class="question pb-3 table-responsive">
             <table class="table table-bordered">
                 <tbody class="answers">
                     <tr>
@@ -184,7 +185,7 @@ function rem2px(rem) {
                 </tbody>
             </table>
         </div>
-        <button @click="!answered && checkAnswer(n - 1)" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
+        <button :tabindex="n == 1 ? 0 : -1" @click="!answered && checkAnswer(n - 1)" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
     </div>
 </template>
 
