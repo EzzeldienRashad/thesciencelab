@@ -1,12 +1,13 @@
 <script setup>
 import {ref} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {removeDashes} from "@/modules.js";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
 import matchImg from "@/assets/images/match.webp";
 
+const router = useRouter();
 const member = ref("");
 const grade = useRoute().params.grade;
 const gradeName = removeDashes(grade);
@@ -26,7 +27,10 @@ fetch("http://127.0.0.1/info/functions/login.php", {
     .then(memberValue => member.value = memberValue);
 fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
     .then(res => res.json())
-    .then(gamesArray => games.value = gamesArray);
+    .then(gamesArray => {
+        if (gamesArray.length) games.value = gamesArray;
+        else router.replace({name: "home"})
+    });
 </script>
 
 <template>

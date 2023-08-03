@@ -5,6 +5,7 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 const passwordField = ref(null);
 const error = ref("");
+const showPassword = ref(false);
 
 async function login() {
     let member = await fetch("http://127.0.0.1/info/functions/login.php", {
@@ -32,12 +33,23 @@ async function login() {
 
 <template>
     <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php">
-        <label class="form-label">
-            Password: <input type="password" name="password" ref="passwordField" class="form-control"/>
-        </label>
+        <label class="form-label" for="password">Password: </label>
+        <div class="input-group">
+            <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control d-inline-block"/>
+            <span class="input-group-text" @click="showPassword = !showPassword">
+                <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
+                <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />
+            </span>
+        </div>
         <br/>
         <span class="text-danger">{{ error }}</span>
         <br/>
         <input type="submit" value="login" class="btn btn-info"/>
     </form>
 </template>
+
+<style scoped>
+.input-group-text {
+    cursor: pointer;
+}
+</style>

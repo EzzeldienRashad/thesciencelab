@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Modal } from 'bootstrap'
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import GradeGames from "@/views/GradeGames.vue";

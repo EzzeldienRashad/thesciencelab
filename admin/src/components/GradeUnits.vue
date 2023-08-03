@@ -1,7 +1,8 @@
 <script setup>
 import {ref} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
+const router = useRouter();
 let units = ref([]);
 let currentTheme = 0;
 defineEmits(["setUnit"]);
@@ -9,7 +10,10 @@ defineEmits(["setUnit"]);
 fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params.grade +
     "&game=" + useRoute().params.game)
     .then(res => res.json())
-    .then(unitsArr => units.value = unitsArr);
+    .then(unitsArr => {
+        if (unitsArr.length) units.value = unitsArr;
+        else router.replace({name: "home"})
+    });
 </script>
 
 <template>

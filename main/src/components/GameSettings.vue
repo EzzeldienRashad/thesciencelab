@@ -1,10 +1,11 @@
 <script setup>
 import {ref, nextTick} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import { removeDashes } from "@/modules.js";
 
 defineEmits(["start"]);
 
+const router = useRouter();
 const routeParams = useRoute().params
 const game = routeParams.game;
 const units = ref([]);
@@ -17,7 +18,8 @@ fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routePa
     "&game=" + routeParams.game))
     .then(res => res.json())
     .then(unitsJson => {
-        units.value = unitsJson;
+        if (unitsJson.length) units.value = unitsJson;
+        else router.replace({name: "home"})
         nextTick(() => lessonsMaxHeight.value = trans.value.offsetHeight + "px");
     });
 
