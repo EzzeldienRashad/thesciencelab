@@ -2,11 +2,14 @@
 import {ref} from "vue";
 import {removeDashes} from "@/modules.js"
 
-const grades = ref([]);
-
-fetch("http://127.0.0.1/info/functions/printInfo.php")
-    .then(res => res.json())
-    .then(gradesArr => grades.value = gradesArr);
+const grades = ref([
+    "grade-4-first-term", "grade-4-second-term",
+    "grade-5-first-term", "grade-5-second-term",
+    "grade-6-first-term", "grade-6-second-term",
+    "1st-prep-first-term", "1st-prep-second-term",
+    "2nd-prep-first-term", "2nd-prep-second-term",
+    "3rd-prep-first-term", "3rd-prep-second-term",
+]);
 </script>
 
 <template>

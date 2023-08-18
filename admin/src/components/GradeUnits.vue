@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import {removeDashes} from "@/modules.js";
 
 const router = useRouter();
 let units = ref([]);
@@ -26,7 +27,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params
             </div>
             <div class="col-sm-6">
                 <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 h-100 p-2 py-3">
-                    {{ unit.replace(/\.[^/.]+$/, "") }}
+                    {{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}
                 </button>
             </div>
         </template>

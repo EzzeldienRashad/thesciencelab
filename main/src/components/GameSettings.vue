@@ -47,7 +47,7 @@ function scrollToTop() {
                             <hr/>
                         </div>
                         <div class="col-sm-6">
-                            <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ unit.replace(/\.[^/.]+$/, "") }}</button>
+                            <button @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}</button>
                         </div>
                     </template>
                     <div class="col">
