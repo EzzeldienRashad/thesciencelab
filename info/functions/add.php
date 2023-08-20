@@ -31,30 +31,16 @@ if ($_GET["game"] == "choose") {
     }
     $arr[trim($_POST["question"])] = $_POST["answer"];
 } elseif ($_GET["game"] == "complete") {
-    if (!isset($_POST["question"]) || !isset($_POST["answers"])) {
+    if (!isset($_POST["question"]) || !isset($_POST["right"]) || !isset($_POST["wrong"])) {
         echo "infoerr";
         exit;
     }
-    array_push($arr, array());
-    $question = preg_split('/\\.{3,}/', $_POST["question"], -1);
-    $answersNum = preg_match_all('/\\.{3,}/', $_POST["question"]);
-    $answers = preg_split("/,/", $_POST["answers"], -1, PREG_SPLIT_NO_EMPTY);
-    if ($question[count($question) - 1] == "") {
-        unset($question[count($question) - 1]);
-    }
-    if ($question[0] == "") {
-        $question[0] = " ";
-    }
-    if ($answersNum * 2 != count($answers)) {
-        echo "answernumerr";
+    $questionParts = preg_split('/\\.{3,}/', $_POST["question"]);
+    if (count($questionParts) != 2) {
+        echo "spacenumerr";
         exit;
     } else {
-        for ($i = 0; $i < $answersNum; $i++) {
-            $arr[count($arr) - 1][$question[$i]] = array($answers[$i * 2], $answers[$i * 2 + 1]);
-        }
-        if ($answersNum != count($question)) {
-            $arr[count($arr) - 1][$question[count($question) - 1]] = array();
-        }
+        array_push($arr, array($questionParts[0], array($_POST["right"], $_POST["wrong"]), $questionParts[1]));
     }
 } elseif ($_GET["game"] == "match") {
     if (!isset($_POST["questions"]) || !isset($_POST["answers"])) {
