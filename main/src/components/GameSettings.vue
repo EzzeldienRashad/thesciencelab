@@ -27,10 +27,29 @@ function getQuestions(unit) {
     fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit))
     .then(res => res.json())
-    .then(questionsArr => questions.value = questionsArr);
+    .then(questionsArr => {
+        if (routeParams.game == "complete") {
+            questionsArr = shuffle(questionsArr.slice(0, (-questionsArr.length % 5 || undefined)));
+            const questionGroups = [];
+            for (let i = 0; i < questionsArr.length; i += 5) {
+                questionGroups.push(questionsArr.slice(i, i + 5));
+            }
+            questions.value = questionGroups;
+        } else {
+            if (!Array.isArray(questionsArr)) questions.value = shuffle(Object.entries(questionsArr));
+            else questions.value = shuffle(questionsArr);
+        }
+    });
 }
 function scrollToTop() {
     scrollTo(0, 0);
+}
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
 </script>
 

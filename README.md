@@ -32,7 +32,7 @@ npm run build
 
 # Before upload
 
-* Fetch remote json files
+* FETCH REMOTE JSON FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
 * Change "http://127.0.0.1" to "http://thesciencelab.byethost22.com" or "http://localhost"
 
 *info:*

@@ -1,16 +1,17 @@
 <script setup>
-import {nextTick} from "vue";
+import {nextTick, computed, watch} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
+const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
+const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
 let checked = false;
-const shuffledQuestionGroups = shuffle(questions.value);
+let currentQuestion = {...questions.value[answeredQuestions.value]};
 const shuffledQuestions = [];
-for (let questionGroup of shuffledQuestionGroups) {
+for (let questionGroup of questions.value) {
     const shuffledKeys = shuffle(Object.keys(questionGroup));
     const shuffledValues = shuffle(Object.values(questionGroup));
     shuffledQuestions.push({"questions": shuffledKeys, "answers": shuffledValues});
 }
+const currentShuffledQuestion = computed(() => [shuffledQuestions[answeredQuestions.value]]);
 let rightSound;
 let wrongSound;
 
@@ -18,22 +19,22 @@ nextTick(() => {
     rightSound = document.getElementById("rightSound");
     wrongSound = document.getElementById("wrongSound");
 });
+watch(answeredQuestions, (answeredQuestionsValue) => currentQuestion = {...questions.value[answeredQuestionsValue]});
 
-function checkAnswer(n) {
+function checkAnswer() {
     const questionTexts = document.querySelector(".answers").getElementsByClassName("question-text");
     let foundWrongAnswer = false;
     for (let questionText of questionTexts) {
-        if (shuffledQuestionGroups[n][questionText.dataset.question] === undefined) continue;
-        if (!checked) changeAnsweredQuestions(answeredQuestions.value + 1);
-        if (shuffledQuestionGroups[n][questionText.dataset.question] == questionText.dataset.answer) {
-            shuffledQuestionGroups[n][questionText.dataset.question] = undefined;
+        if (!currentQuestion[questionText.dataset.question]) continue;
+        if (currentQuestion[questionText.dataset.question] == questionText.dataset.answer) {
+            delete currentQuestion[questionText.dataset.question];
             questionText.style.color = "green";
             questionText.parentElement.querySelector(".connect-line").classList.remove("bg-primary");
             questionText.parentElement.querySelector(".connect-line").classList.remove("bg-danger");
             questionText.parentElement.querySelector(".connect-line").classList.add("bg-success");
             questionText.parentElement.querySelector(".circle-end").dataset.disabled = true;
             if (!checked) changeRightAnswers(rightAnswers.value + 1);
-        } else if (shuffledQuestionGroups[n][questionText.dataset.question] != questionText.dataset.answer) {
+        } else if (currentQuestion[questionText.dataset.question] != questionText.dataset.answer) {
             if (!checked) {
                 questionText.style.color = "red";
                 questionText.parentElement.querySelector(".connect-line").classList.remove("bg-primary");
@@ -51,8 +52,8 @@ function checkAnswer(n) {
         setTimeout(() => changeAnswerIsRight(""), 750);
         if (!answered.value) changeAnswered(true);
         checked = false;
+        nextTick(() => document.getElementById("next-arrow").focus());
     }
-    nextTick(() => document.getElementById("next-arrow").focus());
 }
 function moveCircle(event) {
     event.preventDefault();
@@ -141,52 +142,54 @@ function rem2px(rem) {
 </script>
 
 <template>
-    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="n in shuffledQuestions.length" :key="n">
-        <div :tabindex="-1" class="question pb-3 table-responsive">
-            <table class="table table-bordered">
-                <tbody class="answers">
-                    <tr>
-                        <th class="text-center">Column A</th>
-                        <th class="text-center">Column B</th>
-                    </tr>
-                    <tr v-for="c in shuffledQuestions[n - 1]['questions'].length" :key="c">
-                        <td class="py-3">
-                            <div class="d-flex">
-                                <div :data-question="shuffledQuestions[n - 1]['questions'][c - 1]" data-answer="" class="question-text flex-grow-1 border-end border-2 pe-2">
-                                    {{ shuffledQuestions[n - 1]['questions'][c - 1] }}
-                                </div>
-                                <div class="circles-cont pe-5 ps-1s">
-                                    <div>
-                                        <div class="circle-outer circle-start d-flex align-items-center justify-content-center bg-warning rounded-circle position-absolute top-0 start-0 pointer-event pe-none">
-                                            <div class="circle-inner bg-primary rounded-circle">
-                                                <div class="connect-line bg-primary position-absolute start-50"></div>
+    <TransitionGroup>
+        <div v-for="shuffledQuestion in currentShuffledQuestion" :key="shuffledQuestion" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0">
+            <div class="pb-3 table-responsive">
+                <table class="table table-bordered">
+                    <tbody class="answers">
+                        <tr>
+                            <th class="text-center">Column A</th>
+                            <th class="text-center">Column B</th>
+                        </tr>
+                        <tr v-for="c in currentShuffledQuestion[0]['questions'].length" :key="c">
+                            <td class="py-3">
+                                <div class="d-flex">
+                                    <div :data-question="currentShuffledQuestion[0]['questions'][c - 1]" data-answer="" class="question-text flex-grow-1 border-end border-2 pe-2">
+                                        {{ currentShuffledQuestion[0]['questions'][c - 1] }}
+                                    </div>
+                                    <div class="circles-cont pe-5 ps-1s">
+                                        <div>
+                                            <div class="circle-outer circle-start d-flex align-items-center justify-content-center bg-warning rounded-circle position-absolute top-0 start-0 pointer-event pe-none">
+                                                <div class="circle-inner bg-primary rounded-circle">
+                                                    <div class="connect-line bg-primary position-absolute start-50"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="circle-outer circle-end d-flex align-items-center justify-content-center bg-warning rounded-circle position-absolute"
-                                            @mousedown="$event => moveCircle($event)"
-                                            data-disabled="false">
-                                            <div class="circle-inner bg-primary rounded-circle"></div>
+                                            <div class="circle-outer circle-end d-flex align-items-center justify-content-center bg-warning rounded-circle position-absolute"
+                                                @mousedown="$event => moveCircle($event)"
+                                                data-disabled="false">
+                                                <div class="circle-inner bg-primary rounded-circle"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="droppable py-3">
-                            <div class="d-flex align-items-center">
-                                <div class="ps-4 pe-1 border-end border-2 me-2">
-                                    <div class="pin bg-dark rounded-circle pe-none"></div>
+                            </td>
+                            <td class="droppable py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="ps-4 pe-1 border-end border-2 me-2">
+                                        <div class="pin bg-dark rounded-circle pe-none"></div>
+                                    </div>
+                                    <div :data-text="currentShuffledQuestion[0]['answers'][c - 1]" class="answer-text flex-grow-1">
+                                        {{ currentShuffledQuestion[0]['answers'][c - 1] }}
+                                    </div>
                                 </div>
-                                <div :data-text="shuffledQuestions[n - 1]['answers'][c - 1]" class="answer-text flex-grow-1">
-                                    {{ shuffledQuestions[n - 1]['answers'][c - 1] }}
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
         </div>
-        <button :tabindex="n == 1 ? 0 : -1" @click="!answered && checkAnswer(n - 1)" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>
-    </div>
+    </TransitionGroup>
 </template>
 
 <style scoped>
@@ -231,5 +234,14 @@ td {
 }
 .answer-active {
     background-color: lightskyblue;
+}
+.v-move, .v-enter-active, .v-leave-active {
+    transition: transform 0.5s ease;
+}
+.v-enter-from {
+    transform: translateX(100%);
+}
+ .v-leave-to {
+    transform: translateX(-100%);
 }
 </style>

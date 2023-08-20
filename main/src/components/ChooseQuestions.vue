@@ -1,18 +1,22 @@
 <script setup>
-import {nextTick} from "vue";
+import {nextTick, computed} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnsweredQuestions", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnsweredQuestions, changeAnswered} = props;
+const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
+const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
 let rightSound;
 let wrongSound;
+const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
+
 nextTick(() => {
     rightSound = document.getElementById("rightSound");
     wrongSound = document.getElementById("wrongSound");
 });
 
-function checkAnswer(event, rightAnswer) {
+function checkAnswer(event) {
     if (event.target.tagName != "BUTTON") return;
-    if (event.target.dataset.choice == JSON.parse(event.target.parentElement.parentElement.dataset.choices)[rightAnswer - 1]) {
+    const question = currentQuestion.value[0];
+    const rightAnswer = question[1][question[2] - 1];
+    if (event.target.dataset.choice == rightAnswer) {
         changeAnswerIsRight("right");
         rightSound.play();
         event.target.style.border = "5px solid green";
@@ -22,10 +26,9 @@ function checkAnswer(event, rightAnswer) {
         changeAnswerIsRight("wrong");
         wrongSound.play();
         event.target.style.border = "5px solid red";
-        document.querySelector("button[data-choice='" + JSON.parse(event.target.parentElement.parentElement.dataset.choices)[rightAnswer - 1] + "']").style.border = "5px solid green";
+        document.querySelector("button[data-choice='" + rightAnswer + "']").style.border = "5px solid green";
         setTimeout(() => changeAnswerIsRight(""), 750);
     }
-    changeAnsweredQuestions(answeredQuestions.value + 1);
     changeAnswered(true);
     Array.from(event.target.parentElement.parentElement.querySelectorAll("button")).forEach((el) => {
         el.style.pointerEvents = "none";
@@ -36,19 +39,19 @@ function checkAnswer(event, rightAnswer) {
 </script>
 
 <template>
-    <div class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden" v-for="(question, index) in questions" :key="question">
-        <div class="question">
+    <TransitionGroup>
+        <div v-for="question in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0 question">
             <h2 class="mb-5">{{ question[0] }}</h2>
-            <div :data-choices="JSON.stringify(question[1])" @click="$event => !answered && checkAnswer($event, question[2])" class="row gx-0">
+            <div @click="$event => checkAnswer($event)" class="row gx-0">
                 <div 
                     v-for="choice in question[1]" 
                     :key="choice"
                     class="col-sm-6 p-2">
-                    <button :tabindex="index ? -1 : 0" class="btn w-100 p-2 py-3 h-100" :style="{pointerEvents: index ? 'none' : 'all'}" :data-choice="choice">{{ choice }}</button>
+                    <button class="btn w-100 p-2 py-3 h-100" :data-choice="choice">{{ choice }}</button>
                 </div>
             </div>
         </div>
-    </div>
+    </TransitionGroup>
 </template>
 
 <style scoped>
@@ -57,5 +60,14 @@ button {
 }
 button:hover {
     background-color: rgb(233, 233, 233);
+}
+.v-move, .v-enter-active, .v-leave-active {
+    transition: transform 0.5s ease;
+}
+.v-enter-from {
+    transform: translateX(100%);
+}
+ .v-leave-to {
+    transform: translateX(-100%);
 }
 </style>
