@@ -1,8 +1,10 @@
 <script setup>
 import {nextTick, computed} from "vue";
+import rightImg from "@/assets/icons/right.webp";
+import wrongImg from "@/assets/icons/wrong.webp";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
+const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
+const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
 let rightSound;
 let wrongSound;
@@ -17,7 +19,7 @@ function checkAnswer(answer) {
     document.querySelector(".answers").querySelectorAll("button")[rightAnswer].style.opacity = "0";
     if (answer == rightAnswer) {
         rightSound.play();
-        changeRightAnswers(rightAnswers.value + 1);
+        addRightAnswer();
         document.querySelector("h2").classList.add("text-success");
     } else {
         wrongSound.play();
@@ -39,12 +41,12 @@ function checkAnswer(answer) {
             <div class="answers row p-3 p-md-5">
                 <div class="col-6">
                     <button @click="() => !answered && checkAnswer(1)" class="btn w-100 p-2 py-3 border border-danger border-2">
-                        <img class="w-100" src="@/assets/icons/right.webp" alt="right">
+                        <img class="w-100" :src="rightImg" alt="right">
                     </button>
                 </div>
                 <div class="col-6">
                     <button @click="() => !answered && checkAnswer(0)" class="btn w-100 p-2 py-3 border border-danger border-2">
-                        <img class="w-100" src="@/assets/icons/wrong.webp" alt="wrong">
+                        <img class="w-100" :src="wrongImg" alt="wrong">
                     </button>
                 </div>
             </div>

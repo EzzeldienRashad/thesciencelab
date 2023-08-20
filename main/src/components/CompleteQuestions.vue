@@ -1,8 +1,8 @@
 <script setup>
 import {computed, nextTick} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
+const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
+const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 let checked = false;
 const currentQuestionGroupArr = computed(() => [questions.value[answeredQuestions.value]]);
 const choices = [];
@@ -31,7 +31,7 @@ function checkAnswer() {
             inputs[i].style.borderBottom = "2px dotted green";
             inputs[i].disabled = true;
             currentQuestionGroupArr.value[0][i][1] = [];
-            if (!checked) changeRightAnswers(rightAnswers.value + 1);
+            if (!checked) addRightAnswer();
         } else if (currentQuestionGroupArr.value[0][i][1].length && inputs[i].value.trim().toLowerCase() != currentQuestionGroupArr.value[0][i][1][0].trim().toLowerCase()) {
             if (!checked) {
                 inputs[i].style.borderBottom = "2px solid red";

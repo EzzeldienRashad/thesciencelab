@@ -1,8 +1,8 @@
 <script setup>
 import {nextTick, computed} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
+const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
+const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 let rightSound;
 let wrongSound;
 const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
@@ -21,7 +21,7 @@ function checkAnswer(event) {
         rightSound.play();
         event.target.style.border = "5px solid green";
         setTimeout(() => changeAnswerIsRight(""), 750);
-        changeRightAnswers(rightAnswers.value + 1);
+        addRightAnswer();
     } else {
         changeAnswerIsRight("wrong");
         wrongSound.play();

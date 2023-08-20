@@ -35,9 +35,9 @@ async function login() {
     <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php">
         <label class="form-label" for="password">Password: </label>
         <div class="row">
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="input-group">
-                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" size="50" class="form-control"/>
+                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control"/>
                     <span class="input-group-text" @click="showPassword = !showPassword">
                         <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
                         <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />

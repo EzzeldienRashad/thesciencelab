@@ -32,12 +32,11 @@ const questionsCont = ref(null);
 const rightAnswers = ref(0);
 const answeredQuestions = ref(0);
 const inheritedVariables = {
-    rightAnswers, 
     answeredQuestions,
     answered, 
     questions,
     changeAnswerIsRight(value) {answerIsRight.value = value},
-    changeRightAnswers(value) {rightAnswers.value = value},
+    addRightAnswer() {rightAnswers.value += 1},
     changeAnswered(value) {answered.value = value}
 };
 

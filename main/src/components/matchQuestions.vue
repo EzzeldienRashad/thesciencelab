@@ -1,8 +1,8 @@
 <script setup>
 import {nextTick, computed, watch} from "vue";
 
-const props = defineProps(["rightAnswers", "answeredQuestions", "answered", "questions", "changeAnswerIsRight", "changeRightAnswers", "changeAnswered"]);
-const {rightAnswers, answeredQuestions, answered, questions, changeAnswerIsRight, changeRightAnswers, changeAnswered} = props;
+const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
+const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 let checked = false;
 let currentQuestion = {...questions.value[answeredQuestions.value]};
 const shuffledQuestions = [];
@@ -33,7 +33,7 @@ function checkAnswer() {
             questionText.parentElement.querySelector(".connect-line").classList.remove("bg-danger");
             questionText.parentElement.querySelector(".connect-line").classList.add("bg-success");
             questionText.parentElement.querySelector(".circle-end").dataset.disabled = true;
-            if (!checked) changeRightAnswers(rightAnswers.value + 1);
+            if (!checked) addRightAnswer();
         } else if (currentQuestion[questionText.dataset.question] != questionText.dataset.answer) {
             if (!checked) {
                 questionText.style.color = "red";
@@ -56,7 +56,6 @@ function checkAnswer() {
     }
 }
 function moveCircle(event) {
-    event.preventDefault();
     const circle = event.currentTarget;
     circle.classList.remove("d-flex");
     circle.classList.add("d-none");
@@ -69,8 +68,8 @@ function moveCircle(event) {
     let currentDroppable = null;
     const shiftX = event.clientX - circle.getBoundingClientRect().left;
     const shiftY = event.clientY - circle.getBoundingClientRect().top;
-    addEventListener("mousemove", moveToMouse);
-    addEventListener("mouseup", leaveMouse);
+    addEventListener("pointermove", moveTopointer);
+    addEventListener("pointerup", leavepointer);
     function positionCircle(x, y, shiftX = 0, shiftY = 0) {
         if (x < document.querySelector("tbody").getBoundingClientRect().right - circle.offsetWidth / 2 &&
             x > document.querySelector("tbody").getBoundingClientRect().left) {
@@ -90,7 +89,7 @@ function moveCircle(event) {
         connectLine.style.transform = "rotate(" + rotation + "deg)";
 
     }
-    function moveToMouse(moveEvent) {
+    function moveTopointer(moveEvent) {
         moveEvent.preventDefault();
         circle.classList.remove("d-flex");
         circle.classList.add("d-none");
@@ -111,7 +110,7 @@ function moveCircle(event) {
         }
         positionCircle(moveEvent.clientX, moveEvent.clientY, shiftX, shiftY);
     }
-    function leaveMouse() {
+    function leavepointer() {
         if (currentDroppable && !currentDroppable.classList.contains("busy")) {
             currentDroppable.classList.remove("answer-active");
             const pin = currentDroppable.querySelector(".pin");
@@ -125,8 +124,8 @@ function moveCircle(event) {
             connectLine.style.transform = "";
             circle.closest("td").querySelector(".question-text").dataset.answer = "";
         }
-        removeEventListener("mousemove", moveToMouse);
-        removeEventListener("mouseup", leaveMouse);
+        removeEventListener("pointermove", moveTopointer);
+        removeEventListener("pointerup", leavepointer);
     }
 }
 function shuffle(arr) {
@@ -165,7 +164,7 @@ function rem2px(rem) {
                                                 </div>
                                             </div>
                                             <div class="circle-outer circle-end d-flex align-items-center justify-content-center bg-warning rounded-circle position-absolute"
-                                                @mousedown="$event => moveCircle($event)"
+                                                @pointerdown.prevent="$event => moveCircle($event)"
                                                 data-disabled="false">
                                                 <div class="circle-inner bg-primary rounded-circle"></div>
                                             </div>
@@ -209,6 +208,7 @@ td {
 .circles-cont {
     margin-top: 2px;
     z-index: 2;
+    touch-action: none;
 }
 .circle-outer {
     width: 1.3rem;
