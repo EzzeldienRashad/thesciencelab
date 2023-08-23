@@ -1,5 +1,6 @@
 <script setup>
 import {ref, onBeforeUnmount, provide} from "vue";
+import logo from "@/assets/icons/logo.webp";
 
 const nav = ref(null);
 const navbarCollapse = ref(null);
@@ -35,7 +36,7 @@ onBeforeUnmount(() => {
         <nav ref="nav" class="navbar navbar-expand-sm navbar-light fixed-top p-0" :class="'bg-' + theme">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand p-0">
-                    <img src="/favicon.ico" alt="Main Page" width="50" height="50">
+                    <img :src="logo" alt="Main Page" width="50" height="50">
                 </a>
                 <button ref="navbarToggler" class="navbar-toggler" id="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navigation">
                     <span class="navbar-toggler-icon"></span>

@@ -1,10 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {removeDashes} from "@/modules.js";
 import HomePage from "@/views/HomePage.vue";
-import AboutUs from "@/views/AboutUs.vue";
-import ContactUs from "@/views/ContactUs.vue";
-import GradeGames from "@/views/GradeGames.vue";
-import GameView from "@/views/GameView.vue";
 
 const routes = [
     {
@@ -15,24 +11,24 @@ const routes = [
     {
         path: "/about",
         name: "about",
-        component: AboutUs,
+        component: () => import("@/views/AboutUs.vue"),
         meta: {title: "About Us | The Science Lab"}
     },
     {
         path: "/contact",
         name: "contact",
-        component: ContactUs,
+        component: () => import("@/views/ContactUs.vue"),
         meta: {title: "Contact Us | The Science Lab"}
     },
     {
         path: "/:grade",
         name: "grade",
-        component: GradeGames,
+        component: () => import("@/views/GradeGames.vue"),
     },
     {
         path: "/:grade/:game",
         name: "game",
-        component: GameView
+        component: () => import("@/views/GameView.vue"),
     }
 ];
 const router = createRouter({

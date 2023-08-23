@@ -2,6 +2,7 @@
 import {ref, inject} from "vue";
 import HomeBalls from "@/components/HomeBalls.vue";
 import GradeLink from "@/components/GradeLink.vue";
+import logo from "@/assets/icons/logo.webp";
 
 const grades = ref([
     "grade-4-first-term", "grade-4-second-term",
@@ -24,7 +25,7 @@ const documentWidth = inject("documentWidth");
                     Science<br/>
                     Lab<br/>
                 </h1>
-                <img v-if="documentWidth > 500" src="/favicon.ico" alt="The Science Lab" width="207" height="256"/>
+                <img v-if="documentWidth > 500" :src="logo" alt="The Science Lab" width="250" height="250"/>
             </div>
         </section>
         <section class="p-4 p-sm-5">
