@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -10,6 +10,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  test: {
+    environment: 'jsdom',
+    coverage: {
+      provider: "v8",
+      enabled: true,
+    },
+    includeSource: ["src/**/*.{js,ts}"],
   },
   base: "/admin/"
 })
