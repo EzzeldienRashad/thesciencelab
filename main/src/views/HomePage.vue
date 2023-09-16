@@ -25,7 +25,7 @@ const documentWidth = inject("documentWidth");
                     Science<br/>
                     Lab<br/>
                 </h1>
-                <img v-if="documentWidth > 500" :src="logo" alt="The Science Lab" width="250" height="250"/>
+                <img v-if="documentWidth > 500" :src="logo" alt="The Science Lab" width="230" height="230"/>
             </div>
         </section>
         <section class="p-4 p-sm-5">

@@ -1,5 +1,8 @@
 <?php
 ini_set('session.cookie_samesite','None');
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_secure', 1);
 if (isset($_SERVER["HTTP_ORIGIN"])) {
     $origin = $_SERVER["HTTP_ORIGIN"];
     if ($origin == "http://localhost:5173" || $origin == "http://localhost:5174") {
@@ -13,7 +16,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
     echo "admin";
 } elseif (isset($_POST["password"])) {
     require "password.php";
-    $maxLoginAttempts = 5;
+    $maxLoginAttempts = 20;
     $waitTime = "5 minutes";
     $dsn = "mysql:host=localhost;dbname=b22_32993975_TheScienceLab;";
     $pdo = new PDO($dsn, "b22_32993975", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);

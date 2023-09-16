@@ -37,6 +37,9 @@ npm run build
 
 *info:*
 ini_set('session.cookie_samesite','None');
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_secure', 1);
 if (isset($_SERVER["HTTP_ORIGIN"])) {
     $origin = $_SERVER["HTTP_ORIGIN"];
     if ($origin == "http://localhost:5173" || $origin == "http://localhost:5174") {
@@ -61,7 +64,7 @@ To see changes after modifying info move it to the other server
 * configure remote htaccess to redirect requests to index html or admin
 * copy info folder to the php server in local repo / upload info folder after build on host
 * make a shortcut of todo in onedrive in local repo
-* upload additional password.php with $password = "your password"
+* upload additional password.php with $password = "your password" to info/functions and password.js to admin root
 * create a database b22_32993975_TheScienceLab with table FailedLogins columns id date
 
 ## Hierarchy

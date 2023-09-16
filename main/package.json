@@ -22,9 +22,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/coverage-v8": "^0.34.3",
-    "jsdom": "^22.1.0",
+    "cypress": "^13.2.0",
     "sass": "^1.63.3",
-    "vite": "^4.1.4",
-    "vitest": "^0.34.3"
+    "vite": "^4.1.4"
   }
 }
