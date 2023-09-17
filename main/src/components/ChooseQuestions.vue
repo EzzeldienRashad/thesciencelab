@@ -3,14 +3,7 @@ import {nextTick, computed} from "vue";
 
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
-let rightSound;
-let wrongSound;
 const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
-
-nextTick(() => {
-    rightSound = document.getElementById("rightSound");
-    wrongSound = document.getElementById("wrongSound");
-});
 
 function checkAnswer(event) {
     if (event.target.tagName != "BUTTON") return;
@@ -18,23 +11,18 @@ function checkAnswer(event) {
     const rightAnswer = question[1][question[2] - 1];
     if (event.target.dataset.choice == rightAnswer) {
         changeAnswerIsRight("right");
-        rightSound.play();
         event.target.style.border = "5px solid green";
-        setTimeout(() => changeAnswerIsRight(""), 750);
         addRightAnswer();
     } else {
         changeAnswerIsRight("wrong");
-        wrongSound.play();
         event.target.style.border = "5px solid red";
         document.querySelector("button[data-choice='" + rightAnswer + "']").style.border = "5px solid green";
-        setTimeout(() => changeAnswerIsRight(""), 750);
     }
     changeAnswered(true);
     Array.from(event.target.parentElement.parentElement.querySelectorAll("button")).forEach((el) => {
         el.style.pointerEvents = "none";
         el.tabIndex = -1;
     });
-    nextTick(() => document.getElementById("next-arrow").focus());
 }
 </script>
 

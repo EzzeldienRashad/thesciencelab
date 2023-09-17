@@ -6,23 +6,17 @@ import wrongImg from "@/assets/icons/wrong.webp";
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
-let rightSound;
-let wrongSound;
 
-nextTick(() => {
-    rightSound = document.getElementById("rightSound");
-    wrongSound = document.getElementById("wrongSound");
-});
 function checkAnswer(answer) {
     const rightAnswer = Number(currentQuestion.value[0][1]);
     document.querySelector(".answers").querySelectorAll("button")[Number(!rightAnswer)].parentElement.style.border = "5px solid blue";
     document.querySelector(".answers").querySelectorAll("button")[rightAnswer].style.opacity = "0";
     if (answer == rightAnswer) {
-        rightSound.play();
+        changeAnswerIsRight("right");
         addRightAnswer();
         document.querySelector("h2").classList.add("text-success");
     } else {
-        wrongSound.play();
+        changeAnswerIsRight("wrong");
         document.querySelector("h2").classList.add("text-danger");
     }
     changeAnswered(true);
@@ -30,7 +24,6 @@ function checkAnswer(answer) {
         el.style.pointerEvents = "none";
         el.tabIndex = -1;
     });
-    nextTick(() => document.getElementById("next-arrow").focus());
 }
 </script>
 

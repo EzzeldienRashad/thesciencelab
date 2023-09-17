@@ -12,13 +12,7 @@ for (let questionGroup of questions.value) {
     shuffledQuestions.push({"questions": shuffledKeys, "answers": shuffledValues});
 }
 const currentShuffledQuestion = computed(() => [shuffledQuestions[answeredQuestions.value]]);
-let rightSound;
-let wrongSound;
 
-nextTick(() => {
-    rightSound = document.getElementById("rightSound");
-    wrongSound = document.getElementById("wrongSound");
-});
 watch(answeredQuestions, (answeredQuestionsValue) => currentQuestion = {...questions.value[answeredQuestionsValue]});
 
 function checkAnswer() {
@@ -45,14 +39,11 @@ function checkAnswer() {
     }
     checked = true;
     if (foundWrongAnswer) {
-        wrongSound.play();
+        changeAnswerIsRight("wrong");
     } else {
-        rightSound.play();
         changeAnswerIsRight("right");
-        setTimeout(() => changeAnswerIsRight(""), 750);
         if (!answered.value) changeAnswered(true);
         checked = false;
-        nextTick(() => document.getElementById("next-arrow").focus());
     }
 }
 function moveCircle(event) {

@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHistory, createWebHashHistory} from "vue-router";
 import {removeDashes} from "@/modules.js";
 import HomePage from "@/views/HomePage.vue";
 
@@ -39,6 +39,10 @@ const router = createRouter({
         return {top: 1};
     }
 });
+const hashRouter = createRouter({
+    history: createWebHashHistory(),
+    routes
+});
 
 router.beforeEach((to) => {
     // close navbar
@@ -57,3 +61,4 @@ router.beforeEach((to) => {
 });
 
 export default router;
+export {hashRouter};

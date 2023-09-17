@@ -1,15 +1,22 @@
 <script setup>
-import {inject, ref} from "vue";
+import {inject, ref, nextTick} from "vue";
 import {useRoute} from "vue-router";
 import ChooseQuestions from "@/components/ChooseQuestions.vue";
 import CompleteQuestions from "@/components/CompleteQuestions.vue";
 import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
 import matchQuestions from "@/components/matchQuestions.vue";
-import rightSound from "@/assets/audio/right.mp3";
-import wrongSound from "@/assets/audio/wrong.mp3";
+import rightSoundAudio from "@/assets/audio/right.mp3";
+import wrongSoundAudio from "@/assets/audio/wrong.mp3";
 import rightImg from "@/assets/icons/right.webp";
 import wrongImg from "@/assets/icons/wrong.webp";
 
+const nextArrow = ref(null);
+const rightSound = ref(null);
+const wrongSound = ref(null);
+const audios = {
+    right: rightSound, 
+    wrong: wrongSound
+}
 const routeParams = useRoute().params;
 const emit = defineEmits(["result"]);
 const questions = inject("questions");
@@ -35,9 +42,16 @@ const inheritedVariables = {
     answeredQuestions,
     answered, 
     questions,
-    changeAnswerIsRight(value) {answerIsRight.value = value},
+    changeAnswerIsRight(value) {
+        answerIsRight.value = value;
+        audios[value].value.play();
+        setTimeout(() => answerIsRight.value = "", 750);
+    },
     addRightAnswer() {rightAnswers.value += 1},
-    changeAnswered(value) {answered.value = value}
+    changeAnswered(value) {
+        answered.value = value;
+        nextTick(() => document.getElementById("next-arrow").focus());
+    }
 };
 
 function next() {
@@ -61,11 +75,12 @@ function next() {
             <CompleteQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
             <matchQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />
         </div>
-        <img v-if="answerIsRight == 'right'" :src="rightImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
-        <audio id="rightSound" :src="rightSound"></audio>
-        <img v-if="answerIsRight == 'wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
-        <audio id="wrongSound" :src="wrongSound"></audio>
+        <img v-if="answerIsRight == 'right' && routeParams.game != 'right-or-wrong'" :src="rightImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <img v-if="answerIsRight == 'wrong' && routeParams.game != 'right-or-wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
+        <audio ref="rightSound" :src="rightSoundAudio"></audio>
+        <audio ref="wrongSound" :src="wrongSoundAudio"></audio>
         <button 
+        ref="nextArrow"
         id="next-arrow" 
         class="position-fixed top-50 translate-middle-y border-0 p-0 bg-transparent"
         v-if="answered" 

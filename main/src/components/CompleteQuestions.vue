@@ -14,13 +14,6 @@ for (let questionGroup of questions.value) {
     choices.push(shuffle(choicesArr));
 }
 const currentChoices = computed(() => choices[answeredQuestions.value]);
-let rightSound;
-let wrongSound;
-
-nextTick(() => {
-    rightSound = document.getElementById("rightSound");
-    wrongSound = document.getElementById("wrongSound");
-});
 
 function checkAnswer() {
     const inputs = document.querySelector(".answers").querySelectorAll("input");
@@ -41,17 +34,12 @@ function checkAnswer() {
     }
     checked = true;
     if (foundWrongAnswer) {
-        wrongSound.play();
-        document.querySelector("input:not([disabled])").focus();
         changeAnswerIsRight("wrong");
-        setTimeout(() => changeAnswerIsRight(""), 750);
+        document.querySelector("input:not([disabled])").focus();
     } else {
-        rightSound.play();
         changeAnswerIsRight("right");
-        setTimeout(() => changeAnswerIsRight(""), 750);
         if (!answered.value) changeAnswered(true);
         checked = false;
-        nextTick(() => document.getElementById("next-arrow").focus());
     }
 }
 function shuffle(arr) {
