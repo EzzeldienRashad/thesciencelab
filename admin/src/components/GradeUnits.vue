@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {removeDashes} from "@/modules.js";
+import {removeDashes} from "@/modules/removeDashes.js";
 
 const router = useRouter();
 let units = ref([]);

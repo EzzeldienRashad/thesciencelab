@@ -1,5 +1,5 @@
 <script setup>
-import {nextTick, computed} from "vue";
+import {computed} from "vue";
 
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
@@ -18,24 +18,23 @@ function checkAnswer(event) {
         event.target.style.border = "5px solid red";
         document.querySelector("button[data-choice='" + rightAnswer + "']").style.border = "5px solid green";
     }
-    changeAnswered(true);
-    Array.from(event.target.parentElement.parentElement.querySelectorAll("button")).forEach((el) => {
-        el.style.pointerEvents = "none";
-        el.tabIndex = -1;
-    });
+    changeAnswered();
 }
 </script>
 
 <template>
     <TransitionGroup>
         <div v-for="question in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0 question">
-            <h2 class="mb-5">{{ question[0] }}</h2>
-            <div @click="$event => checkAnswer($event)" class="row gx-0">
+            <h2 class="mb-5" data-cy="question">{{ question[0] }}</h2>
+            <div @click="$event => checkAnswer($event)" class="row gx-0" data-cy="choices">
                 <div 
                     v-for="choice in question[1]" 
                     :key="choice"
                     class="col-sm-6 p-2">
-                    <button class="btn w-100 p-2 py-3 h-100" :data-choice="choice">{{ choice }}</button>
+                    <button class="btn w-100 p-2 py-3 h-100" 
+                        :data-choice="choice" 
+                        :style="{pointerEvents: answered ? 'none' : 'auto'}"
+                        :tabIndex="answered ? -1 : 0">{{ choice }}</button>
                 </div>
             </div>
         </div>

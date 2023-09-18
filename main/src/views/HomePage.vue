@@ -1,6 +1,6 @@
 <script setup>
 import {ref, inject} from "vue";
-import HomeBalls from "@/components/HomeBalls.vue";
+import BouncingBallsDecoration from "@/components/BouncingBallsDecoration.vue";
 import GradeLink from "@/components/GradeLink.vue";
 import logo from "@/assets/icons/logo.webp";
 
@@ -18,7 +18,7 @@ const documentWidth = inject("documentWidth");
 <template>
     <div>
         <section class="position-relative">
-            <HomeBalls />
+            <BouncingBallsDecoration />
             <div class="overlay overflow-hidden position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-around align-items-center">
                 <h1 class="display-1 m-0 text-center fw-bold">
                     The<br/>

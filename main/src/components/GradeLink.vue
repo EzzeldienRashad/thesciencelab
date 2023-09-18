@@ -1,7 +1,8 @@
 <script setup>
-import {RouterLink} from 'vue-router';
+import vueRouter from '@/modules/vue-router';
+const {RouterLink} = vueRouter;
 import {onMounted, ref, inject} from "vue";
-import {removeDashes} from "@/modules.js";
+import {removeDashes} from "@/modules/removeDashes.js";
 
 const props = defineProps({
     grade: {

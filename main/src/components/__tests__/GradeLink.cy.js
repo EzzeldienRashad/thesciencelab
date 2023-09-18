@@ -4,12 +4,20 @@ import GradeLink from '../GradeLink.vue'
 
 describe('<GradeLink />', () => {
     it('renders', () => {
-        cy.mount(GradeLink, 
-            {grade: "my-grade"},
-            {documentWidth: Cypress.config("viewportWidth")},
-            {FontAwesomeIcon},
-            [hashRouter]
-        )
+        cy.mount(GradeLink, {
+            props: {
+                grade: "my-grade"
+            },
+            global: {
+                provide: {
+                    documentWidth: Cypress.config("viewportWidth")
+                },
+                components: {
+                    FontAwesomeIcon
+                },
+                plugins: [hashRouter]
+            }
+        });
         cy.get("a").should("have.text", "My grade ")
     })
 })

@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from "vue";
-import {removeDashes} from "@/modules.js"
+import {removeDashes} from "@/modules/removeDashes.js"
 
 const grades = ref([
     "grade-4-first-term", "grade-4-second-term",

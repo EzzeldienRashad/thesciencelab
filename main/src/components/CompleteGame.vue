@@ -1,5 +1,5 @@
 <script setup>
-import {computed, nextTick} from "vue";
+import {computed} from "vue";
 
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
@@ -38,7 +38,7 @@ function checkAnswer() {
         document.querySelector("input:not([disabled])").focus();
     } else {
         changeAnswerIsRight("right");
-        if (!answered.value) changeAnswered(true);
+        if (!answered.value) changeAnswered();
         checked = false;
     }
 }
@@ -54,13 +54,13 @@ function shuffle(arr) {
 <template>
     <TransitionGroup>
         <div v-for="currentQuestionGroup in currentQuestionGroupArr" :key="currentQuestionGroup" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0 question">
-            <div class="text-bg-info rounded-1 p-1 p-md-5">
+            <div class="text-bg-info rounded-1 p-1 p-md-5" data-cy="choices">
                 {{ currentChoices[0] }}
                 <template v-for="choice in currentChoices.slice(1)" :key="choice">
                     &nbsp;&nbsp;,&nbsp;&nbsp; {{ choice }} 
                 </template>
             </div>
-            <ol class="answers border border-2 border-dark rounded-2 mt-3 py-2">
+            <ol class="answers border border-2 border-dark rounded-2 mt-3 py-2" data-cy="questions">
                 <li v-for="question in currentQuestionGroup" :key="question" class="pb-3">
                     {{ question[0] }}
                     <input :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>

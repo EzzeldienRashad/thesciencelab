@@ -1,5 +1,6 @@
-import {createRouter, createWebHistory, createWebHashHistory} from "vue-router";
-import {removeDashes} from "@/modules.js";
+import vueRouter from "@/modules/vue-router";
+const {createRouter, createWebHistory, createWebHashHistory} = vueRouter;
+import {removeDashes} from "@/modules/removeDashes.js";
 import HomePage from "@/views/HomePage.vue";
 
 const routes = [
@@ -23,12 +24,12 @@ const routes = [
     {
         path: "/:grade",
         name: "grade",
-        component: () => import("@/views/GradeGames.vue"),
+        component: () => import("@/views/GamesView.vue"),
     },
     {
         path: "/:grade/:game",
         name: "game",
-        component: () => import("@/views/GameView.vue"),
+        component: () => import("@/views/TheGame.vue"),
     }
 ];
 const router = createRouter({

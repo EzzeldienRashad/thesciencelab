@@ -1,12 +1,10 @@
 <script setup>
-import {useRoute, useRouter} from "vue-router";
-
+import vueRouter from "@/modules/vue-router";
+const {useRoute, useRouter} = vueRouter;
 const props = defineProps({
-    game: String,
     score: Number,
     total: Number
 });
-
 const routeParams = useRoute().params;
 const router = useRouter();
 const result = props.score / props.total * 100;

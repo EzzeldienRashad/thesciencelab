@@ -1,10 +1,11 @@
 <script setup>
 import {inject, ref, nextTick} from "vue";
-import {useRoute} from "vue-router";
-import ChooseQuestions from "@/components/ChooseQuestions.vue";
-import CompleteQuestions from "@/components/CompleteQuestions.vue";
-import RightOrWrongQuestions from "@/components/RightOrWrongQuestions.vue";
-import matchQuestions from "@/components/matchQuestions.vue";
+import vueRouter from "@/modules/vue-router";
+const {useRoute} = vueRouter;
+import ChooseGame from "@/components/ChooseGame.vue";
+import CompleteGame from "@/components/CompleteGame.vue";
+import RightOrWrongGame from "@/components/RightOrWrongGame.vue";
+import MatchGame from "@/components/MatchGame.vue";
 import rightSoundAudio from "@/assets/audio/right.mp3";
 import wrongSoundAudio from "@/assets/audio/wrong.mp3";
 import rightImg from "@/assets/icons/right.webp";
@@ -48,8 +49,8 @@ const inheritedVariables = {
         setTimeout(() => answerIsRight.value = "", 750);
     },
     addRightAnswer() {rightAnswers.value += 1},
-    changeAnswered(value) {
-        answered.value = value;
+    changeAnswered() {
+        answered.value = true;
         nextTick(() => document.getElementById("next-arrow").focus());
     }
 };
@@ -57,7 +58,7 @@ const inheritedVariables = {
 function next() {
     answeredQuestions.value += 1;
     if (answeredQuestions.value >= questionsLength) {
-        emit("result", routeParams.game, rightAnswers.value, totalQuestions);
+        emit("result", rightAnswers.value, totalQuestions);
         return;
     }
     answered.value = false;
@@ -70,10 +71,10 @@ function next() {
             <div class="progress-bar" :style="{width: answeredQuestions * 100 / questionsLength + '%'}"></div>
         </div>
         <div ref="questionsCont" id="questions-cont">
-            <ChooseQuestions v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
-            <RightOrWrongQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'right-or-wrong'" />
-            <CompleteQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
-            <matchQuestions v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />
+            <ChooseGame v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
+            <RightOrWrongGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'right-or-wrong'" />
+            <CompleteGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
+            <MatchGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />
         </div>
         <img v-if="answerIsRight == 'right' && routeParams.game != 'right-or-wrong'" :src="rightImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>
         <img v-if="answerIsRight == 'wrong' && routeParams.game != 'right-or-wrong'" :src="wrongImg" width="200" height="200" class="position-fixed start-50 translate-middle-x"/>

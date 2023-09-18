@@ -1,5 +1,5 @@
 <script setup>
-import {nextTick, computed, watch} from "vue";
+import {computed, watch} from "vue";
 
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
@@ -42,7 +42,7 @@ function checkAnswer() {
         changeAnswerIsRight("wrong");
     } else {
         changeAnswerIsRight("right");
-        if (!answered.value) changeAnswered(true);
+        if (!answered.value) changeAnswered();
         checked = false;
     }
 }

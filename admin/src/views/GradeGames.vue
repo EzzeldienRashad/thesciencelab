@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {removeDashes} from "@/modules.js";
+import {removeDashes} from "@/modules/removeDashes.js";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
