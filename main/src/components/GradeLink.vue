@@ -1,6 +1,5 @@
 <script setup>
-import vueRouter from '@/modules/vue-router';
-const {RouterLink} = vueRouter;
+import { RouterLink } from "vue-router";
 import {onMounted, ref, inject} from "vue";
 import removeDashes from "@/modules/removeDashes.js";
 

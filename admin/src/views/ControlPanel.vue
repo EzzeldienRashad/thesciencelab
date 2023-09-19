@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 import ControlPanelChoose from "@/components/ControlPanelChoose.vue";
 import ControlPanelComplete from "@/components/ControlPanelComplete.vue";
 import ControlPanelRightOrWrong from "@/components/ControlPanelRightOrWrong.vue";
@@ -47,8 +47,7 @@ async function deleteQuestion(questionData, byKey = false) {
         else loadQuestions();
     });
 }
-function addQuestion() {
-    const form = document.getElementById("form");
+function addQuestion(form) {
     fetch("http://127.0.0.1/info/functions/add.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value, {
         method: "post",

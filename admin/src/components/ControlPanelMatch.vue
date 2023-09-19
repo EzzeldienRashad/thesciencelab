@@ -24,8 +24,7 @@ const questionsNum = ref(3);
             <tfoot>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)">
-                        </button>
+                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>
@@ -35,7 +34,7 @@ const questionsNum = ref(3);
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-light">
                 <div class="modal-body">
-                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
+                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
                         <template v-for="n in questionsNum">
@@ -49,7 +48,7 @@ const questionsNum = ref(3);
                         </template>
                         <button class="btn btn-info float-end ms-2" @click="questionsNum++">+ question</button>
                         <button class="btn btn-danger float-end" @click="questionsNum--">- question</button>
-                        <input type="submit" name="submit" value="add" class="btn btn-success"/>
+                        <input type="submit" name="submit" value="add" class="btn btn-success" data-cy="submit"/>
                     </form>
                 </div>
             </div>

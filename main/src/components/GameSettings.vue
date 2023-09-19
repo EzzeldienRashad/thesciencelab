@@ -1,7 +1,8 @@
 <script setup>
 import {ref, nextTick} from "vue";
+import { useRouter } from "vue-router";
 import vueRouter from "@/modules/vue-router";
-const {useRoute, useRouter} = vueRouter;
+const {useRoute} = vueRouter;
 import removeDashes from "@/modules/removeDashes.js";
 
 defineEmits(["start"]);

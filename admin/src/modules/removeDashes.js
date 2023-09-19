@@ -1,3 +1,3 @@
-export function removeDashes(str) {
+export default function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1).replaceAll("-", " ");
 }

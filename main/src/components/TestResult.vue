@@ -1,6 +1,7 @@
 <script setup>
+import { useRouter } from "vue-router";
 import vueRouter from "@/modules/vue-router";
-const {useRoute, useRouter} = vueRouter;
+const {useRoute} = vueRouter;
 const props = defineProps({
     score: Number,
     total: Number

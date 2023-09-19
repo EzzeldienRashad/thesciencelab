@@ -1,7 +1,6 @@
 <script setup>
 import {ref, onMounted} from "vue";
-import vueRouter from "@/modules/vue-router";
-const {onBeforeRouteLeave} = vueRouter;;
+import { onBeforeRouteLeave } from "vue-router";
 
 const ballId = ref(0);
 const balls = ref([]);

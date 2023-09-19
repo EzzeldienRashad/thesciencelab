@@ -1,7 +1,6 @@
 <script setup>
 import {inject, ref, nextTick} from "vue";
-import vueRouter from "@/modules/vue-router";
-const {useRoute} = vueRouter;
+import {useRoute} from "vue-router";
 import ChooseGame from "@/components/ChooseGame.vue";
 import CompleteGame from "@/components/CompleteGame.vue";
 import RightOrWrongGame from "@/components/RightOrWrongGame.vue";

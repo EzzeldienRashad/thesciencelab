@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from "vue";
-import vueRouter from "@/modules/vue-router";
-const {onBeforeRouteLeave} = vueRouter;
+import { onBeforeRouteLeave } from "vue-router";
 import GamesContainer from "@/components/GamesContainer.vue";
 import TestResult from "@/components/TestResult.vue";
 

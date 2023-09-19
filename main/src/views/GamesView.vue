@@ -1,6 +1,5 @@
 <script setup>
-import vueRouter from "@/modules/vue-router";
-const {useRoute, useRouter} = vueRouter;
+import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import removeDashes from "@/modules/removeDashes.js";
 import chooseImg from "@/assets/images/choose.webp";

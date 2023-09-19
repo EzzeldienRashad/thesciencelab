@@ -4,15 +4,15 @@ const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
 </script>
 
 <template>
-    <div v-for="(answer, question) in questions" :key="question" class="p-3 m-3 rounded" :class="[parseInt(answer) ? 'text-bg-success' : 'text-bg-danger']">
+    <div v-for="(answer, question) in questions" :key="question" class="p-3 m-3 rounded" :class="[parseInt(answer) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
         {{ question }}
-        <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)"></button>
+        <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)" data-cy="delete-btn"></button>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-light">
                 <div class="modal-body">
-                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + msgColor">{{ msg }}</div>
+                    <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
                         <div class="row">
@@ -26,7 +26,7 @@ const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
                         </div>
                         <br/>
                         <br/>
-                        <input type="submit" name="submit" value="add" class="btn btn-success"/>
+                        <input type="submit" name="submit" value="add" class="btn btn-success" data-cy="submit"/>
                     </form>
                 </div>
             </div>

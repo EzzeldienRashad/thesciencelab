@@ -1,19 +1,7 @@
 import {
-    useRoute, 
-    useRouter,
-    RouterLink,
-    createRouter,
-    createWebHashHistory, 
-    createWebHistory,
-    onBeforeRouteLeave
+    useRoute
 } from "vue-router";
 
 export default {
-    useRoute,
-    useRouter, 
-    RouterLink,
-    createRouter,
-    createWebHashHistory, 
-    createWebHistory,
-    onBeforeRouteLeave
+    useRoute
 };
