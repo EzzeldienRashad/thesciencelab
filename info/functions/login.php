@@ -12,6 +12,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 header("Access-Control-Allow-Credentials: true");
 
 session_start();
+if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
 if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
     echo "admin";
 } elseif (isset($_POST["password"])) {
