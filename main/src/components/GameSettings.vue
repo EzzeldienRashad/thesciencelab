@@ -2,7 +2,7 @@
 import {ref, nextTick} from "vue";
 import vueRouter from "@/modules/vue-router";
 const {useRoute, useRouter} = vueRouter;
-import { removeDashes } from "@/modules/removeDashes.js";
+import removeDashes from "@/modules/removeDashes.js";
 
 defineEmits(["start"]);
 
@@ -60,7 +60,7 @@ function shuffle(arr) {
         <transition name="lessons">
             <div class="border-top border-2 border-dark overflow-hidden" ref="trans" v-if="!Object.keys(questions).length">
                 <p class="display-6">Please choose a unit:</p>
-                <div class="row g-2 p-2">
+                <div class="row g-2 p-2" data-cy="units">
                     <template v-for="unit in units" :key="unit">
                         <div v-if="parseInt(unit) && currentTheme != parseInt(unit)" class="col-12">
                             <h3>Theme {{ currentTheme = parseInt(unit) }}:</h3>
@@ -82,7 +82,7 @@ function shuffle(arr) {
                 <div class="d-flex flex-column align-items-center p2">     
                     <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">quick</button>
                     <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-3 m-1 text-center">normal</button>
-                    <button @click="$emit('start', 'coprehensive', questions)" class="btn btn-danger w-75 p-3 m-1 text-center">coprehensive</button>
+                    <button @click="$emit('start', 'comprehensive', questions)" class="btn btn-danger w-75 p-3 m-1 text-center">comprehensive</button>
                 </div>
             </div>
         </transition>

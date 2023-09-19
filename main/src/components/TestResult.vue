@@ -37,10 +37,10 @@ function back() {
             <div class="col-md-6">
                 <div id="c-outer" class="mx-auto border border-2 border-dark rounded-circle position-relative">
                     <div id="c-inner" class="border border-2 rounded-circle position-absolute top-50 start-50 translate-middle bg-light d-flex fs-4 align-items-center justify-content-center">
-                        <div id="score" :style="{'color': info[1]}" class="d-inline-block fs-2">{{ score }} / {{ total }}</div>
+                        <div id="score" :style="{'color': info[1]}" class="d-inline-block fs-2" data-cy="score">{{ score }} / {{ total }}</div>
                     </div>
                 </div>
-                <h1 :style="{'color': info[1]}" class="text-center my-3">{{ info[0] }}</h1>
+                <h1 :style="{'color': info[1]}" class="text-center my-3" data-cy="score-text">{{ info[0] }}</h1>
             </div>
             <div class="col-md-6 fs-4">
                 <div class="float-start separator d-none d-md-inline-block h-100 bg-black"></div>

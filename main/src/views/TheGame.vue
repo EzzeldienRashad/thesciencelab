@@ -19,7 +19,7 @@ function startTest(levelStr, questionsArr) {
             questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
             emit("changeTheme", "warning");
             break;
-        case "coprehensive":
+        case "comprehensive":
             questions.value = questionsArr;
             emit("changeTheme", "danger");
             break;

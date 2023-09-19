@@ -1,6 +1,6 @@
 import vueRouter from "@/modules/vue-router";
 const {createRouter, createWebHistory, createWebHashHistory} = vueRouter;
-import {removeDashes} from "@/modules/removeDashes.js";
+import removeDashes from "@/modules/removeDashes.js";
 import HomePage from "@/views/HomePage.vue";
 
 const routes = [

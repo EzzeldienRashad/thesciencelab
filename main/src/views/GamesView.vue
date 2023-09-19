@@ -2,7 +2,7 @@
 import vueRouter from "@/modules/vue-router";
 const {useRoute, useRouter} = vueRouter;
 import {ref} from "vue";
-import {removeDashes} from "@/modules/removeDashes.js";
+import removeDashes from "@/modules/removeDashes.js";
 import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
