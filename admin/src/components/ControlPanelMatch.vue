@@ -3,6 +3,7 @@ import {ref} from "vue";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
+const form = ref(null);
 const questionsNum = ref(3);
 </script>
 
@@ -36,7 +37,7 @@ const questionsNum = ref(3);
                 <div class="modal-body">
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
-                    <form id="form" method="post" @submit.prevent="addQuestion" class="mt-2">
+                    <form ref="form" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <template v-for="n in questionsNum">
                             <label class="form-label w-100">
                                 Question: <input type="text" name="questions[]" class="form-control" autocomplete="off" required/>
@@ -46,8 +47,8 @@ const questionsNum = ref(3);
                             </label>
                             <hr/>
                         </template>
-                        <button class="btn btn-info float-end ms-2" @click="questionsNum++">+ question</button>
-                        <button class="btn btn-danger float-end" @click="questionsNum--">- question</button>
+                        <button class="btn btn-info float-end ms-2" @click.prevent="questionsNum++">+ question</button>
+                        <button class="btn btn-danger float-end" @click.prevent="questionsNum--">- question</button>
                         <input type="submit" name="submit" value="add" class="btn btn-success" data-cy="submit"/>
                     </form>
                 </div>
