@@ -6,8 +6,8 @@ Cypress.Commands.add("getByData", selector => cy.get(`[data-cy=${selector}]`));
 Cypress.Commands.add("findByData", {prevSubject: true}, (subject, selector) => cy.wrap(subject).find(`[data-cy=${selector}]`));
 Cypress.Commands.add("login", () => {
     cy.session(password, () => {
-        cy.request("POST", "http://localhost/info/functions/login.php", {
-            password
-        })
+        cy.visit("http://localhost:5174");
+        cy.getByData("password").type(password);
+        cy.contains("login").click();
     });
 });

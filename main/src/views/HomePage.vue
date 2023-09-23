@@ -39,7 +39,7 @@ const documentWidth = inject("documentWidth");
                 We hope you a fun and intersting journey here in The Science Lab! 
             </p>
         </section>
-        <section class="p-4 p-sm-5 row gx-0">
+        <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
             <h2 class="col-12">Grades:</h2>
             <div v-for="grade in grades" :key="grade" class="col-12 col-md-6 p-2">
                 <GradeLink :grade="grade"/>

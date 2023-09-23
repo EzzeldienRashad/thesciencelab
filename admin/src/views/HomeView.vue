@@ -14,7 +14,7 @@ const grades = ref([
 
 <template>
     <h1 class="text-center">Please choose a grade</h1>
-    <div class="row row-cols-1 row-cols-md-2 g-2">
+    <div class="row row-cols-1 row-cols-md-2 g-2" data-cy="grades">
         <div v-for="grade in grades" :key="grade" class="col">
             <RouterLink :to="'/' + grade" class="text-decoration-none btn btn-primary w-100 p-2 py-3">
                 {{ removeDashes(grade) }}

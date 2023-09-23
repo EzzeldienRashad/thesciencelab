@@ -21,7 +21,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params
 
 <template>
     <h1 class="text-center">Please choose a unit</h1>
-    <div class="row g-2">
+    <div class="row g-2" data-cy="units">
         <template v-for="unit in units" :key="unit">
             <div v-if="parseInt(unit) && currentTheme != parseInt(unit)" class="col-12">
                 <h3>Theme {{ currentTheme = parseInt(unit) }}:</h3>
