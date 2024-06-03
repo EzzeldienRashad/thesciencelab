@@ -33,7 +33,7 @@ npm run build
 # Before upload
 
 * FETCH REMOTE JSON FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
-* Change "http://127.0.0.1" to "http://thesciencelab.byethost22.com" or "http://localhost"
+* Change "http://127.0.0.1" to "http://thesciencelab.infinityfreeapp.com" or "http://localhost"
 
 *info:*
 ini_set('session.cookie_samesite','None');
@@ -51,9 +51,9 @@ to
 //httpallow!
 
 and
-    $dsn = "mysql:host=localhost;dbname=b22_32993975_TheScienceLab;";
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
 to
-    $dsn = "mysql:host=sql205.byethost22.com;dbname=b22_32993975_TheScienceLab;";
+    $dsn = "mysql:host=sql200.infinityfree.com;dbname=if0_36665133_TheScienceLab;";
 
 -----------------------------------------
 
@@ -65,7 +65,7 @@ To see changes after modifying info move it to the other server
 * copy info folder to the php server in local repo / upload info folder after build on host
 * make a shortcut of todo in onedrive in local repo
 * upload additional password.php with $password = "your password" to info/functions and password.js to admin root
-* create a database b22_32993975_TheScienceLab with table FailedLogins columns id date
+* create a database if0_36665133_TheScienceLab with table FailedLogins columns id date
 
 ## Hierarchy
 ### main

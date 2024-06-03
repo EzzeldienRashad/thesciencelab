@@ -19,13 +19,13 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
     require "password.php";
     $maxLoginAttempts = 20;
     $waitTime = "5 minutes";
-    $dsn = "mysql:host=localhost;dbname=b22_32993975_TheScienceLab;";
-    $pdo = new PDO($dsn, "b22_32993975", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-    $getStmt = $pdo->query("SELECT id, date FROM b22_32993975_TheScienceLab.FailedLogins");
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+    $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+    $getStmt = $pdo->query("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins");
     $dates = $getStmt->fetchAll();
     if (count($dates) >= $maxLoginAttempts) { 
         if (count($dates) > $maxLoginAttempts) {
-            $deleteStmt = $pdo->prepare("DELETE FROM b22_32993975_TheScienceLab.FailedLogins WHERE id < ?");
+            $deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab.FailedLogins WHERE id < ?");
             $deleteStmt->bindParam(1, $dates[count($dates) - $maxLoginAttempts]["id"], PDO::PARAM_INT);
             $deleteStmt->execute();
         }
@@ -37,7 +37,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
                 $_SESSION["isAdmin"] = true;
                 echo "admin";
             } else {
-                $pdo->query("INSERT INTO b22_32993975_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
+                $pdo->query("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
             }
         }
     } else {
@@ -45,7 +45,7 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
             $_SESSION["isAdmin"] = true;
             echo "admin";
         } else {
-            $pdo->query("INSERT INTO b22_32993975_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
+            $pdo->query("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
         }
     }
 }
