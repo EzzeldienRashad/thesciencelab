@@ -6,6 +6,9 @@ import chooseImg from "@/assets/images/choose.webp";
 import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
 import matchImg from "@/assets/images/match.webp";
+import biologyImg from "@/assets/images/biology.webp";
+import physicsImg from "@/assets/images/physics.webp";
+import chemistryImg from "@/assets/images/chemistry.webp";
 
 const router = useRouter();
 const grade = useRoute().params.grade;
@@ -16,6 +19,9 @@ const gamesImages = {
     "complete": completeImg,
     "right-or-wrong": rightOrWrongImg,
     "match": matchImg,
+    "biology": biologyImg,
+    "physics": physicsImg,
+    "chemistry": chemistryImg,
 };
 
 fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
@@ -30,7 +36,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
     <div>
         <h1 class="text-center pt-2">Welcome to {{ gradeName }}!</h1>
         <h4 class="p-2">Please choose a game:</h4>
-        <div class="row row-cols-sm-2 row-cols-lg-3 p-2">
+        <div class="row row-cols-sm-2 row-cols-lg-3 p-2 align-items-end">
             <div v-for="game in games" :key="game" class="col-12 col-sm-6 col-lg-4">
                 <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="'/' + grade + '/' + game">
                     <figure class="mb-0 w-75">
@@ -45,3 +51,23 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
         </div>
     </div>
 </template>
+
+<style>
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
+}
+.v-enter-active, .v-leave-active {
+    transition: height 0.5 ease;
+}
+.v-enter-from, .v-leave-to {
+    height: 0;
+}
+.v-enter-to, .v-leave-from {
+    height: 300px
+}
+</style>

@@ -70,7 +70,7 @@ function next() {
             <div class="progress-bar" :style="{width: answeredQuestions * 100 / questionsLength + '%'}"></div>
         </div>
         <div ref="questionsCont" id="questions-cont">
-            <ChooseGame v-bind="inheritedVariables" v-if="routeParams.game == 'choose'" />
+            <ChooseGame v-bind="inheritedVariables" v-if="['biology', 'physics', 'chemistry', 'choose'].includes(routeParams.game)" />
             <RightOrWrongGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'right-or-wrong'" />
             <CompleteGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
             <MatchGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'match'" />

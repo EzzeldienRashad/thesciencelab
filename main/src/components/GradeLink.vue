@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <RouterLink :class="{'fs-4': documentWidth > 500}" class="p-2 border-dark border border-3 text-decoration-none text-dark w-100 d-block" :to="'/' + grade">
+    <RouterLink :class="{'fs-5': documentWidth > 760 && documentWidth < 830, 'fs-4': (documentWidth > 500 && documentWidth < 760) || documentWidth > 830}" class="p-2 border-dark border border-3 text-decoration-none text-dark w-100 d-block" :to="'/' + grade">
         {{ gradeName }}
         <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
     </RouterLink>

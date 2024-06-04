@@ -11,6 +11,9 @@ const grades = ref([
     "1st-prep-first-term", "1st-prep-second-term",
     "2nd-prep-first-term", "2nd-prep-second-term",
     "3rd-prep-first-term", "3rd-prep-second-term",
+    "1st-secondary-first-term", "1st-secondary-second-term",
+    "2nd-secondary-first-term", "2nd-secondary-second-term",
+    "3rd-secondary-first-term", "3rd-secondary-second-term",
 ]);
 const documentWidth = inject("documentWidth");
 </script>
@@ -38,6 +41,35 @@ const documentWidth = inject("documentWidth");
                 We always try our best to improve our content and offer the best experience for our users. 
                 We hope you a fun and intersting journey here in The Science Lab! 
             </p>
+        </section>
+        <section lang="ar" dir="rtl" class="p-4 p-sm-3">
+            <div class="row">
+                <div class="col-6">
+                    <h2>تحت رعاية:</h2>
+                    <ul class="fs-4 bullet-arrow">
+                        <li>مديرية التربية والتعليم بالقليوبية</li>
+                        <li>التوجيه العام لمادة العلوم</li>
+                        <li>ادارة العبور التعليمية</li>
+                        <li>مدرسة على بن أبى طالب الرسمية لغات</li>
+                    </ul>
+                </div>
+                <div class="col-6 pe-2 border-end">
+                    <h2>تحت إشراف ورعاية:</h2>
+                    <ul class="fs-4 ps-0">
+                        <li><b>دكتورة</b>/ سماح ابراهيم، مدير المديرية</li>
+                        <li><b>أ</b>/ سعيد ندا، وكيل المديرية</li>
+                        <li><b>دكتورة</b>/ فوزية عبد الفتاح، مديرة الشئون التربوية</li>
+                        <li><b>مستر</b>/ أيمن فاضل، التوجيه العام لمادة Science</li>
+                        <li><b>الدكتور</b>/ سعد عسل، مدير الإدارة</li>
+                        <li><b>أ</b>/ حسام زهدى، وكيل الادارة</li>
+                        <li><b>أ</b>/ محمد عبد الحليم السعدنى، مدير مدرسة على بن أبى طالب الرسمية للغات</li>
+                        <li>أسرة مادة Science بالمدرسة</li>
+                        <li><b>مصمم الموقع</b>/ الطالب عزالدين رشاد</li>
+                        <li>مدرسة ستيم العبور</li>
+                        <li><b>أ</b>/ طارق على سليمان، مشرف المادة بالمدرسة</li>
+                    </ul>
+                </div>
+            </div>
         </section>
         <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
             <h2 class="col-12">Grades:</h2>
@@ -68,5 +100,8 @@ const documentWidth = inject("documentWidth");
     to {
         background-position: 0% 200%;
     }
+}
+.bullet-arrow {
+    list-style-type: "- ";
 }
 </style>
