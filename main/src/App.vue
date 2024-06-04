@@ -33,7 +33,7 @@ onBeforeUnmount(() => {
 
 <template>
     <header>
-        <nav ref="nav" class="navbar navbar-expand-sm navbar-light fixed-top p-0" :class="'bg-' + theme">
+        <nav ref="nav" class="navbar navbar-expand-sm navbar-light fixed-top p-1 fs-5" :class="'bg-' + theme">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand p-0">
                     <img :src="logo" alt="Main Page" width="50" height="50">

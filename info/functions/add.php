@@ -21,7 +21,7 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
 }
 $path = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
 $arr = json_decode(file_get_contents($path), true);
-if ($_GET["game"] == "choose") {
+if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry"))) {
     if (!isset($_POST["question"]) || !isset($_POST["first"]) || !isset($_POST["second"]) || !isset($_POST["third"]) || !isset($_POST["fourth"]) || !isset($_POST["number"])) {
         echo "infoerr";
         exit;
@@ -59,5 +59,5 @@ if ($_GET["game"] == "choose") {
     }
 }
 file_put_contents($path, json_encode($arr));
-echo "successful";
+print("successful");
 ?>

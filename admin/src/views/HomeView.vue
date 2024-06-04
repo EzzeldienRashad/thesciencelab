@@ -9,6 +9,9 @@ const grades = ref([
     "1st-prep-first-term", "1st-prep-second-term",
     "2nd-prep-first-term", "2nd-prep-second-term",
     "3rd-prep-first-term", "3rd-prep-second-term",
+    "1st-secondary-first-term", "1st-secondary-second-term",
+    "2nd-secondary-first-term", "2nd-secondary-second-term",
+    "3rd-secondary-first-term", "3rd-secondary-second-term",
 ]);
 </script>
 
@@ -16,7 +19,7 @@ const grades = ref([
     <h1 class="text-center">Please choose a grade</h1>
     <div class="row row-cols-1 row-cols-md-2 g-2" data-cy="grades">
         <div v-for="grade in grades" :key="grade" class="col">
-            <RouterLink :to="'/' + grade" class="text-decoration-none btn btn-primary w-100 p-2 py-3">
+            <RouterLink :to="'/' + grade" class="text-decoration-none btn btn-primary w-100 p-2 py-3 fs-5">
                 {{ removeDashes(grade) }}
             </RouterLink>
         </div>

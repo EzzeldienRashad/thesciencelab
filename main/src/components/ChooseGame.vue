@@ -27,11 +27,8 @@ function checkAnswer(event) {
         <div v-for="question in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0 question">
             <h2 class="mb-5" data-cy="question">{{ question[0] }}</h2>
             <div @click="$event => checkAnswer($event)" class="row gx-0" data-cy="choices">
-                <div 
-                    v-for="choice in question[1]" 
-                    :key="choice"
-                    class="col-sm-6 p-2">
-                    <button class="btn w-100 p-2 py-3 h-100" 
+                <div v-for="choice in question[1]" :key="choice" class="col-lg-6 p-2 p-lg-3">
+                    <button class="btn w-100 p-2 py-3 h-100 py-sm-4 fs-5 text-dark" 
                         :data-choice="choice" 
                         :style="{pointerEvents: answered ? 'none' : 'auto'}"
                         :tabIndex="answered ? -1 : 0">{{ choice }}</button>
@@ -43,10 +40,10 @@ function checkAnswer(event) {
 
 <style scoped>
 button {
-    background-color: lightgrey;
+    background-color: rgba(211, 211, 211, 0.589);
 }
 button:hover {
-    background-color: rgb(233, 233, 233);
+    background-color: rgba(233, 233, 233, 0.541);
 }
 .v-move, .v-enter-active, .v-leave-active {
     transition: transform 0.5s ease;

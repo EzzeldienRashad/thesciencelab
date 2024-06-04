@@ -44,18 +44,18 @@ const documentWidth = inject("documentWidth");
         </section>
         <section lang="ar" dir="rtl" class="p-4 p-sm-3">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <h2>تحت رعاية:</h2>
-                    <ul class="fs-4 bullet-arrow">
+                    <ul class="fs-5 bullet-arrow">
                         <li>مديرية التربية والتعليم بالقليوبية</li>
                         <li>التوجيه العام لمادة العلوم</li>
                         <li>ادارة العبور التعليمية</li>
                         <li>مدرسة على بن أبى طالب الرسمية لغات</li>
                     </ul>
                 </div>
-                <div class="col-6 pe-2 border-end">
+                <div class="col-12 col-sm-6 pe-2 border-end">
                     <h2>تحت إشراف ورعاية:</h2>
-                    <ul class="fs-4 ps-0">
+                    <ul class="fs-5 ps-0">
                         <li><b>دكتورة</b>/ سماح ابراهيم، مدير المديرية</li>
                         <li><b>أ</b>/ سعيد ندا، وكيل المديرية</li>
                         <li><b>دكتورة</b>/ فوزية عبد الفتاح، مديرة الشئون التربوية</li>

@@ -91,7 +91,7 @@ function addQuestion(form) {
             <button data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
-            <ControlPanelChoose v-if="useRoute().params.game == 'choose'" v-bind="inheritedVariables" />
+            <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" />
             <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" />
             <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" />
             <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" />

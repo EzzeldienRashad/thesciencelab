@@ -68,11 +68,11 @@ function shuffle(arr) {
                             <hr/>
                         </div>
                         <div class="col-sm-6">
-                            <button :data-unit="unit" @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3">{{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}</button>
+                            <button :data-unit="unit" @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3 fs-5">{{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}</button>
                         </div>
                     </template>
                     <div class="col">
-                        <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3">The whole term</button>
+                        <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3 fs-5">The whole term</button>
                     </div>
                 </div>
             </div>
@@ -81,9 +81,9 @@ function shuffle(arr) {
             <div class="overflow-hidden border-top border-2 border-dark" v-if="Object.keys(questions).length">
                 <p class="display-6">Please choose the test type:</p>
                 <div class="d-flex flex-column align-items-center p2">     
-                    <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-3 m-1 text-center rounded-2">quick</button>
-                    <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-3 m-1 text-center">normal</button>
-                    <button @click="$emit('start', 'comprehensive', questions)" class="btn btn-danger w-75 p-3 m-1 text-center">comprehensive</button>
+                    <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">quick</button>
+                    <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">normal</button>
+                    <button @click="$emit('start', 'comprehensive', questions)" class="btn btn-danger w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">comprehensive</button>
                 </div>
             </div>
         </transition>

@@ -1,21 +1,24 @@
 <template>
-    <div class="table-responsive">
-        <table class="table table-striped table-borderedable-responsive">
-            <tbody>
-                <tr>
-                    <th scope="row">location:</th>
-                    <td>Ali Ebn Abi Taleb language school, El Obour, El Qalyubiah, Egypt</td>
-                </tr>
-                <tr>
-                    <th scope="row">Email:</th>
-                    <td><a href="mailto:thesciencelabgroup@gmail.com">thesciencelabgroup@gmail.com</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Youtube Channel:</th>
-                    <td><a href="https://www.youtube.com/@TheScienceLabGroup">https://www.youtube.com/@TheScienceLabGroup</a></td>
-                </tr>
-            </tbody>
-        </table>
+    <div>
+        <h1 class="text-center p-3">You can contact us at:</h1>
+        <div class="table-responsive p-5">
+            <table class="table table-striped table-borderedable-responsive table-bordered border border-3 border-black">
+                <tbody>
+                    <tr>
+                        <th scope="row" class="p-3 py-4">location:</th>
+                        <td class="p-3 py-3 py-4">Ali Ebn Abi Taleb language school, El Obour, El Qalyubiah, Egypt</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="p-3 py-4">Email:</th>
+                        <td class="p-3 py-4"><a href="mailto:thesciencelabgroup@gmail.com">thesciencelabgroup@gmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="p-3 py-4">Youtube Channel:</th>
+                        <td class="p-3 py-4"><a href="https://www.youtube.com/@TheScienceLabGroup">https://www.youtube.com/@TheScienceLabGroup</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
