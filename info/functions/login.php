@@ -1,4 +1,4 @@
-<?php
+<?php //you tried to log a lot even if user not exists, make admin can now who uploaded each question, make questions in database, add tests 
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -10,19 +10,19 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-
 session_start();
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
-if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
-    echo "admin";
-} elseif (isset($_POST["password"])) {
+if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
+    echo "allowed";
+} elseif (isset($_POST["password"]) && isset($_POST["username"])) {
     require "password.php";
-    $maxLoginAttempts = 20;
+    $maxLoginAttempts = 5;
     $waitTime = "5 minutes";
     $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-    $getStmt = $pdo->query("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins");
-    $dates = $getStmt->fetchAll();
+    $getLoginsStmt = $pdo->prepare("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins where username = ?");
+    $getLoginsStmt->execute([$_POST["username"]]);
+    $dates = $getLoginsStmt->fetchAll();
     if (count($dates) >= $maxLoginAttempts) { 
         if (count($dates) > $maxLoginAttempts) {
             $deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab.FailedLogins WHERE id < ?");
@@ -30,23 +30,27 @@ if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) {
             $deleteStmt->execute();
         }
         if ((int) $dates[count($dates) - $maxLoginAttempts]["date"] > strtotime("-" . $waitTime)) {
-            echo "lockout";
+            echo "blocked";
             exit;
         } else {
-            if (password_verify($_POST["password"], '$2y$10$PWZp0FxpLcwgFDTE4SsBFOfif8K675xMibtCZ/I8VTmmNbdbNLl9q')) {
-                $_SESSION["isAdmin"] = true;
-                echo "admin";
-            } else {
-                $pdo->query("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
-            }
+            login($pdo);
         }
     } else {
-        if (password_verify($_POST["password"], '$2y$10$PWZp0FxpLcwgFDTE4SsBFOfif8K675xMibtCZ/I8VTmmNbdbNLl9q')) {
-            $_SESSION["isAdmin"] = true;
-            echo "admin";
-        } else {
-            $pdo->query("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date) VALUES (" . time() . ")");
-        }
+        login($pdo);
+    }
+}
+
+function login($pdo) {
+    $getPasswdStmt = $pdo->prepare("SELECT subject, password FROM if0_36665133_TheScienceLab.Members where username = ?");
+    $getPasswdStmt->execute([$_POST["username"]]);
+    $userInfo = $getPasswdStmt->fetch();
+    if (password_verify($_POST["password"], $userInfo["password"])) {
+        $_SESSION["subject"] = $userInfo["subject"];
+        echo "allowed";
+    } else {
+        $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES (" . time() . ", ?)");
+        $logStmt->execute([$_POST["username"]]);
+        echo "not allowed";
     }
 }
 ?>

@@ -64,8 +64,8 @@ To see changes after modifying info move it to the other server
 * configure remote htaccess to redirect requests to index html or admin
 * copy info folder to the php server in local repo / upload info folder after build on host
 * make a shortcut of todo in onedrive in local repo
-* upload additional password.php with $password = "your password" to info/functions and password.js to admin root
-* create a database if0_36665133_TheScienceLab with table FailedLogins columns id date
+* upload additional password.php with $password = "database password" to info/functions and password.js with export default "your control panel login password" to admin root
+* create a database if0_36665133_TheScienceLab with table FailedLogins columns id date username and table Members with columns id name username phone subject password
 
 ## Hierarchy
 ### main

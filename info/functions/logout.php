@@ -10,7 +10,6 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-
 session_start();
-$_SESSION["isAdmin"] = false;
+$_SESSION["subject"] = null;
 ?>

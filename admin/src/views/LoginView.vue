@@ -4,52 +4,61 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const passwordField = ref(null);
+const usernameField = ref(null);
 const error = ref("");
 const showPassword = ref(false);
 
 async function login() {
-    let member = await fetch("http://127.0.0.1/info/functions/login.php", {
+    let isAllowed = await fetch("http://127.0.0.1/info/functions/login.php", {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({
+            "username": usernameField.value.value,
             "password": passwordField.value.value,
         })
     });
-    member = await member.text();
-    if (member == "admin") {
+    isAllowed = await isAllowed.text();
+    if (isAllowed == "allowed") {
         router.push({name: "home"});
-    } else if (member == "lockout") {
+    } else if (isAllowed == "blocked") {
         error.value = "....";
-        setTimeout(() => {error.value = "You tried too many passwords in a short time, try again after 5 minutes."}, 500);
+        setTimeout(() => {error.value = "*You tried too many passwords in a short time, try again after 5 minutes."}, 500);
+    } else if (isAllowed == "not allowed") {
+        error.value = "....";
+        setTimeout(() => {error.value = "*Wrong username or password!"}, 500);
     } else {
         error.value = "....";
-        setTimeout(() => {error.value = "Wrong password!"}, 500);
+        setTimeout(() => {error.value = "*An error has occurred!"}, 500);
     }
 }
 </script>
 
 <template>
-    <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php">
-        <label class="form-label" for="password">Password: </label>
-        <div class="row">
-            <div class="col-12 col-md-4">
+    <div class="d-flex justify-content-center">
+        <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php" class="w-75 py-3">
+            <span class="text-danger fs-5">{{ error }}</span>
+            <br/>
+            <label class="form-label fs-4" for="password">Username: </label>
+            <input type="text" name="username" ref="usernameField" class="form-control p-3 rounded-start-4 fs-4 w-100" data-cy="username"/>
+            <br/>
+            <br/>
+            <label class="form-label fs-4" for="password">Password: </label>
+            <div class="w-100">
                 <div class="input-group">
-                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control" data-cy="password"/>
-                    <span class="input-group-text" @click="showPassword = !showPassword">
+                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control p-3 rounded-start-4 fs-4" data-cy="password"/>
+                    <span class="input-group-text rounded-end-4" @click="showPassword = !showPassword">
                         <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
                         <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />
                     </span>
                 </div>
             </div>
-        </div>
-        <br/>
-        <span class="text-danger">{{ error }}</span>
-        <br/>
-        <input type="submit" value="login" class="btn btn-info"/>
-    </form>
+            <br/>
+            <input type="submit" value="login" class="btn btn-info fs-3 p-3 rounded-4 fw-bold"/>
+        </form>
+    </div>
 </template>
 
 <style scoped>

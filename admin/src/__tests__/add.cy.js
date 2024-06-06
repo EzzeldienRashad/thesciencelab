@@ -9,6 +9,7 @@ it("prints logout if logged out", () => {
 describe("handles error cases correctly", () => {
     beforeEach(() => {
         cy.request("POST", "http://localhost/info/functions/login.php", {
+            username: "ezzeldienrashad",
             password
         })
     });

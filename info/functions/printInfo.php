@@ -10,7 +10,6 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-
 $path = "../grades/" . (isset($_GET["grade"]) ? $_GET["grade"] . (isset($_GET["game"]) ? "/" . $_GET["game"] . (isset($_GET["unit"]) && $_GET["unit"] !== "whole" ? "/" . $_GET["unit"] : "") : "") : "");
 if (!file_exists($path)) {
     echo "[]";
