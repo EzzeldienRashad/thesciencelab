@@ -1,4 +1,4 @@
-<?php //you tried to log a lot even if user not exists, make admin can now who uploaded each question, make questions in database, add tests 
+<?php //make admin can know who uploaded each question, put the questions in a database, add tests with cypress
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -41,10 +41,10 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
 }
 
 function login($pdo) {
-    $getPasswdStmt = $pdo->prepare("SELECT subject, password FROM if0_36665133_TheScienceLab.Members where username = ?");
+    $getPasswdStmt = $pdo->prepare("SELECT subject, /*password*/phone FROM if0_36665133_TheScienceLab.Members where username = ?");
     $getPasswdStmt->execute([$_POST["username"]]);
     $userInfo = $getPasswdStmt->fetch();
-    if (password_verify($_POST["password"], $userInfo["password"])) {
+    if (/*password_verify($_POST["password"], $userInfo["password"]*/ $_POST["password"] == "science" . substr($userInfo["phone"], -5)) {
         $_SESSION["subject"] = $userInfo["subject"];
         echo "allowed";
     } else {
