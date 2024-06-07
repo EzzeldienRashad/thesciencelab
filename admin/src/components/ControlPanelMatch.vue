@@ -1,8 +1,9 @@
 <script setup>
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "meber"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
 const form = ref(null);
 const questionsNum = ref(3);
 </script>
@@ -25,7 +26,7 @@ const questionsNum = ref(3);
             <tfoot>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+                        <button v-if="member == useRoute().params.game || member == 'admin'" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>

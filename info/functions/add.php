@@ -12,26 +12,31 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
-    echo "logout";
+    "logout";
     exit;
 }
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || empty($_POST)) {
     exit;
 }
-$path = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
-$arr = json_decode(file_get_contents($path), true);
+$isSecondary = str_contains($_GET["grade"], "secondary");
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
+require "password.php";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry"))) {
     if (!isset($_POST["question"]) || !isset($_POST["first"]) || !isset($_POST["second"]) || !isset($_POST["third"]) || !isset($_POST["fourth"]) || !isset($_POST["number"])) {
         echo "infoerr";
         exit;
     }
-    array_push($arr, array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"])));
+    $addStmt = $pdo->prepare("insert into ChooseQuestions (data, grade, subject, unit, uploader) values (?, ?, ?, ?, ?)");
+    $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]))), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
 } elseif ($_GET["game"] == "right-or-wrong") {
     if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
         echo "infoerr";
         exit;
     }
-    $arr[trim($_POST["question"])] = $_POST["answer"];
+    $addStmt = $pdo->prepare("insert into RightOrWrongQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
+    $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
 } elseif ($_GET["game"] == "complete") {
     if (!isset($_POST["question"]) || !isset($_POST["right"]) || !isset($_POST["wrong"])) {
         echo "infoerr";
@@ -42,7 +47,8 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         echo "spacenumerr";
         exit;
     } else {
-        array_push($arr, array($questionParts[0], array($_POST["right"], $_POST["wrong"]), $questionParts[1]));
+        $addStmt = $pdo->prepare("insert into CompleteQuestioins (data, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+        $addStmt->execute([json_encode(array($questionParts[0], array($_POST["right"], $_POST["wrong"]), $questionParts[1])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
     }
 } elseif ($_GET["game"] == "match") {
     if (!isset($_POST["questions"]) || !isset($_POST["answers"])) {
@@ -52,11 +58,12 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         echo "answernumerr";
         exit;
     }
-    array_push($arr, array());
+    $arr = array();
     for ($i = 0; $i < count($_POST["questions"]); $i++) {
-        $arr[count($arr) - 1][$_POST["questions"][$i]] = $_POST["answers"][$i];
+        $arr[$_POST["questions"][$i]] = $_POST["answers"][$i];
     }
+    $addStmt = $pdo->prepare("insert into MatchQuestions (data, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+    $addStmt->execute([json_encode($arr), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
 }
-file_put_contents($path, json_encode($arr));
-print("successful");
+echo "successful";
 ?>

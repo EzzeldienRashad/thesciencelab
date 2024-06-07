@@ -1,4 +1,4 @@
-<?php //make admin can know who uploaded each question, put the questions in a database, add tests with cypress
+<?php
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -13,7 +13,7 @@ header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
 if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
-    echo "allowed";
+    echo $_SESSION["subject"];
 } elseif (isset($_POST["password"]) && isset($_POST["username"])) {
     require "password.php";
     $maxLoginAttempts = 5;
@@ -46,7 +46,8 @@ function login($pdo) {
     $userInfo = $getPasswdStmt->fetch();
     if (/*password_verify($_POST["password"], $userInfo["password"]*/ $_POST["password"] == "science" . substr($userInfo["phone"], -5)) {
         $_SESSION["subject"] = $userInfo["subject"];
-        echo "allowed";
+        $_SESSION["username"] = $_POST["username"];
+        echo $_SESSION["subject"];
     } else {
         $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES (" . time() . ", ?)");
         $logStmt->execute([$_POST["username"]]);

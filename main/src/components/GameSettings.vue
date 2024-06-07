@@ -30,6 +30,7 @@ function getQuestions(unit) {
     "&game=" + routeParams.game + "&unit=" + unit))
     .then(res => res.json())
     .then(questionsArr => {
+        questionsArr = Object.values(questionsArr);
         if (routeParams.game == "complete") {
             questionsArr = shuffle(questionsArr.slice(0, (-questionsArr.length % 5 || undefined)));
             const questionGroups = [];
@@ -68,7 +69,7 @@ function shuffle(arr) {
                             <hr/>
                         </div>
                         <div class="col-sm-6">
-                            <button :data-unit="unit" @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3 fs-5">{{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}</button>
+                            <button :data-unit="unit" @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3 fs-5">{{ removeDashes(unit) }}</button>
                         </div>
                     </template>
                     <div class="col">

@@ -10,34 +10,39 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
-$path = "../grades/" . (isset($_GET["grade"]) ? $_GET["grade"] . (isset($_GET["game"]) ? "/" . $_GET["game"] . (isset($_GET["unit"]) && $_GET["unit"] !== "whole" ? "/" . $_GET["unit"] : "") : "") : "");
-if (!file_exists($path)) {
-    echo "[]";
-    exit;
-}
-if (isset($_GET["grade"]) && isset($_GET["game"]) && isset($_GET["unit"])) {
-    if ($_GET["unit"] == "whole") {
-        $questions = [];
-        foreach (array_filter(scandir($path), function($file) {return $file != "." && $file != "..";}) as $unit) {
-            $questions = array_merge($questions, json_decode(file_get_contents($path . "/" . $unit), true));
-        }
-        $questions = json_encode($questions);
-    } else {
-        $questions = file_get_contents($path);
-    }
-    echo $questions;
+if (!isset($_GET["grade"]) || !isset($_GET["game"])) exit;
+$isSecondary = str_contains($_GET["grade"], "secondary");
+if (!isset($_GET["unit"])) {
+    $units = json_decode(file_get_contents("../units.json"), true)[$_GET["grade"]];
+    if ($isSecondary) $units = $units[$_GET["game"]];
+    echo json_encode($units);
 } else {
-    print_r(
-        json_encode(
-            array_values(
-                array_filter(
-                    scandir($path),
-                    function ($file) use ($path) {
-                        return $file != "." && $file != ".." && (isset($_GET["game"]) ? is_file($path . "/" . $file) : is_dir($path . "/" . $file));
-                    }
-                )
-            )
-        )
-    );
+    require "password.php";
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+    $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+    $questions = [];
+    if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
+    if ($_GET["unit"] == "whole") {
+        $getStmt = $pdo->prepare("SELECT id, data FROM if0_36665133_TheScienceLab." . 
+            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?" .
+            ($isSecondary ? " and subject = ?" : ""));
+        if (!$isSecondary) $getStmt->execute([$_GET["grade"]]);
+        else $getStmt->execute([$_GET["grade"], $_GET["game"]]);
+        $questions = array();
+        while ($data = $getStmt->fetch()) {
+            $questions[$data["id"]] = json_decode($data["data"]);
+        };
+    } else {
+        $getStmt = $pdo->prepare("SELECT id, data FROM if0_36665133_TheScienceLab." . 
+            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?" .
+            ($isSecondary ? " and subject = ?" : ""));
+        if (!$isSecondary) $getStmt->execute([$_GET["grade"]]);
+        else $getStmt->execute([$_GET["grade"], $_GET["game"]]);
+        $questions = array();
+        while ($data = $getStmt->fetch()) {
+            $questions[$data["id"]] = json_decode($data["data"]);
+        };
+    }
+    echo json_encode($questions);
 }
 ?>

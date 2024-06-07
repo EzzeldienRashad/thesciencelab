@@ -1,0 +1,349 @@
+{
+    "1st-prep-first-term": [
+        "1.1-Matter-and-its-characteristics",
+        "1.2-Matter-construction",
+        "1.3-Atomic-structure-of-matter",
+        "2.1-Energy-resources-and-forms",
+        "2.2-Energy-transformations",
+        "2.3-Heat-energy",
+        "3.1-Living-organisms-diversity-and-principles-of-their-classification",
+        "3.2-Adaptation-and-diversity-of-living-organisms"
+    ],
+    "1st-prep-second-term": [
+        "1.1Chemical-combination",
+        "1.2-Chemical-compounds",
+        "1.3-Chemical-equations-and-chemical-reactions",
+        "2.1-Fundamental-forces-in-nature",
+        "2.2-Accompanied-forces-to-motion",
+        "2.3-Motion",
+        "3.1-The-celestial-bodies",
+        "3.2-The-earth",
+        "3.3-Rocks-and-minerals"
+    ],
+    "1st-secondary-first-term": {
+        "biology": [
+            "1.1-Chemical-structure-of-living-organism's-bodies-(carbohydrates-and-lipids)",
+            "1.2-Chemical-structure-of-living-organism's-bodies-(proteins-and-nucleic-acids)",
+            "1.3-Chemical-reactions-in-organisms'-bodies",
+            "2.1-Cell-theory",
+            "2.2-Cell-ultra-structure",
+            "2.3-Differentiation-of-cells-and-diversity-of-plant-and-animal-tissues"
+        ],
+        "chemistry": [
+            "1.1-Chemistry-and-measurement",
+            "1.2-Nanotechnology-and-chemistry",
+            "2.1-Mole-and-chemical-equation",
+            "2.2-Calculation-of-chemical-formula",
+            "3.1-Solutions-and-colloids",
+            "3.2-Acids-and-bases"
+        ],
+        "physics": [
+            "1.1-Physical-measurements",
+            "1.2-Scalar-and-vector-quantities",
+            "2.1-Motion-in-a-straight-line",
+            "2.2-Motion-at-uniform-acceleration",
+            "2.3-Force-and-motion"
+        ]
+    },
+    "1st-secondary-second-term": {
+        "biology": [
+            "3.1-Chromosomes-and-genetic-information",
+            "3.2-Genes-interaction",
+            "3.3-Genetic-inheritance-and-genetic-diseases",
+            "4.1-Principles-of-living-organisms-classification",
+            "4.2-Modern-classification-of-living-organisms",
+            "4.3-Kingdom-animalia"
+        ],
+        "chemistry": [
+            "4.1-Heat-content",
+            "4.2-Forms-of-changes-in-heat-content",
+            "5.1-Atomic-nucleus-and-primary-particles",
+            "5.2-Radioactivity-and-nuclear-reactions"
+        ],
+        "physics": [
+            "3.1-Laws-of-circular-motion",
+            "3.2-Universal-gravity-and-circular-motion",
+            "4.1-Work-and-energy",
+            "4.2-Law-of-conservation-of-energy"
+        ]
+    },
+    "2nd-prep-first-term": [
+        "1.1-Attempts-of-elements-classification",
+        "1.2-Graduation-of-elements-properties-in-the-modern-periodic-table",
+        "1.3-Main-groups-in-the-modern-periodic-table",
+        "1.4-Water",
+        "2.1-The-atmospheric-layers",
+        "2.2-Erosion-of-ozone-layer-and-global-warming",
+        "3.1-Fossils",
+        "3.2-Extinction"
+    ],
+    "2nd-prep-second-term": [
+        "1.1-Oscillatory-motion",
+        "1.2-Wave-motion",
+        "2.1-Properties-of-sound-waves",
+        "2.2-Wave-nature-of-light",
+        "2.3-Reflection-and-refraction-of-light",
+        "3.1-Reproduction-in-plants",
+        "3.2-Reproduction-in-humans"
+    ],
+    "2nd-secondary-first-term": {
+        "biology": [
+            "1.1-The-importance-of-nutrition-for-living-organisms",
+            "1.2-Root-absorption-of-salts",
+            "1.3-Photosynthesis-in-plants",
+            "1.4-Light-reactions-and-photosynthetic-reactions",
+            "1.5-Concept-and-importance-of-digestion",
+            "2.1-Transport-in-plant",
+            "2.2-Transport-of-water-and-salts-in-plants",
+            "2.3-Food-transport-from-the-leaf-to-the-other-parts-of-the-plants",
+            "2.4-Human-transport-system",
+            "2.5-Blood",
+            "2.6-Measuring-blood-pressure-(lymphatic-system)-blood-clotting",
+            "2.7-Circulatory-system",
+            "3.1-Respiration-in-living-organisms",
+            "3.2-Anaerobic-respiration",
+            "3.3-Respiratory-system-in-humans",
+            "3.4-Respiration-in-plants",
+            "3.5-Experiment-proves-respiration-in-plants"
+        ],
+        "chemistry": [
+            "1.1-Introduction",
+            "1.2-Dalton's-atomic-theory",
+            "1.3-The-thomson's-model-of-the-atom",
+            "1.4-Rutherford's-atom-model",
+            "1.5-Bohr-atomic-model",
+            "1.6-The-principles-of-modern-atomic-theory",
+            "1.7-Quantum-numbers",
+            "1.8-Summary-of-the-relationship-between-the-principal-energy-level-sublevels-and-orbitals",
+            "1.9-Principles-of-distributing-electrons",
+            "2.1-The-long-form-periodic-table",
+            "2.10-Acidic-and-basic-properties",
+            "2.11-Oxidation-numbers",
+            "2.2-Description-of-the-long-form-periodic-table",
+            "2.3-The-periodic-table-and-classification-of-elements",
+            "2.4-Trends-and-periodicity-of-properties-in-the-periodic-table",
+            "2.5-Atomic-radius",
+            "2.6-Ionization-potential-(Ionization-energy)",
+            "2.7-Electron-affinity",
+            "2.8-Electronegativity",
+            "2.9-Property-metallic-and-nonmetallic"
+        ],
+        "physics": [
+            "1.1-Wave-motion",
+            "2.1-Reflection-and-refraction-of-light",
+            "2.2-Light-interference",
+            "2.3-Light-diffraction",
+            "2.4-Total-reflection-and-the-critical-angle",
+            "2.5-Deviation-of-light-in-a-prism",
+            "2.6-The-thin-prism"
+        ]
+    },
+    "2nd-secondary-second-term": {
+        "biology": [
+            "4.1-Excertion-in-humans-and-animals",
+            "4.2-Human-urinary-system-and-kidneys",
+            "4.3-Excertion-in-plants",
+            "4.4-Experiment-proves-transpiration-in-plants",
+            "4.4-Experiment-to-show-water-ascending-by-transpiration",
+            "4.4-Experiment-to-show-water-ascending-in-xylem",
+            "5.1-Vent's-experiment",
+            "5.2-Sense-in-humans",
+            "5.3-Nervous-system",
+            "5.4-Nervous-impulse"
+        ],
+        "chemistry": [
+            "3.1-Chemical-combination",
+            "3.2-Ionic-bond",
+            "3.3-Covalent-bonds",
+            "3.4-Hybridization",
+            "3.5-The-molecular-orbital-theory",
+            "3.6-Coordination-bond",
+            "3.7-Hydrogen-bond",
+            "3.8-Metallic-bond",
+            "4.1-General-porperties-of-the-first-group-elements",
+            "4.10-Elements-of-p-block-group-5A",
+            "4.2-Elements-of-s-block",
+            "4.3-Detection-of-nitrate-ion-NO3-and-how-to-differentiate-between-nitrite-and-nitrate-salts",
+            "4.4-Nitric-acid-HNO3-and-chemical-properties-of-nitric-acid",
+            "4.5-Ammonia-and-it's-role-in-the-manufacture-of-fertilizers",
+            "4.6-The-famous-elements-in-fifth-group-(A)-Nitrogen-(N2)",
+            "4.7-Elements-of-p-block",
+            "4.8-Sodium-hydroxide-NaOH",
+            "4.9-Extraction-of-alkali-metals-from-their-ores"
+        ],
+        "physics": [
+            "3.1-Atmospheric-pressure",
+            "3.2-Balance-of-liquids-in-a-u-shaped-tube",
+            "3.3-Manometer",
+            "3.4-Applications-to-pressure",
+            "3.5-Pascal's-principle",
+            "3.6-Density",
+            "3.7-Pressure-at-a-point-inside-a-liquid-and-its-measurement",
+            "4.1-Hydrodynamics",
+            "5.1-Boyle's-law",
+            "5.2-Charle's-law",
+            "5.3-Jolly's-law",
+            "5.4-Other-forms-of-Charle's-and-Jolly's-(pressure)-laws",
+            "5.5-General-gas-law"
+        ]
+    },
+    "3rd-prep-first-term": [
+        "1.1-Motion-in-one-directon",
+        "1.2-Graphic-representation-of-moving-in-a-straight-line",
+        "1.3-Physical-quantities-scalars-and-vectors",
+        "2.1-Mirrors",
+        "2.2-Lenses",
+        "3.1-The-universe-and-the-solar-system",
+        "4.1-Cell-division",
+        "4.2-Sexual-and-asexual-reproduction"
+    ],
+    "3rd-prep-second-term": [
+        "1.1-Chemical-reaction",
+        "1.2-Speed-of-chemical-reaction",
+        "2.1-Physical-properties-of-electric-current",
+        "2.2-The-electric-current-and-cell",
+        "2.3-Radioactivity-and-nuclear-energy",
+        "3.1-The-main-principles-of-heredity",
+        "4.1-Hormones",
+        "4.2-Hormones-and-human-body"
+    ],
+    "3rd-secondary-first-term": {
+        "biology": [
+            "1.1-Support-and-movement-in-the-plant",
+            "1.2-The-skeletal-system-of-man",
+            "1.3-Movement-in-human",
+            "2.1-Hormonal-coordination-in-human",
+            "2.2-Endocrine-glannds",
+            "3.1-Methods-or-reproduction-in-living-organsms",
+            "3.2-Reproduction-in-flowering-plants",
+            "3.3-Reproduction-in-human-beings",
+            "4.1-Immunity-in-plants",
+            "4.2-Immunity-in-humans",
+            "4.3-The-antibodies",
+            "4.4-The-aquired-immunity"
+        ],
+        "chemistry": [
+            "1.1-Transition-elements",
+            "1.2-The-first-transition-series",
+            "1.3-Magnetic-moment-of-the-first-transition-elmemnts",
+            "1.4-Magnetic-moment-of-first-transition-elements",
+            "1.5-Colors-of-first-transition-series",
+            "1.6-Iron",
+            "1.7-Iron-properties-and-oxides-of-iron",
+            "2.1-Qualitative-analysis",
+            "2.2-Identification-of-anions",
+            "2.3-Identification-of-cations",
+            "2.4-Quantitative-analysis",
+            "3.1-Chemical-equilibrium"
+        ],
+        "physics": [
+            "1.1-Electricity-basic-concepts",
+            "1.2-Resistivity-and-coductivity",
+            "1.3-Parallel-and-series-connection",
+            "1.4-Ohm's-law-for-a-closed-circuit",
+            "1.5-How-to-solve-problems",
+            "1.6-Problems-on-Ohm's-law-for-closed-circuit",
+            "1.7-Kirchhoff's-laws",
+            "2.1-Magnetic-effect-of-electric-current-(straight-wire-+_circular-coil-+-solenoid)",
+            "2.2-Neutral-point",
+            "2.3-The-magnetic-force",
+            "2.4-Torque-acting-on-rectangular-coil",
+            "2.5-Application-on-torque",
+            "2.6-Ohmmeter",
+            "3.1-Electromagnetic-introduction",
+            "3.2-Mutual-induction-and-self-induction",
+            "3.3-Eddy-currents",
+            "3.4-Dynamo-(generator)",
+            "3.5-Current-rectification-in-dynamo",
+            "3.6-The-electric-motor",
+            "3.7-The-electric-transformer",
+            "4.1-How-wire-ammeter",
+            "4.2-AC-circuits",
+            "4.3-Oscillating-circuit",
+            "4.4-Tuning-circuit"
+        ]
+    },
+    "3rd-secondary-second-term": {
+        "biology": [
+            "5.1-DNA-and-the-genetic-materials",
+            "5.2-The-structure-of-DNA",
+            "6.1-RNA-and-protein-synthesis",
+            "6.2-Molecular-technology"
+        ],
+        "chemistry": [
+            "4.1-Electrochemistry",
+            "5.1-Organic-chemistry-introduction",
+            "5.2-Alkanes",
+            "5.3-Alkenes",
+            "5.4-Alkynes",
+            "5.5-Cyclic-hydrocarbons",
+            "5.6-Alcohols-and-phenols"
+        ],
+        "physics": [
+            "5.1-Black-body-radiation",
+            "5.2-Photo-electric-effect-and-thermoelectric-effect",
+            "5.3-Compton-effect",
+            "5.4-Properties-of-photon-+-microscopic-and-macroscopic-model",
+            "5.5-Proof-force-of-light-beam-+-proof-de-Broglie-relation",
+            "5.6-Optical-and-electron-microscope",
+            "6.1-Bohr's-model",
+            "6.2-Bohr's-postulates",
+            "6.3-Emission-of-light-by-Bohr's-atom",
+            "6.4-Hydrogen-atomic-spectral-series",
+            "6.5-Spectrometer",
+            "6.6-Types-of-spectro",
+            "6.7-X-rays",
+            "7.1-Spontaneous-and-stimulated-emission",
+            "7.10-Holograms",
+            "7.2-Monochromaticity-of-laser",
+            "7.3-Calimation-of-laser",
+            "7.4-Coherence-of-laser",
+            "7.5-Characteristics-of-laser-radiation",
+            "7.6-Theory-of-laser-action",
+            "7.7-Main-components-of-laser",
+            "7.8-Helium-neon-laser",
+            "7.9-Laser-applications",
+            "8.1-Semiconductors",
+            "8.2-Doping-of-semiconductor",
+            "8.3-PN-junction",
+            "8.4-Transistor",
+            "8.5-Logic-gates"
+        ]
+    },
+    "grade-4-first-term": [
+        "1.1-Adaptation-and-Survival",
+        "1.2-Senses-at-Work",
+        "1.3-Light-and-Sight",
+        "1.4-Communication-and-Information-Transfer",
+        "2.1-Starting-and-Stopping",
+        "2.2-Energy-and-Motion",
+        "2.3-Energy-and-Collisions"
+    ],
+    "grade-4-second-term": [
+        "3.1-Devices-and-Energy",
+        "3.2-About-Fuels",
+        "3.3-Renewable-Energy-Resources",
+        "4.1-Breaking-Down-and-Moving-Rocks",
+        "4.2-Changing-Landscapes"
+    ],
+    "grade-5-first-term": [
+        "1.1-Plant-Needs",
+        "1.2-Energy-Flow-in-Ecosystems",
+        "1.3-Changes-in-Food-Webs",
+        "2.1-Matter-in-the-World-Around-Us",
+        "2.2-Describing-and-Measuring-Matter",
+        "2.3-Comparing-Changes-in-Matter"
+    ],
+    "grade-5-second-term": [
+        "3.1-Hydrosphere-and-Biosphere-Interactions",
+        "3.2-Water-as-a-Valuable-Natural-Resource",
+        "4.1-Effects-of-Gravity",
+        "4.2-Patterns-of-Motion-in-the-Sky"
+    ],
+    "grade-6-first-term": [
+        "coming-soon"
+    ],
+    "grade-6-second-term": [
+        "coming-soon"
+    ]
+}

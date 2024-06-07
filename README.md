@@ -33,7 +33,7 @@ npm run build
 # Before upload
 
 * FETCH REMOTE JSON FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
-* Change "http://127.0.0.1" to "http://thesciencelab.infinityfreeapp.com" or "http://localhost"
+* Change "http://127.0.0.1" to "https://thesciencelab.infinityfreeapp.com" or "http://localhost"
 
 *info:*
 ini_set('session.cookie_samesite','None');

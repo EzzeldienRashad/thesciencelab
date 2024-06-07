@@ -13,7 +13,7 @@ import chemistryImg from "@/assets/images/chemistry.webp";
 const router = useRouter();
 const grade = useRoute().params.grade;
 const gradeName = removeDashes(grade);
-const games = ref([]);
+const games = ref(grade.includes("secondary") ? ["biology", "physics", "chemistry"] : ["choose", "right-or-wrong", "complete", "match"]);
 const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
@@ -23,13 +23,6 @@ const gamesImages = {
     "physics": physicsImg,
     "chemistry": chemistryImg,
 };
-
-fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
-    .then(res => res.json())
-    .then(gamesArray => {
-        if (gamesArray.length) games.value = gamesArray;
-        else router.replace({name: "home"})
-    });
 </script>
 
 <template>

@@ -29,7 +29,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params
             </div>
             <div class="col-sm-6">
                 <button @click="$emit('setUnit', unit)" class="text-decoration-none btn btn-primary w-100 h-100 p-2 py-3 fs-5">
-                    {{ removeDashes(unit.replace(/\.[^/.]+$/, "")) }}
+                    {{ removeDashes(unit) }}
                 </button>
             </div>
         </template>

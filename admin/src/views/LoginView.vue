@@ -9,7 +9,7 @@ const error = ref("");
 const showPassword = ref(false);
 
 async function login() {
-    let isAllowed = await fetch("http://127.0.0.1/info/functions/login.php", {
+    let member = await fetch("http://127.0.0.1/info/functions/login.php", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -20,13 +20,13 @@ async function login() {
             "password": passwordField.value.value,
         })
     });
-    isAllowed = await isAllowed.text();
-    if (isAllowed == "allowed") {
+    member = await member.text();
+    if (["biology", "physics", "chemistry", "admin", "none"].includes(member)) {
         router.push({name: "home"});
-    } else if (isAllowed == "blocked") {
+    } else if (member == "blocked") {
         error.value = "....";
         setTimeout(() => {error.value = "*You tried too many passwords in a short time, try again after 5 minutes."}, 500);
-    } else if (isAllowed == "not allowed") {
+    } else if (member == "not allowed") {
         error.value = "....";
         setTimeout(() => {error.value = "*Wrong username or password!"}, 500);
     } else {

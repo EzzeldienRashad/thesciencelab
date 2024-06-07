@@ -1,8 +1,9 @@
 <script setup>
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
 const form = ref(null);
 </script>
 
@@ -13,7 +14,7 @@ const form = ref(null);
             <span class='badge text-bg-success me-1'>{{ question[1][0] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question[1][1] }}</span>
             {{ question[2] }}
-            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <button v-if="member == useRoute().params.game || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         </div>
     </div>
     <div class="modal" id="overlay">

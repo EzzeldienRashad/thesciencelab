@@ -15,7 +15,7 @@ const router = useRouter();
 const member = ref("");
 const grade = useRoute().params.grade;
 const gradeName = removeDashes(grade);
-const games = ref([]);
+const games = ref(grade.includes("secondary") ? ["biology", "physics", "chemistry"] : ["choose", "right-or-wrong", "complete", "match"]);
 const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
@@ -32,12 +32,6 @@ fetch("http://127.0.0.1/info/functions/login.php", {
     })
     .then(res => res.text())
     .then(memberValue => member.value = memberValue);
-fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + grade)
-    .then(res => res.json())
-    .then(gamesArray => {
-        if (gamesArray.length) games.value = gamesArray;
-        else router.replace({name: "home"})
-    });
 </script>
 
 <template>

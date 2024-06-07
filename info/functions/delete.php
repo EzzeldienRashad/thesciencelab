@@ -15,17 +15,16 @@ if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biolo
     echo "logout";
     exit;
 }
-if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || (!isset($_GET["questionnum"]) && !isset($_GET["question"]))) {
+if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || !isset($_GET["questionnum"])) {
     exit;
 }
-$file = "../grades/" . $_GET["grade"] . "/" . $_GET["game"] . "/" . $_GET["unit"];
-$arr = json_decode(file_get_contents($file), true);
-if (isset($_GET["questionnum"])) {
-    if ((int) $_GET["questionnum"] < count($arr)) {
-        array_splice($arr, $_GET["questionnum"], 1);
-    }
-} elseif (isset($_GET["question"])) {
-    unset($arr[$_GET["question"]]);
-}
-file_put_contents($file, json_encode($arr));
+$isSecondary = str_contains($_GET["grade"], "secondary");
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
+if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
+require "password.php";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+$deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
+$deleteStmt->execute()
 ?>

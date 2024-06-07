@@ -41,14 +41,14 @@ router.beforeEach(async to => {
         document.body.style.paddingRight = "";
         document.body.classList.remove("modal-open");
     }
-    let isAllowed = await fetch("http://127.0.0.1/info/functions/login.php", {
+    let member = await fetch("http://127.0.0.1/info/functions/login.php", {
         method: "get",
         credentials: "include",
     });
-    isAllowed = await isAllowed.text();
-    if (isAllowed != "allowed" && to.name != "login") {
+    member = await member.text();
+    if (!["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name != "login") {
         return {name: "login"};
-    } else if ((isAllowed == "allowed") && to.name == "login") {
+    } else if (["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name == "login") {
         return {name: "home"};
     }
 });

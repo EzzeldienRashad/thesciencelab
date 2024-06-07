@@ -1,15 +1,16 @@
 <script setup>
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
 const form = ref(null);
 </script>
 
 <template>
-    <div v-for="(answer, question) in questions" :key="question" class="p-3 m-3 rounded" :class="[parseInt(answer) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
-        {{ question }}
-        <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question, true)" data-cy="delete-btn"></button>
+    <div v-for="(questionAnswer, index) in questions" :key="questionAnswer[0]" class="p-3 m-3 rounded" :class="[parseInt(questionAnswer[1]) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
+        {{ questionAnswer[0] }}
+        <button v-if="member == useRoute().params.game || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">

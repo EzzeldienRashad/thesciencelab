@@ -19,7 +19,8 @@ const inheritedVariables = {
     msg,
     msgColor,
     deleteQuestion,
-    addQuestion
+    addQuestion,
+    member
 }
 
 fetch("http://127.0.0.1/info/functions/login.php", {
@@ -35,9 +36,9 @@ function loadQuestions() {
     .then(res => res.json())
     .then(questionsArr => questions.value = questionsArr);
 }
-async function deleteQuestion(questionData, byKey = false) {
+async function deleteQuestion(questionData) {
     fetch("http://127.0.0.1/info/functions/delete.php?grade=" + routeParams.grade +
-    "&game=" + routeParams.game + "&unit=" + unit.value + (byKey ? "&question=" + questionData : "&questionnum=" + questionData), {
+    "&game=" + routeParams.game + "&unit=" + unit.value + "&questionnum=" + questionData, {
         method: "get",
         credentials: "include"
     })
@@ -88,7 +89,7 @@ function addQuestion(form) {
             <RouterLink to="/" class="text-dark">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
             </RouterLink>
-            <button data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
+            <button v-if="member == useRoute().params.game || member == 'admin'" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
             <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" />

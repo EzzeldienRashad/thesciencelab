@@ -1,8 +1,9 @@
 <script setup>
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
 const form = ref(null);
 </script>
 
@@ -10,7 +11,7 @@ const form = ref(null);
     <div v-for="(question, index) in questions" :key="question[0]" class="card mb-2 border-dark" data-cy="question-cont">
         <div class="card-header p-2 fw-bold" data-cy="question">
             {{ question[0] }}
-            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <button v-if="member == useRoute().params.game || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         </div>
         <div class="card-body p-0">
             <div class="row g-0">
