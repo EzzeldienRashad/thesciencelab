@@ -101,7 +101,7 @@ function addQuestion(form) {
             <RouterLink to="/" class="text-dark">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
             </RouterLink>
-            <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
+            <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
             <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" />

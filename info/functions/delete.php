@@ -19,7 +19,7 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
     exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
-if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") /*exit*/;
 if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";

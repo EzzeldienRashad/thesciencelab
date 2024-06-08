@@ -43,6 +43,7 @@ const documentWidth = inject("documentWidth");
             </p>
         </section>
         <section lang="ar" dir="rtl" class="p-4 p-sm-3">
+            <h1 class="text-center">بنك أسئلة العلوم Science</h1>
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <h2>تحت رعاية:</h2>
@@ -59,7 +60,9 @@ const documentWidth = inject("documentWidth");
                         <li><b>دكتورة</b>/ سماح ابراهيم، مدير المديرية</li>
                         <li><b>أ</b>/ سعيد ندا، وكيل المديرية</li>
                         <li><b>دكتورة</b>/ فوزية عبد الفتاح، مديرة الشئون التربوية</li>
+                        <li><b>أ</b>/ إبراهيم الصغير، مدير عام التوجيهات بالمديرية</li>
                         <li><b>أ</b>/ علاء شعبان، توجيه عام للعلوم بالقليوبية</li>
+                        <li><b>أ</b>/ محمد السيد مرسي، توجيه عام للعلوم بالقليوبية</li>
                         <li><b>أ</b>/ صالح محمد توجيه Science</li>
                         <li><b>مستر</b>/ أيمن فاضل، التوجيه العام لمادة Science</li>
                         <li><b>الدكتور</b>/ سعد عسل، مدير الإدارة</li>

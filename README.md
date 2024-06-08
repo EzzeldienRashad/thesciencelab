@@ -51,9 +51,9 @@ to
 //httpallow!
 
 and
-    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 to
-    $dsn = "mysql:host=sql200.infinityfree.com;dbname=if0_36665133_TheScienceLab;";
+    $dsn = "mysql:host=sql200.infinityfree.com;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 
 -----------------------------------------
 

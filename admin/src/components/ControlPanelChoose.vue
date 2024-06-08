@@ -12,7 +12,7 @@ const form = ref(null);
     <div v-for="(question, index) in questions" :key="question[0]" class="card mb-2 border-dark" data-cy="question-cont">
         <div class="card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             {{ question[0] }}
-            <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         </div>
         <div class="card-body p-0">
             <div class="row g-0">

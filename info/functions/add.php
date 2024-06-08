@@ -19,7 +19,7 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
     exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
-if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") /*exit*/;
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
