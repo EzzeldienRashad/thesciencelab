@@ -47,7 +47,7 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         echo "spacenumerr";
         exit;
     } else {
-        $addStmt = $pdo->prepare("insert into CompleteQuestioins (data, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+        $addStmt = $pdo->prepare("insert into CompleteQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
         $addStmt->execute([json_encode(array($questionParts[0], array($_POST["right"], $_POST["wrong"]), $questionParts[1])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
     }
 } elseif ($_GET["game"] == "match") {
@@ -62,7 +62,7 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
     for ($i = 0; $i < count($_POST["questions"]); $i++) {
         $arr[$_POST["questions"][$i]] = $_POST["answers"][$i];
     }
-    $addStmt = $pdo->prepare("insert into MatchQuestions (data, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+    $addStmt = $pdo->prepare("insert into MatchQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
     $addStmt->execute([json_encode($arr), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
 }
 echo "successful";

@@ -10,7 +10,7 @@ const form = ref(null);
 <template>
     <div v-for="(questionAnswer, index) in questions" :key="questionAnswer[0]" class="p-3 m-3 rounded" :class="[parseInt(questionAnswer[1]) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
         {{ questionAnswer[0] }}
-        <button v-if="member == useRoute().params.game || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+        <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">

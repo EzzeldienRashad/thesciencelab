@@ -34,7 +34,6 @@ function checkAnswer(answer) {
                         class="btn w-100 p-2 py-3 border border-danger border-2"
                         :style="{pointerEvents: answered ? 'none' : 'auto'}"
                         :tabIndex="answered ? -1 : 0">
-                        >
                         <img class="w-100" :src="rightImg" alt="right">
                     </button>
                 </div>
