@@ -8,6 +8,7 @@ import ControlPanelMatch from "@/components/ControlPanelMatch.vue";
 import GradeUnits from "@/components/GradeUnits.vue";
 
 const unit = ref("");
+const uploaders = ref({});
 const routeParams = useRoute().params;
 const router = useRouter();
 const member = ref("");
@@ -20,7 +21,8 @@ const inheritedVariables = {
     msgColor,
     deleteQuestion,
     addQuestion,
-    member
+    member,
+    uploaders
 }
 
 fetch("http://127.0.0.1/info/functions/login.php", {
@@ -35,6 +37,15 @@ function loadQuestions() {
     "&game=" + routeParams.game + "&unit=" + unit.value))
     .then(res => res.json())
     .then(questionsArr => questions.value = questionsArr);
+    if (member.value == "admin") {
+        fetch("http://127.0.0.1/info/functions/printUploaders.php?grade=" + routeParams.grade +
+            "&game=" + routeParams.game + "&unit=" + unit.value, {
+                method: "get",
+                credentials: "include"
+            })
+            .then(res => res.json())
+            .then(uploadersArr => uploaders.value = uploadersArr);
+    }
 }
 async function deleteQuestion(questionData) {
     fetch("http://127.0.0.1/info/functions/delete.php?grade=" + routeParams.grade +

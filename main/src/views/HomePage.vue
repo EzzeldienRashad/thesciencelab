@@ -44,7 +44,7 @@ const documentWidth = inject("documentWidth");
         </section>
         <section lang="ar" dir="rtl" class="p-4 p-sm-3">
             <div class="row">
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-lg-6">
                     <h2>تحت رعاية:</h2>
                     <ul class="fs-5 bullet-arrow">
                         <li>مديرية التربية والتعليم بالقليوبية</li>
@@ -53,12 +53,14 @@ const documentWidth = inject("documentWidth");
                         <li>مدرسة على بن أبى طالب الرسمية لغات</li>
                     </ul>
                 </div>
-                <div class="col-12 col-sm-6 pe-2 border-end">
+                <div class="col-12 col-lg-6 pe-2 border-end">
                     <h2>تحت إشراف ورعاية:</h2>
                     <ul class="fs-5 ps-0">
                         <li><b>دكتورة</b>/ سماح ابراهيم، مدير المديرية</li>
                         <li><b>أ</b>/ سعيد ندا، وكيل المديرية</li>
                         <li><b>دكتورة</b>/ فوزية عبد الفتاح، مديرة الشئون التربوية</li>
+                        <li><b>أ</b>/ علاء شعبان، توجيه عام للعلوم بالقليوبية</li>
+                        <li><b>أ</b>/ صالح محمد توجيه Science</li>
                         <li><b>مستر</b>/ أيمن فاضل، التوجيه العام لمادة Science</li>
                         <li><b>الدكتور</b>/ سعد عسل، مدير الإدارة</li>
                         <li><b>أ</b>/ حسام زهدى، وكيل الادارة</li>

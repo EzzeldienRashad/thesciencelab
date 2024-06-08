@@ -42,13 +42,13 @@ async function login() {
             <span class="text-danger fs-5">{{ error }}</span>
             <br/>
             <label class="form-label fs-4" for="password">Username: </label>
-            <input type="text" name="username" ref="usernameField" class="form-control p-3 rounded-start-4 fs-4 w-100" data-cy="username"/>
+            <input type="text" name="username" ref="usernameField" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username"/>
             <br/>
             <br/>
             <label class="form-label fs-4" for="password">Password: </label>
             <div class="w-100">
                 <div class="input-group">
-                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control p-3 rounded-start-4 fs-4" data-cy="password"/>
+                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control p-1 p-sm-3 rounded-start-4 fs-4" data-cy="password"/>
                     <span class="input-group-text rounded-end-4" @click="showPassword = !showPassword">
                         <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
                         <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />

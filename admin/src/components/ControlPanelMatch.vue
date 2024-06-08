@@ -2,8 +2,8 @@
 import {ref} from "vue";
 import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
 const questionsNum = ref(3);
 </script>
@@ -11,19 +11,24 @@ const questionsNum = ref(3);
 <template>
     <div class="table-responsive" v-for="(questionGroup, index) in questions" :key="questionGroup">
         <table class="w-100 table table-bordered table-striped">
-            <thead>
+            <thead @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
                 <tr>
                     <th scope="col">Question</th>
                     <th scope="col">Answer</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
                 <tr v-for="(answer, question) in questionGroup" :key="question">
                     <td>{{ question }}</td>
                     <td>{{ answer }}</td>
                 </tr>
             </tbody>
             <tfoot>
+                <tr class="uploader-name">
+                    <td colspan="2" class="bg-body-secondary">
+                        <div dir="rtl">{{ uploaders[index] }}</div>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
                         <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>

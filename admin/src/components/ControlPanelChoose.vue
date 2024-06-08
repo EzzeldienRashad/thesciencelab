@@ -2,14 +2,15 @@
 import {ref} from "vue";
 import {useRoute} from "vue-router";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
+
 </script>
 
 <template>
     <div v-for="(question, index) in questions" :key="question[0]" class="card mb-2 border-dark" data-cy="question-cont">
-        <div class="card-header p-2 fw-bold" data-cy="question">
+        <div class="card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             {{ question[0] }}
             <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         </div>
@@ -20,6 +21,7 @@ const form = ref(null);
                 </div>
             </div>
         </div>
+        <div class="card-footer p-1 text-bg-secondary d-none uploader-name" dir="rtl">{{ uploaders[index] }}</div>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
