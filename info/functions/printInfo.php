@@ -18,7 +18,7 @@ if (!isset($_GET["unit"])) {
     echo json_encode($units);
 } else {
     require "password.php";
-    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $questions = [];
     if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";

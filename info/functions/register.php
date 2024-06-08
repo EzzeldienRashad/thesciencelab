@@ -15,16 +15,14 @@ if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biolo
     echo "logout";
     exit;
 }
-if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || !isset($_GET["questionnum"])) {
+if (!isset($_POST["username"]) || !isset($_POST["arabicname"]) || !isset($_POST["phone"]) || !isset($_POST["subject"])) {
+    echo "error";
     exit;
 }
-$isSecondary = str_contains($_GET["grade"], "secondary");
-if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
-if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
-$deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
-$deleteStmt->execute()
+$registerStmt = $pdo->prepare("insert into if0_36665133_TheScienceLab.Members (name, username, phone, subject, password) values (?, ?, ?, ?, 'none')");
+$registerStmt->execute([$_POST["arabicname"], $_POST["username"], $_POST["phone"], $_POST["subject"]]);
+echo "successful";
 ?>

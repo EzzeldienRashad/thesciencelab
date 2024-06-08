@@ -41,14 +41,13 @@ async function login() {
         <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php" class="w-75 py-3">
             <span class="text-danger fs-5">{{ error }}</span>
             <br/>
-            <label class="form-label fs-4" for="password">Username: </label>
-            <input type="text" name="username" ref="usernameField" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username"/>
+            <label class="form-label fs-4" for="username">Username: </label>
+            <input type="text" name="username" id="username" ref="usernameField" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username" required/>
             <br/>
-            <br/>
-            <label class="form-label fs-4" for="password">Password: </label>
+            <label class="form-label fs-4"  for="password">Password: </label>
             <div class="w-100">
                 <div class="input-group">
-                    <input :type="showPassword ? 'text' : 'password'" name="password" ref="passwordField" class="form-control p-1 p-sm-3 rounded-start-4 fs-4" data-cy="password"/>
+                    <input :type="showPassword ? 'text' : 'password'" name="password" id="password" ref="passwordField" class="form-control p-1 p-sm-3 rounded-start-4 fs-4" data-cy="password" required/>
                     <span class="input-group-text rounded-end-4" @click="showPassword = !showPassword">
                         <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
                         <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />

@@ -9,12 +9,12 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
         header("Access-Control-Allow-Origin: " . $origin);
     }
 }
-session_start();
 header("Access-Control-Allow-Credentials: true");
+session_start();
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || !isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") exit;
 $isSecondary = str_contains($_GET["grade"], "secondary");
 require "password.php";
-$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
 $getStmt = $pdo->prepare("SELECT id, uploader FROM if0_36665133_TheScienceLab." . 

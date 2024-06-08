@@ -18,7 +18,7 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
     require "password.php";
     $maxLoginAttempts = 5;
     $waitTime = "5 minutes";
-    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;";
+    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $getLoginsStmt = $pdo->prepare("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins where username = ?");
     $getLoginsStmt->execute([$_POST["username"]]);
