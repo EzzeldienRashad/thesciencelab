@@ -6,15 +6,7 @@ import NameCard from "@/components/NameCard.vue";
 import logo from "@/assets/icons/logo.webp";
 
 const grades = ref([
-    "grade-4-first-term", "grade-4-second-term",
-    "grade-5-first-term", "grade-5-second-term",
-    "grade-6-first-term", "grade-6-second-term",
-    "1st-prep-first-term", "1st-prep-second-term",
-    "2nd-prep-first-term", "2nd-prep-second-term",
-    "3rd-prep-first-term", "3rd-prep-second-term",
-    "1st-secondary-first-term", "1st-secondary-second-term",
-    "2nd-secondary-first-term", "2nd-secondary-second-term",
-    "3rd-secondary-first-term", "3rd-secondary-second-term",
+    "grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary",
 ]);
 const documentWidth = inject("documentWidth");
 </script>
@@ -44,7 +36,7 @@ const documentWidth = inject("documentWidth");
             </p>
         </section>
         <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
-            <h1 class="text-center">منصه بنك الاسئله لمعلمي علوم لغات القليوبيه</h1>
+            <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>
             <div>
                 <h2>تحت رعاية:</h2>
                 <div class="row g-sm-2">
@@ -63,7 +55,7 @@ const documentWidth = inject("documentWidth");
                     <NameCard title="مديرة الشئون التربوية" description="الدكتورة سماح ابراهيم"/>
                     <NameCard title="مدير عام التوجيهات بالمديرية" description="الأستاذ إبراهيم الصغير"/>
                     <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ علاء شعبان"/>
-                    <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ محمد السيد مرسي"/>
+                    <NameCard title="موجه مركزى" description="الأستاذ محمد السيد مرسي"/>
                     <NameCard title="التوجيه العام لمادة Science" description="الأستاذ أيمن فاضل"/>
                     <NameCard title="توجيه Science" description="الأستاذ صالح محمد"/>
                     <NameCard title="مدير الإدارة" description="الدكتور سعد عسل"/>
@@ -78,7 +70,7 @@ const documentWidth = inject("documentWidth");
         </section>
         <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
             <h2 class="col-12">Grades:</h2>
-            <div v-for="grade in grades" :key="grade" class="col-12 col-md-6 p-2">
+            <div v-for="grade in grades" :key="grade" class="col-12 col-lg-6 p-2">
                 <GradeLink :grade="grade"/>
             </div>
         </section>

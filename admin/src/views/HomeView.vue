@@ -27,7 +27,7 @@ const grades = ref([
     </div>
     <hr/>
     <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
-            <h1 class="text-center">منصه بنك الاسئله لمعلمي علوم لغات القليوبيه</h1>
+            <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>
             <div>
                 <h2>تحت رعاية:</h2>
                 <div class="row g-sm-2">
@@ -46,7 +46,7 @@ const grades = ref([
                     <NameCard title="مديرة الشئون التربوية" description="الدكتورة سماح ابراهيم"/>
                     <NameCard title="مدير عام التوجيهات بالمديرية" description="الأستاذ إبراهيم الصغير"/>
                     <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ علاء شعبان"/>
-                    <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ محمد السيد مرسي"/>
+                    <NameCard title="موجه مركزى" description="الأستاذ محمد السيد مرسي"/>
                     <NameCard title="التوجيه العام لمادة Science" description="الأستاذ أيمن فاضل"/>
                     <NameCard title="توجيه Science" description="الأستاذ صالح محمد"/>
                     <NameCard title="مدير الإدارة" description="الدكتور سعد عسل"/>

@@ -10,7 +10,6 @@ const props = defineProps({
     }
 });
 let gradeName = ref("");
-const documentWidth = inject("documentWidth");
 
 onMounted(() => {
     gradeName.value = removeDashes(props.grade);
@@ -18,10 +17,27 @@ onMounted(() => {
 </script>
 
 <template>
-    <RouterLink :class="{'fs-5': documentWidth > 760 && documentWidth < 830, 'fs-4': (documentWidth > 500 && documentWidth < 760) || documentWidth > 830}" class="p-2 border-dark border border-3 text-decoration-none text-dark w-100 d-block" :to="'/' + grade">
-        {{ gradeName }}
-        <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
-    </RouterLink>
+    <div class="accordion" id="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fs-4" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + grade" aria-expanded="false" :aria-controls="grade">
+                    {{ grade }}
+                </button>
+            </h2>
+            <div :id="grade" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <div class="accordion-body row">
+                    <RouterLink class="text-decoration-none fs-5 col-6 border-end border-2" :to="'/' + grade">
+                        First Term
+                        <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
+                    </RouterLink>
+                    <RouterLink class="text-decoration-none fs-5 col-6" :to="'/' + grade">
+                        Second Term
+                        <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
+                    </RouterLink>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style>

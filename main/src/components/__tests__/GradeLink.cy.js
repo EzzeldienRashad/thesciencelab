@@ -8,9 +8,6 @@ it('renders', () => {
             grade: "my-grade"
         },
         global: {
-            provide: {
-                documentWidth: Cypress.config("viewportWidth")
-            },
             components: {
                 FontAwesomeIcon
             },
