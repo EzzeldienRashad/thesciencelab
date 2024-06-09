@@ -1,15 +1,29 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute} from "vue-router";
+import {jsPDF} from "jspdf";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
+
+defineExpose({exportPdf});
+
+function exportPdf() {
+    let questionsText = "";
+    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
+        let question = document.querySelectorAll(".question")[j];
+        questionsText += (j + 1) +  ") " + question.querySelector(".questionTitle").textContent + "\n";
+    }
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.text(30, 30, questionsText);
+    pdf.save("questions.pdf");
+}
 </script>
 
 <template>
-    <div v-for="(questionAnswer, index) in questions" :key="questionAnswer[0]" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" class="p-3 m-3 rounded" :class="[parseInt(questionAnswer[1]) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
-        {{ questionAnswer[0] }}
+    <div v-for="(questionAnswer, index) in questions" :key="questionAnswer[0]" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');}" class="question p-3 m-3 rounded" :class="[parseInt(questionAnswer[1]) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
+        <span class="questionTitle">{{ questionAnswer[0] }}</span>
         <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         <div class="p-1 uploader-name d-none" dir="rtl">{{ uploaders[index] }}</div>
     </div>

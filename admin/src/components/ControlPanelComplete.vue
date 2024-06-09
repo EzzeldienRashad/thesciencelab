@@ -1,19 +1,33 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute} from "vue-router";
+import {jsPDF} from "jspdf";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
+
+defineExpose({exportPdf});
+
+function exportPdf() {
+    let questionsText = "";
+    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
+        let question = document.querySelectorAll(".question")[j];
+        questionsText += "\n" + (j + 1) + ") " + question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[0].textContent + "\n";
+    }
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.text(30, 30, questionsText);
+    pdf.save("questions.pdf");
+}
 </script>
 
 <template>
-    <div v-for="(question, index) in questions" :key="question" class="border border-2 d-flex p-2">
+    <div v-for="(question, index) in questions" :key="question" class="question border border-2 d-flex p-2">
         <div class="w-100" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
-            {{ question[0] }}
+            <span class="questionTitle">{{ question[0] }}</span>
             <span class='badge text-bg-success me-1'>{{ question[1][0] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question[1][1] }}</span>
-            {{ question[2] }}
+            <span class="questionTitle">{{ question[2] }}</span>
             <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
             <div class="p-1 m-1 rounded-2 bg-body-secondary d-none uploader-name" dir="rtl">{{ uploaders[index] }}</div>
         </div>

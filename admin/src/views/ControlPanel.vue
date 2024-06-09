@@ -24,6 +24,7 @@ const inheritedVariables = {
     member,
     uploaders
 }
+const currentGame = ref(null);
 
 fetch("http://127.0.0.1/info/functions/login.php", {
         method: "get",
@@ -92,6 +93,9 @@ function addQuestion(form) {
         }
     });
 }
+function exportPdf() {
+    currentGame.value.exportPdf();
+}
 </script>
 
 <template>
@@ -101,13 +105,16 @@ function addQuestion(form) {
             <RouterLink to="/" class="text-dark">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
             </RouterLink>
-            <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
+            <div>
+                <button v-if="member == 'admin'" class="btn btn-warning" @click="exportPdf">export pdf</button>&nbsp;&nbsp;&nbsp;
+                <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
+            </div>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
-            <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" />
-            <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" />
-            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" />
-            <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" />
+            <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" ref="currentGame"/>
+            <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" ref="currentGame"/>
+            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" ref="currentGame"/>
+            <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" ref="currentGame"/>
         </main>
 </div>
 </template>

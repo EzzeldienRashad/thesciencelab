@@ -1,23 +1,39 @@
 <script setup>
-import {ref} from "vue";
-import {useRoute} from "vue-router";
+import {ref, defineExpose} from "vue";
+import {jsPDF} from "jspdf";
+// import {useRoute} from "vue-router";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
 
+defineExpose({exportPdf});
+
+function exportPdf() {
+    let questionsText = "";
+    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
+        let question = document.querySelectorAll(".question")[j];
+        questionsText += "\n" + (j + 1) + ") " + question.querySelector(".questionTitle").textContent + "\n";
+        for (let i = 0; i < 4; i++) {
+            questionsText += ["a) ", "b) ", "c) ", "d) "][i] + question.querySelectorAll(".choice")[i].textContent + "     ";
+        }
+    }
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.text(30, 30, questionsText);
+    pdf.save("questions.pdf");
+}
 </script>
 
 <template>
-    <div v-for="(question, index) in questions" :key="question[0]" class="card mb-2 border-dark" data-cy="question-cont">
-        <div class="card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+    <div v-for="(question, index) in questions" :key="question[0]" class="question card mb-2 border-dark" data-cy="question-cont">
+        <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             {{ question[0] }}
             <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
         </div>
         <div class="card-body p-0">
             <div class="row g-0">
                 <div v-for="answer in question[1]" class="col-12 col-sm-6 col-lg-3 border px-1" :class="{'text-bg-success': answer == question[1][question[2] - 1]}">
-                    <div class="h-100" data-cy="answer">{{ answer }}</div>
+                    <div class="h-100 choice" data-cy="answer">{{ answer }}</div>
                 </div>
             </div>
         </div>

@@ -48,7 +48,7 @@ const documentWidth = inject("documentWidth");
             <div>
                 <h2>تحت إشراف ورعاية:</h2>
                 <div class="row g-sm-2">
-                    <NameCard title="مدير المديرية" description="الدكتورة سماح ابراهيم"/>
+                    <NameCard title="مدير المديرية" description="الأستاذة سماح ابراهيم"/>
                     <NameCard title="وكيل المديرية" description="الأستاذ سعيد ندا"/>
                     <NameCard title="مديرة الشئون التربوية" description="الدكتورة سماح ابراهيم"/>
                     <NameCard title="مدير عام التوجيهات بالمديرية" description="الأستاذ إبراهيم الصغير"/>

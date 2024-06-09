@@ -1,16 +1,45 @@
 <script setup>
 import {ref} from "vue";
 import {useRoute} from "vue-router";
+import {jsPDF} from "jspdf";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
 const form = ref(null);
 const questionsNum = ref(3);
+
+defineExpose({exportPdf});
+
+function exportPdf() {
+    let questionsText = "";
+    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
+        let question = document.querySelectorAll(".question")[j];
+        questionsText += "Question 1:\nColumn A:\n";
+        for (let colA of shuffle(Array.from(question.querySelectorAll(".colA")))) {
+            questionsText += colA.textContent + "\n";
+        }
+        questionsText += "Column B:\n";
+        for (let colB of shuffle(Array.from(question.querySelectorAll(".colB")))) {
+            questionsText += colB.textContent + "\n";
+        }
+        questionsText += "--------------------------------\n";
+    }
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.text(30, 30, questionsText);
+    pdf.save("questions.pdf");
+}
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
 </script>
 
 <template>
     <div class="table-responsive" v-for="(questionGroup, index) in questions" :key="questionGroup">
-        <table class="w-100 table table-bordered table-striped">
+        <table class="question w-100 table table-bordered table-striped">
             <thead @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
                 <tr>
                     <th scope="col">Question</th>
@@ -19,12 +48,12 @@ const questionsNum = ref(3);
             </thead>
             <tbody @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
                 <tr v-for="(answer, question) in questionGroup" :key="question">
-                    <td>{{ question }}</td>
-                    <td>{{ answer }}</td>
+                    <td class="colA">{{ question }}</td>
+                    <td class="colB">{{ answer }}</td>
                 </tr>
             </tbody>
             <tfoot>
-                <tr class="uploader-name">
+                <tr class="uploader-name d-none">
                     <td colspan="2" class="bg-body-secondary">
                         <div dir="rtl">{{ uploaders[index] }}</div>
                     </td>
