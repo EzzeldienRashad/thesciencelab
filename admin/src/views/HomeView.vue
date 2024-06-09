@@ -2,13 +2,27 @@
 import {ref} from "vue";
 import NameCard from "@/components/NameCard.vue";
 import GradeLink from "@/components/GradeLink.vue";
+import { RouterLink } from "vue-router";
 
 const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
+const member = ref("");
+
+fetch("http://127.0.0.1/info/functions/login.php", {
+        method: "get",
+        credentials: "include",
+    })
+    .then(res => res.text())
+    .then(memberValue => {
+        member.value = memberValue;
+    });
 </script>
 
 <template>
     <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
-        <h2 class="col-12">Grades:</h2>
+        <div class="col-12">
+            <h2 class="d-inline-block">Grades:</h2>
+            <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning float-end fs-5 fw-bold text-decoration-none">uploaders</RouterLink>
+        </div>
         <div v-for="grade in grades" :key="grade" class="col-12 col-lg-6 p-2">
             <GradeLink :grade="grade"/>
         </div>
@@ -39,8 +53,8 @@ const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3r
                     <NameCard title="مدير الإدارة" description="الدكتور سعد عسل"/>
                     <NameCard title="وكيل الادارة" description="الأستاذ حسام زهدى"/>
                     <NameCard title="مدير مدرسة على بن أبى طالب الرسمية للغات" description="الأستاذ محمد عبد الحليم السعدنى"/>
-                    <NameCard description="أسرة مادة Science بالمدرسة" center/>
-                    <NameCard title="مصمم الموقع" description="الطالب عزالدين رشاد"/>
+                    <NameCard title="أسرة مادة Science بالمدرسة" description="الأستاذة أمل خالد والأستاذة غادة سعيد"/>
+                    <NameCard title="مصمم الموقع" description="الطالب عزالدين رشاد محمد حسن"/>
                     <NameCard description="مدرسة ستيم العبور" center/>
                     <NameCard title="مشرف المادة بالمدرسة" description="الأستاذ طارق على سليمان"/>
                 </div>

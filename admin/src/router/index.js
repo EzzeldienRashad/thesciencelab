@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, createWebHashHistory} from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import UploadersView from "@/views/UploadersView.vue";
 import GamesView from "@/views/GamesView.vue";
 import ControlPanel from "@/views/ControlPanel.vue";
 
@@ -20,6 +21,11 @@ const routes = [
         path: "/register",
         name: "register",
         component: RegisterView
+    },
+    {
+        path: "/uploaders",
+        name: "uploaders",
+        component: UploadersView
     },
     {
         path: "/:grade",

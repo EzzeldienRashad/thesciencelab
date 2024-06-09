@@ -59,8 +59,8 @@ const documentWidth = inject("documentWidth");
                     <NameCard title="مدير الإدارة" description="الدكتور سعد عسل"/>
                     <NameCard title="وكيل الادارة" description="الأستاذ حسام زهدى"/>
                     <NameCard title="مدير مدرسة على بن أبى طالب الرسمية للغات" description="الأستاذ محمد عبد الحليم السعدنى"/>
-                    <NameCard description="أسرة مادة Science بالمدرسة" center/>
-                    <NameCard title="مصمم الموقع" description="الطالب عزالدين رشاد"/>
+                    <NameCard title="أسرة مادة Science بالمدرسة" description="الأستاذة أمل خالد والأستاذة غادة سعيد"/>
+                    <NameCard title="مصمم الموقع" description="الطالب عزالدين رشاد محمد حسن"/>
                     <NameCard description="مدرسة ستيم العبور" center/>
                     <NameCard title="مشرف المادة بالمدرسة" description="الأستاذ طارق على سليمان"/>
                 </div>
