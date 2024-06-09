@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import removeDashes from "@/modules/removeDashes.js"
+import NameCard from "@/components/NameCard.vue";
 
 const grades = ref([
     "grade-4-first-term", "grade-4-second-term",
@@ -25,38 +26,47 @@ const grades = ref([
         </div>
     </div>
     <hr/>
-    <section lang="ar" dir="rtl" class="p-4 p-sm-3">
-        <h1 class="text-center">بنك أسئلة العلوم Science</h1>
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <h2>تحت رعاية:</h2>
-                    <ul class="fs-5 bullet-arrow">
-                        <li>مديرية التربية والتعليم بالقليوبية</li>
-                        <li>التوجيه العام لمادة العلوم</li>
-                        <li>ادارة العبور التعليمية</li>
-                        <li>مدرسة على بن أبى طالب الرسمية لغات</li>
-                    </ul>
+    <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
+            <h1 class="text-center">منصه بنك الاسئله لمعلمي علوم لغات القليوبيه</h1>
+            <div>
+                <h2>تحت رعاية:</h2>
+                <div class="row g-sm-2">
+                    <NameCard title="مديرية التربية والتعليم بالقليوبية" center/>
+                    <NameCard title="التوجيه العام لمادة العلوم" center/>
+                    <NameCard title="ادارة العبور التعليمية" center/>
+                    <NameCard title="مدرسة على بن أبى طالب الرسمية لغات" center/>
                 </div>
-                <div class="col-12 col-lg-6 pe-2 border-end">
-                    <h2>تحت إشراف ورعاية:</h2>
-                    <ul class="fs-5 ps-0">
-                        <li><b>دكتورة</b>/ سماح ابراهيم، مدير المديرية</li>
-                        <li><b>أ</b>/ سعيد ندا، وكيل المديرية</li>
-                        <li><b>دكتورة</b>/ فوزية عبد الفتاح، مديرة الشئون التربوية</li>
-                        <li><b>أ</b>/ إبراهيم الصغير، مدير عام التوجيهات بالمديرية</li>
-                        <li><b>أ</b>/ علاء شعبان، توجيه عام للعلوم بالقليوبية</li>
-                        <li><b>أ</b>/ محمد السيد مرسي، توجيه عام للعلوم بالقليوبية</li>
-                        <li><b>أ</b>/ صالح محمد توجيه Science</li>
-                        <li><b>مستر</b>/ أيمن فاضل، التوجيه العام لمادة Science</li>
-                        <li><b>الدكتور</b>/ سعد عسل، مدير الإدارة</li>
-                        <li><b>أ</b>/ حسام زهدى، وكيل الادارة</li>
-                        <li><b>أ</b>/ محمد عبد الحليم السعدنى، مدير مدرسة على بن أبى طالب الرسمية للغات</li>
-                        <li>أسرة مادة Science بالمدرسة</li>
-                        <li><b>مصمم الموقع</b>/ الطالب عزالدين رشاد</li>
-                        <li>مدرسة ستيم العبور</li>
-                        <li><b>أ</b>/ طارق على سليمان، مشرف المادة بالمدرسة</li>
-                    </ul>
+            </div>
+            <br/>
+            <div>
+                <h2>تحت إشراف ورعاية:</h2>
+                <div class="row g-sm-2">
+                    <NameCard title="مدير المديرية" description="الدكتورة سماح ابراهيم"/>
+                    <NameCard title="وكيل المديرية" description="الأستاذ سعيد ندا"/>
+                    <NameCard title="مديرة الشئون التربوية" description="الدكتورة سماح ابراهيم"/>
+                    <NameCard title="مدير عام التوجيهات بالمديرية" description="الأستاذ إبراهيم الصغير"/>
+                    <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ علاء شعبان"/>
+                    <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ محمد السيد مرسي"/>
+                    <NameCard title="التوجيه العام لمادة Science" description="الأستاذ أيمن فاضل"/>
+                    <NameCard title="توجيه Science" description="الأستاذ صالح محمد"/>
+                    <NameCard title="مدير الإدارة" description="الدكتور سعد عسل"/>
+                    <NameCard title="وكيل الادارة" description="الأستاذ حسام زهدى"/>
+                    <NameCard title="مدير مدرسة على بن أبى طالب الرسمية للغات" description="الأستاذ محمد عبد الحليم السعدنى"/>
+                    <NameCard description="أسرة مادة Science بالمدرسة" center/>
+                    <NameCard title="مصمم الموقع" description="الطالب عزالدين رشاد"/>
+                    <NameCard description="مدرسة ستيم العبور" center/>
+                    <NameCard title="مشرف المادة بالمدرسة" description="الأستاذ طارق على سليمان"/>
                 </div>
             </div>
         </section>
 </template>
+<style>
+#contributors h1 {
+    font-family: "Reem Kufi Fun", sans-serif;
+}
+#contributors h2 {
+    font-family: "Amiri", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+</style>
