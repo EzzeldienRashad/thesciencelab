@@ -1,31 +1,18 @@
 <script setup>
 import {ref} from "vue";
-import removeDashes from "@/modules/removeDashes.js"
 import NameCard from "@/components/NameCard.vue";
+import GradeLink from "@/components/GradeLink.vue";
 
-const grades = ref([
-    "grade-4-first-term", "grade-4-second-term",
-    "grade-5-first-term", "grade-5-second-term",
-    "grade-6-first-term", "grade-6-second-term",
-    "1st-prep-first-term", "1st-prep-second-term",
-    "2nd-prep-first-term", "2nd-prep-second-term",
-    "3rd-prep-first-term", "3rd-prep-second-term",
-    "1st-secondary-first-term", "1st-secondary-second-term",
-    "2nd-secondary-first-term", "2nd-secondary-second-term",
-    "3rd-secondary-first-term", "3rd-secondary-second-term",
-]);
+const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
 </script>
 
 <template>
-    <h1 class="text-center">Please choose a grade</h1>
-    <div class="row row-cols-1 row-cols-md-2 g-2" data-cy="grades">
-        <div v-for="grade in grades" :key="grade" class="col">
-            <RouterLink :to="'/' + grade" class="text-decoration-none btn btn-primary w-100 p-2 py-3 fs-5">
-                {{ removeDashes(grade) }}
-            </RouterLink>
+    <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
+        <h2 class="col-12">Grades:</h2>
+        <div v-for="grade in grades" :key="grade" class="col-12 col-lg-6 p-2">
+            <GradeLink :grade="grade"/>
         </div>
-    </div>
-    <hr/>
+    </section>
     <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
             <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>
             <div>

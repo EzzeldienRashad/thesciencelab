@@ -5,9 +5,7 @@ import GradeLink from "@/components/GradeLink.vue";
 import NameCard from "@/components/NameCard.vue";
 import logo from "@/assets/icons/logo.webp";
 
-const grades = ref([
-    "grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary",
-]);
+const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
 const documentWidth = inject("documentWidth");
 </script>
 
