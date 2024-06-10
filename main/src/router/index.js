@@ -45,6 +45,7 @@ const hashRouter = createRouter({
 });
 
 router.beforeEach((to) => {
+    document.getElementsByTagName('MAIN')[0].style.height = "";
     // close navbar
     if (document.getElementById("navigation") && 
     document.getElementById("navigation").classList.contains("show") && 

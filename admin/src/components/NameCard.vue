@@ -28,7 +28,7 @@ onMounted(() => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .next-arrow {
     transform: translateY(-10%);
 }

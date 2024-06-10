@@ -45,15 +45,7 @@ const gamesImages = {
     </div>
 </template>
 
-<style>
-button {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	outline: inherit;
-}
+<style scoped>
 .v-enter-active, .v-leave-active {
     transition: height 0.5 ease;
 }
@@ -62,5 +54,15 @@ button {
 }
 .v-enter-to, .v-leave-from {
     height: 80vh
+}
+</style>
+<style>
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
 }
 </style>

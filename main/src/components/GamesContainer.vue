@@ -35,7 +35,6 @@ switch (routeParams.game) {
 }
 const answerIsRight = ref("");
 const answered = ref(false);
-const questionsCont = ref(null);
 const rightAnswers = ref(0);
 const answeredQuestions = ref(0);
 const inheritedVariables = {
@@ -69,7 +68,7 @@ function next() {
         <div class="progress">
             <div class="progress-bar" :style="{width: answeredQuestions * 100 / questionsLength + '%'}"></div>
         </div>
-        <div ref="questionsCont" id="questions-cont">
+        <div id="questions-cont">
             <ChooseGame v-bind="inheritedVariables" v-if="['biology', 'physics', 'chemistry', 'choose'].includes(routeParams.game)" />
             <RightOrWrongGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'right-or-wrong'" />
             <CompleteGame v-bind="inheritedVariables" v-else-if="routeParams.game == 'complete'" />
@@ -117,4 +116,10 @@ img {
     border-radius: 0 !important;
     height: 12px;
 }
+</style>
+<style>
+    .question img.uploaded {
+        max-width: 100%;
+        max-height: 500px;
+    }
 </style>

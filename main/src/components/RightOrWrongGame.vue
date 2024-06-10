@@ -20,14 +20,17 @@ function checkAnswer(answer) {
         document.querySelector("h2").classList.add("text-danger");
     }
     changeAnswered();
-
 }
+const setMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = document.getElementsByClassName('question')[0].offsetHeight + 50 + 'px';
+const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = "";
 </script>
 
 <template>
-    <TransitionGroup>
-        <div v-for="[question] in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 overflow-hidden position-absolute top-0 start-0 question">
+    <TransitionGroup @after-enter="setMainWidth" @after-leave="unsetMainWidth">
+        <div v-for="[question, answer, img] in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 position-absolute overflow-hidden top-0 start-0 question">
             <h2 class="mb-5" data-cy="question">{{ question }}</h2>
+            <div class="text-center"><img v-if="img" :src="'http://127.0.0.1/info/images/' + img" class="d-inline-block uploaded"/></div>
+            <br/>
             <div class="answers row p-3 p-md-5" data-cy="choices">
                 <div class="col-6">
                     <button @click="() => !answered && checkAnswer(1)" 

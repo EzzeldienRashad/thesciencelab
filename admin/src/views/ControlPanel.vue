@@ -72,24 +72,37 @@ function addQuestion(form) {
         console.log(msgValue)
         form.parentElement.scrollTo(0, 0);
         msgColor.value = "danger";
-        if (msgValue == "logout") {
-            msg.value = "You are not logged in.";
-            setTimeout(() => router.push({name: "login"}), 1500);
-        } else if (msgValue == "spacenumerr") {
-            msg.value = "The question must include one space!";
-            setTimeout(() => msg.value = "", 1500);
-        } else if (msgValue == "infoerr") {
-            msg.value = "Please fill in all the fields!";
-            setTimeout(() => msg.value = "", 1500);
-        } else if (msgValue == "successful") {
-            msgColor.value = "success"
-            form.reset();
-            msg.value = "Added successfully!";
-            setTimeout(() => msg.value = "", 1000);
-            loadQuestions();
-        } else {
-            msg.value = "An error occured.";
-            setTimeout(() => msg.value = "", 1500);            
+        switch (msgValue) {
+            case "logout":
+                msg.value = "You are not logged in.";
+                setTimeout(() => router.push({name: "login"}), 1500);
+                break;
+            case "spacenumerr":
+                msg.value = "The question must include one space!";
+                setTimeout(() => msg.value = "", 1500);
+                break;
+            case "infoerr":
+                msg.value = "Please fill in all the fields!";
+                setTimeout(() => msg.value = "", 1500);
+                break;
+            case "big":
+                msg.value = "The image uploaded is too big!";
+                setTimeout(() => msg.value = "", 1500);
+                break;
+            case "typeerr":
+                msg.value = "Only images are allowed!";
+                setTimeout(() => msg.value = "", 1500);
+                break;
+            case "successful":
+                msgColor.value = "success"
+                form.reset();
+                msg.value = "Added successfully!";
+                setTimeout(() => msg.value = "", 1000);
+                loadQuestions();
+                break;
+            default:
+                msg.value = "An error occured.";
+                setTimeout(() => msg.value = "", 1500);            
         }
     });
 }
@@ -118,3 +131,10 @@ function exportPdf() {
         </main>
 </div>
 </template>
+
+<style>
+    .question img {
+        max-width: 300px;
+        max-height: 300px;
+    }
+</style>

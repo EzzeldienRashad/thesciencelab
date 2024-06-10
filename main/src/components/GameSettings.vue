@@ -109,7 +109,7 @@ function shuffle(arr) {
     max-height: 0;
 }
 .levels-enter-to, .levels-leave-from {
-    max-height: 270px;
+    max-height: 500px;
 }
 h3 {
     color: darkred;

@@ -61,7 +61,7 @@ fetch("http://127.0.0.1/info/functions/login.php", {
             </div>
         </section>
 </template>
-<style>
+<style scoped>
 #contributors h1 {
     font-family: "Reem Kufi Fun", sans-serif;
 }

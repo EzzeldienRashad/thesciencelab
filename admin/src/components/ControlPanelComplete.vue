@@ -23,7 +23,7 @@ function exportPdf() {
 
 <template>
     <div v-for="(question, index) in questions" :key="question" class="question border border-2 d-flex p-2">
-        <div class="w-100" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+        <div class="w-100" @click="$event => {if ($event.target.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             <span class="questionTitle">{{ question[0] }}</span>
             <span class='badge text-bg-success me-1'>{{ question[1][0] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question[1][1] }}</span>

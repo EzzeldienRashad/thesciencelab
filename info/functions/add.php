@@ -16,7 +16,7 @@ if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biolo
     exit;
 }
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || empty($_POST)) {
-    exit;
+    print_r($_POST);exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
 if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") /*exit*/;
@@ -29,14 +29,42 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         exit;
     }
     $addStmt = $pdo->prepare("insert into ChooseQuestions (data, grade, subject, unit, uploader) values (?, ?, ?, ?, ?)");
-    $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]))), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+        if ($_FILES["image"]["size"] > 1 * 1024 * 1024) {
+            echo "big";
+            exit;
+        }
+        if (!in_array(exif_imagetype($_FILES["image"]["tmp_name"]), array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP, IMAGETYPE_GIF))) {
+            echo "typeerr";
+            exit;
+        }
+        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . $_FILES["image"]["name"]);
+        $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]), $imgName)), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
+    } else {
+        $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]))), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
+    }
 } elseif ($_GET["game"] == "right-or-wrong") {
     if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
         echo "infoerr";
         exit;
     }
     $addStmt = $pdo->prepare("insert into RightOrWrongQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
-    $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+        if ($_FILES["image"]["size"] > 1 * 1024 * 1024) {
+            echo "big";
+            exit;
+        }
+        if (!in_array(exif_imagetype($_FILES["image"]["tmp_name"]), array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP, IMAGETYPE_GIF))) {
+            echo "typeerr";
+            exit;
+        }
+        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . $_FILES["image"]["name"]);
+        $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"], $imgName)), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
+    } else {
+        $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
+    }
 } elseif ($_GET["game"] == "complete") {
     if (!isset($_POST["question"]) || !isset($_POST["right"]) || !isset($_POST["wrong"])) {
         echo "infoerr";

@@ -28,20 +28,16 @@ if (!isset($_GET["unit"])) {
             ($isSecondary ? " and subject = ?" : ""));
         if (!$isSecondary) $getStmt->execute([$_GET["grade"]]);
         else $getStmt->execute([$_GET["grade"], $_GET["game"]]);
-        $questions = array();
-        while ($data = $getStmt->fetch()) {
-            $questions[$data["id"]] = json_decode($data["data"]);
-        };
     } else {
         $getStmt = $pdo->prepare("SELECT id, data FROM if0_36665133_TheScienceLab." . 
-            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?" .
+            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ? and unit = ?" .
             ($isSecondary ? " and subject = ?" : ""));
-        if (!$isSecondary) $getStmt->execute([$_GET["grade"]]);
-        else $getStmt->execute([$_GET["grade"], $_GET["game"]]);
-        $questions = array();
-        while ($data = $getStmt->fetch()) {
-            $questions[$data["id"]] = json_decode($data["data"]);
-        };
+        if (!$isSecondary) $getStmt->execute([$_GET["grade"], $_GET["unit"]]);
+        else $getStmt->execute([$_GET["grade"], $_GET["unit"], $_GET["game"]]);
+    };
+    $questions = array();
+    while ($data = $getStmt->fetch()) {
+        $questions[$data["id"]] = json_decode($data["data"]);
     }
     echo json_encode($questions);
 }

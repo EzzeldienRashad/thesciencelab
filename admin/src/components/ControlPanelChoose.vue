@@ -26,9 +26,11 @@ function exportPdf() {
 
 <template>
     <div v-for="(question, index) in questions" :key="question[0]" class="question card mb-2 border-dark" data-cy="question-cont">
-        <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+        <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             {{ question[0] }}
             <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <br/>
+            <img v-if="question[3]" :src="'http://127.0.0.1/info/images/' + question[3]" class="uploaded"/>
         </div>
         <div class="card-body p-0">
             <div class="row g-0">
@@ -45,10 +47,10 @@ function exportPdf() {
                 <div class="modal-body">
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
-                    <form ref="form" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
+                    <form ref="form" method="post" type="multipart/form-data" @submit.prevent="addQuestion(form)" class="mt-2">
                         <div class="row g-0">
                             <label class="form-label">
-                                Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
+                                Question: <input type="text" name="question" class="form-control" autocomplete="off"/>
                             </label>
                         </div>
                         <fieldset class="row" data-cy="choices">
@@ -68,6 +70,11 @@ function exportPdf() {
                         </fieldset>
                         <label>
                             Number of the right answer: <input type="number" name="number" max="4" min="1" autocomplete="off" class="form-control w-50" required data-cy="right-answer-num"/>
+                        </label>
+                        <br/>
+                        <br/>
+                        <label>
+                            Upload an image: <input type="file" name="image" data-cy="file-upload"/>
                         </label>
                         <br/>
                         <br/>

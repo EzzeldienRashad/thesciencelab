@@ -14,7 +14,7 @@ function exportPdf() {
     let questionsText = "";
     for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
         let question = document.querySelectorAll(".question")[j];
-        questionsText += "Question 1:\nColumn A:\n";
+        questionsText += "Question " + (j + 1) + ":\nColumn A:\n";
         for (let colA of shuffle(Array.from(question.querySelectorAll(".colA")))) {
             questionsText += colA.textContent + "\n";
         }
@@ -40,7 +40,7 @@ function shuffle(arr) {
 <template>
     <div class="table-responsive" v-for="(questionGroup, index) in questions" :key="questionGroup">
         <table class="question w-100 table table-bordered table-striped">
-            <thead @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
+            <thead @click="$event => {if (member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')}">
                 <tr>
                     <th scope="col">Question</th>
                     <th scope="col">Answer</th>

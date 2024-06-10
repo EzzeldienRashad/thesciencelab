@@ -31,3 +31,5 @@ private_info
 todo.txt
 password.php
 password.js
+info/images/*
+!info/images/.gitkeep

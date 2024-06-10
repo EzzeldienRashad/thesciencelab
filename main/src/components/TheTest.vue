@@ -20,6 +20,7 @@ function result(scoreValue, totalValue) {
     total.value = totalValue;
     done.value = true;
 }
+const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = "";
 
 onBeforeRouteLeave(() => {
     emit("changeTheme", "primary");
@@ -27,7 +28,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-    <transition mode="out-in">
+    <transition mode="out-in" @after-leave="unsetMainWidth">
         <h1 v-if="!started" class="vw-100 vh-100 d-flex align-items-center justify-content-center position-fixed">
             <div>{{ state }}</div>
         </h1>
