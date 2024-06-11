@@ -2,10 +2,13 @@
 import {ref, defineExpose} from "vue";
 import {jsPDF} from "jspdf";
 // import {useRoute} from "vue-router";
+import ScienceFormInput from "@/components/ScienceFormInput.vue";
+import symbolsArr from "./symbols.json"
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
+const symbols = symbolsArr[routeParams.game == "choose" ? "science" : routeParams.game];
 
 defineExpose({exportPdf});
 
@@ -28,7 +31,7 @@ function exportPdf() {
     <div v-for="(question, index) in questions" :key="question[0]" class="question card mb-2 border-dark" data-cy="question-cont">
         <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             {{ question[0] }}
-            <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <button v-if="/*member == routeParams.game || member == 'admin' || !routeParams.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
             <br/>
             <img v-if="question[3]" :src="'http://127.0.0.1/info/images/' + question[3]" class="uploaded"/>
         </div>
@@ -48,25 +51,13 @@ function exportPdf() {
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form ref="form" method="post" type="multipart/form-data" @submit.prevent="addQuestion(form)" class="mt-2">
-                        <div class="row g-0">
-                            <label class="form-label">
-                                Question: <input type="text" name="question" class="form-control" autocomplete="off"/>
-                            </label>
-                        </div>
+                            <ScienceFormInput label="Question: " inputName="question" :symbols/>
                         <fieldset class="row" data-cy="choices">
                             <legend>Answers:</legend>
-                            <label class="form-label col-md-6">
-                                First answer: <input type="text" name="first" class="form-control" autocomplete="off" required/>
-                            </label>
-                            <label class="form-label col-md-6">
-                                Second answer: <input type="text" name="second" class="form-control" autocomplete="off" required/>
-                            </label>
-                            <label class="form-label col-md-6">
-                                Third answer: <input type="text" name="third" class="form-control" autocomplete="off" required/>
-                            </label>
-                            <label class="form-label col-md-6">
-                                Fourth answer: <input type="text" name="fourth" class="form-control" autocomplete="off" required/>
-                            </label>
+                            <ScienceFormInput label="First Choice: " inputName="first" class="col-lg-6" :symbols/>
+                            <ScienceFormInput label="Second Choice: " inputName="second" class="col-lg-6" :symbols/>
+                            <ScienceFormInput label="Third Choice: " inputName="third" class="col-lg-6" :symbols/>
+                            <ScienceFormInput label="Fourth Choice: " inputName="fourth" class="col-lg-6" :symbols/>
                         </fieldset>
                         <label>
                             Number of the right answer: <input type="number" name="number" max="4" min="1" autocomplete="off" class="form-control w-50" required data-cy="right-answer-num"/>

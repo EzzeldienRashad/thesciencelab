@@ -1,0 +1,34 @@
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps(["label", "inputName", "symbols"]);
+</script>
+
+<template>
+<div>
+    <label class="form-label" :for="props.inputName">{{ props.label }}</label>
+    <div class="input-group">
+        <input type="text" :name="props.inputName" :id="props.inputName" class="form-control" autocomplete="off"/>
+        <button type="button" class="input-group-text" @click="$event => {
+            $event.currentTarget.parentElement.parentElement.getElementsByClassName('symbols')[0].classList.toggle('height-0');
+            $event.currentTarget.parentElement.parentElement.getElementsByClassName('symbols')[0].classList.toggle('height-300');
+            }"><font-awesome-icon icon="fa-solid fa-caret-down" /></button>
+    </div>
+    <div class="symbols border height-0 d-flex flex-wrap align-items-start align-content-start">
+        <button type="button" v-for="symbol in props.symbols" :data-symbol="symbol" @click="$event => $event.currentTarget.parentElement.parentElement.getElementsByTagName('INPUT')[0].value += $event.currentTarget.dataset.symbol" class="d-inline-block p-2 bg-white border border-black rounded-2 h-auto flex-grow-1 flex-shrink-1">{{ symbol }}</button>
+    </div>
+</div>
+</template>
+
+<style scoped>
+.symbols {
+    overflow: scroll;
+    transition: height 0.5s ease;
+}
+.height-0 {
+    height: 0px;
+}
+.height-300 {
+    height: 300px;
+}
+</style>

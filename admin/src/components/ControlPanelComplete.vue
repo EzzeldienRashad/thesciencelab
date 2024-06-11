@@ -1,11 +1,13 @@
 <script setup>
 import {ref} from "vue";
-import {useRoute} from "vue-router";
 import {jsPDF} from "jspdf";
+import ScienceFormInput from "@/components/ScienceFormInput.vue";
+import symbolsArr from "./symbols.json"
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
+const symbols = symbolsArr["science"];
 
 defineExpose({exportPdf});
 
@@ -28,7 +30,7 @@ function exportPdf() {
             <span class='badge text-bg-success me-1'>{{ question[1][0] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question[1][1] }}</span>
             <span class="questionTitle">{{ question[2] }}</span>
-            <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
             <div class="p-1 m-1 rounded-2 bg-body-secondary d-none uploader-name" dir="rtl">{{ uploaders[index] }}</div>
         </div>
     </div>
@@ -39,15 +41,9 @@ function exportPdf() {
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form ref="form" method="post" @submit.prevent="addQuestion(form)" class="mt-2 row">
-                        <label class="form-label col-12">
-                            Question: <input type="text" name="question" class="form-control" autocomplete="off" required/>
-                        </label>
-                        <label class="form-label col-12 col-md-6">
-                            Right answer: <input type="text" name="right" class="form-control" autocomplete="off" required/>
-                        </label>
-                        <label class="form-label col-12 col-md-6">
-                            Wrong answer: <input type="text" name="wrong" class="form-control" autocomplete="off" required/>
-                        </label>
+                        <ScienceFormInput label="Question: " inputName="question" :symbols/>
+                        <ScienceFormInput label="Right answer: " inputName="right" :symbols class="col-12 col-lg-6"/>
+                        <ScienceFormInput label="Wrong answer: " inputName="wrong" :symbols class="col-12 col-lg-6"/>
                         <div class="text-center mt-3">
                             <input type="submit" name="submit" value="add" class="btn btn-success col-6" data-cy="submit"/>
                         </div>

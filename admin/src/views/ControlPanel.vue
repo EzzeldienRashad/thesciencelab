@@ -22,7 +22,8 @@ const inheritedVariables = {
     deleteQuestion,
     addQuestion,
     member,
-    uploaders
+    uploaders,
+    routeParams
 }
 const currentGame = ref(null);
 
@@ -120,7 +121,7 @@ function exportPdf() {
             </RouterLink>
             <div>
                 <button v-if="member == 'admin'" class="btn btn-warning" @click="exportPdf">export pdf</button>&nbsp;&nbsp;&nbsp;
-                <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
+                <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success" data-cy="add-btn">+ add</button>
             </div>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
@@ -134,7 +135,8 @@ function exportPdf() {
 
 <style>
     .question img {
-        max-width: 300px;
-        max-height: 300px;
+        max-width: 100%;
+        max-height: 500px;
+        min-width: 300px;
     }
 </style>

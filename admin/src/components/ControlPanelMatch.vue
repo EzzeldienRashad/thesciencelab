@@ -1,12 +1,14 @@
 <script setup>
 import {ref} from "vue";
-import {useRoute} from "vue-router";
 import {jsPDF} from "jspdf";
+import ScienceFormInput from "@/components/ScienceFormInput.vue";
+import symbolsArr from "./symbols.json"
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
 const questionsNum = ref(3);
+const symbols = symbolsArr["science"];
 
 defineExpose({exportPdf});
 
@@ -60,7 +62,7 @@ function shuffle(arr) {
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>
@@ -74,12 +76,8 @@ function shuffle(arr) {
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form ref="form" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <template v-for="n in questionsNum">
-                            <label class="form-label w-100">
-                                Question: <input type="text" name="questions[]" class="form-control" autocomplete="off" required/>
-                            </label>
-                            <label class="form-label w-100">
-                                answer: <input type="text" name="answers[]" class="form-control" autocomplete="off" required/>
-                            </label>
+                            <ScienceFormInput label="Question: " inputName="questions[]" :symbols/>
+                            <ScienceFormInput label="Answer: " inputName="answers[]" :symbols/>
                             <hr/>
                         </template>
                         <button class="btn btn-info float-end ms-2" @click.prevent="questionsNum++">+ question</button>

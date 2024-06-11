@@ -10,11 +10,13 @@ import { faLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { faRightLong } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faLeftLong);
 library.add(faRightLong);
 library.add(faEye);
 library.add(faEyeSlash);
+library.add(faCaretDown);
 const app = createApp(App);
 app.use(router);
 app.component("font-awesome-icon", FontAwesomeIcon);

@@ -121,5 +121,6 @@ img {
     .question img.uploaded {
         max-width: 100%;
         max-height: 500px;
+        min-width: 300px;
     }
 </style>
