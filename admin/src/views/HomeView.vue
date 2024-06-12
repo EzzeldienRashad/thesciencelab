@@ -18,12 +18,12 @@ fetch("http://127.0.0.1/info/functions/login.php", {
 </script>
 
 <template>
-    <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
+    <section class="p-2 p-sm-4 p-sm-5 row gx-0" data-cy="grades">
         <div class="col-12 d-flex mb-2 justify-content-end justify-content-between flex-wrap">
             <h2>Grades:</h2>
             <div>
-                <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning fs-5 fw-bold text-decoration-none flex-grow-1 me-2 admin-btn">uploaders</RouterLink>
-                <RouterLink to="/uploadedQuestions" v-if="member == 'admin'" class="btn btn-warning fs-5 fw-bold text-decoration-none flex-grow-1 ms-2 admin-btn">uploaded questions</RouterLink>
+                <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning fw-bold text-decoration-none flex-grow-1 me-1 me-sm-2 admin-btn p-1 p-sm-2 fs-5">uploaders</RouterLink>
+                <RouterLink to="/uploadedQuestions" v-if="member == 'admin'" class="btn btn-warning fw-bold text-decoration-none flex-grow-2 ms-1 ms-sm-1 admin-btn p-1 p-sm-2 fs-5">uploaded questions</RouterLink>
             </div>
         </div>
         <div v-for="grade in grades" :key="grade" class="col-12 col-lg-6 p-2">
