@@ -17,21 +17,39 @@ defineExpose({exportPdf});
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
     pdf.setFont("ARIAL", "normal");
-    let questionsText = "";
+    let lines = 1;
+    let lineHeight = pdf.getLineHeight();
+    let pageHeight = pdf.internal.pageSize.height;
     let questions = document.querySelectorAll(".question");
     for (let j = 0; j < questions.length; j++) {
         let question = questions[questions.length - j - 1];
-        questionsText += "Question " + (j + 1) + ":\nColumn A:\n";
+        pdf.text("Question " + (j + 1) + ":\nColumn A:\n", lineHeight, lineHeight * lines);
+        lines += 2;
         for (let colA of shuffle(Array.from(question.querySelectorAll(".colA")))) {
-            questionsText += pdf.splitTextToSize(colA.textContent, 500).join("\n") + "\n";
+            for (let questionPart of pdf.splitTextToSize(colA.textContent, 535)) {
+                if (lines * lineHeight >= pageHeight - lineHeight) {
+                    pdf.addPage();
+                    lines = 1;
+                }
+                pdf.text(questionPart, lineHeight, lineHeight * lines);
+                lines += 1;
+            }
         }
-        questionsText += "Column B:\n";
+        pdf.text("Column B:\n", lineHeight, lineHeight * lines);
+        lines += 1;
         for (let colB of shuffle(Array.from(question.querySelectorAll(".colB")))) {
-            questionsText += pdf.splitTextToSize(colB.textContent, 500).join("\n") + "\n";
+            for (let questionPart of pdf.splitTextToSize(colB.textContent, 535)) {
+                if (lines * lineHeight >= pageHeight - lineHeight) {
+                    pdf.addPage();
+                    lines = 1;
+                }
+                pdf.text(questionPart, lineHeight, lineHeight * lines);
+                lines += 1;
+            }
         }
-        questionsText += "--------------------------------\n";
+        pdf.text("----------------------------------------------------------------------------------------\n", lineHeight, lineHeight * lines);
+        lines += 1;
     }
-    pdf.text(questionsText, 30, 30);
     pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
 }
 function shuffle(arr) {

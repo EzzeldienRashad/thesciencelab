@@ -16,13 +16,22 @@ defineExpose({exportPdf});
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
     pdf.setFont("ARIAL", "normal");
-    let questionsText = "";
+    let lines = 1;
+    let lineHeight = pdf.getLineHeight();
+    let pageHeight = pdf.internal.pageSize.height;
     let questions = document.querySelectorAll(".question");
     for (let j = 0; j < questions.length; j++) {
-        let question = questions[questions.length - j - 1];
-        questionsText += "\n" + (j + 1) + ") " + pdf.splitTextToSize(question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[1].textContent, 535).join("\n") + "\n";
+        let numbered = false;
+        for (let questionPart of pdf.splitTextToSize(questions[questions.length - j - 1].querySelectorAll(".questionTitle")[0].textContent + " ....... " + questions[questions.length - j - 1].querySelectorAll(".questionTitle")[1].textContent, 535)) {
+            if (lines * lineHeight >= pageHeight - lineHeight) {
+                pdf.addPage();
+                lines = 1;
+            }
+            pdf.text((!numbered ? (j + 1) +  ") " : "") + questionPart, lineHeight, lineHeight * lines);
+            numbered = true;
+            lines += 1;
+        }
     }
-    pdf.text(questionsText, 30, 30);
     pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
 }
 </script>

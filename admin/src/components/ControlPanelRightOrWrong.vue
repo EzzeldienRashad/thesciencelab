@@ -23,7 +23,7 @@ function exportPdf() {
     for (let j = 0; j < questions.length; j++) {
         let question = questions[questions.length - j - 1];
         let numbered = false;
-        for (let questionPart of pdf.splitTextToSize(question.querySelector(".questionTitle").textContent, 500)) {
+        for (let questionPart of pdf.splitTextToSize(question.querySelector(".questionTitle").textContent, 535)) {
             if (lines * lineHeight >= pageHeight - lineHeight) {
                 pdf.addPage();
                 lines = 1;
