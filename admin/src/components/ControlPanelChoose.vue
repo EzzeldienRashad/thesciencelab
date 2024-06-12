@@ -3,26 +3,55 @@ import {ref, defineExpose} from "vue";
 import {jsPDF} from "jspdf";
 // import {useRoute} from "vue-router";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
-import symbolsArr from "./symbols.json"
+import symbolsArr from "@/assets/info/symbols.json"
+import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
 const symbols = symbolsArr[routeParams.game == "choose" ? "science" : routeParams.game];
 
+jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
 
 function exportPdf() {
-    let questionsText = "";
-    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
-        let question = document.querySelectorAll(".question")[j];
-        questionsText += "\n" + (j + 1) + ") " + question.querySelector(".questionTitle").textContent + "\n";
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.setFont("ARIAL", "normal");
+    let lines = 1;
+    let lineHeight = pdf.getLineHeight();
+    let pageHeight = pdf.internal.pageSize.height;
+    let questions = document.querySelectorAll(".question");
+    for (let j = 0; j < questions.length; j++) {
+        let question = questions[questions.length - j - 1];
+        let numbered = false;
+        let choices = "";
+        let newLines = 0;
+        for (let questionPart of pdf.splitTextToSize(question.querySelector(".questionTitle").textContent, 535)) {
+            if (lines * lineHeight >= pageHeight - lineHeight) {
+                pdf.addPage();
+                lines = 1;
+            }
+            pdf.text((!numbered ? (j + 1) +  ") " : "") + questionPart, lineHeight, lineHeight * lines);
+            numbered = true;
+            lines += 1;
+        }
         for (let i = 0; i < 4; i++) {
-            questionsText += ["a) ", "b) ", "c) ", "d) "][i] + question.querySelectorAll(".choice")[i].textContent + "     ";
+            choices += ["a) ", "b) ", "c) ", "d) "][i] + pdf.splitTextToSize(question.querySelectorAll(".choice")[i].textContent, 535).join("\n") + "     ";
+            newLines += pdf.splitTextToSize(question.querySelectorAll(".choice")[i].textContent, 535).length - 1;
+        }
+        pdf.text(choices, lineHeight, lineHeight * lines);
+        lines += newLines + 1;
+        newLines = 0;
+        let img = question.getElementsByTagName("img")[0];
+        if (img) { //fix img type png jpeg .....
+            if (lines * lineHeight + Math.ceil(img.clientHeight / img.clientWidth * 300) >= pageHeight - lineHeight) {
+                pdf.addPage();
+                lines = 1;
+            }
+            pdf.addImage(img.src, 'png', lineHeight, lineHeight * lines, 300, Math.ceil(img.clientHeight / img.clientWidth * 300));
+            lines += Math.ceil(img.clientHeight / img.clientWidth * 300 / lineHeight) + 2;
         }
     }
-    let pdf = new jsPDF("p", "pt", "A4");
-    pdf.text(30, 30, questionsText);
     pdf.save("questions.pdf");
 }
 </script>

@@ -2,23 +2,46 @@
 import {ref} from "vue";
 import {jsPDF} from "jspdf";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
-import symbolsArr from "./symbols.json"
+import symbolsArr from "@/assets/info/symbols.json"
+import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
 const symbols = symbolsArr["science"];
 
+jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
 
 function exportPdf() {
-    let questionsText = "";
-    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
-        let question = document.querySelectorAll(".question")[j];
-        questionsText += (j + 1) +  ") " + question.querySelector(".questionTitle").textContent + "\n";
-    }
     let pdf = new jsPDF("p", "pt", "A4");
-    pdf.text(30, 30, questionsText);
+    pdf.setFont("ARIAL", "normal");
+    let lines = 1;
+    let lineHeight = pdf.getLineHeight();
+    let pageHeight = pdf.internal.pageSize.height;
+    let questions = document.querySelectorAll(".question");
+    for (let j = 0; j < questions.length; j++) {
+        let question = questions[questions.length - j - 1];
+        let numbered = false;
+        for (let questionPart of pdf.splitTextToSize(question.querySelector(".questionTitle").textContent, 500)) {
+            if (lines * lineHeight >= pageHeight - lineHeight) {
+                pdf.addPage();
+                lines = 1;
+            }
+            pdf.text((!numbered ? (j + 1) +  ") " : "") + questionPart, lineHeight, lineHeight * lines);
+            numbered = true;
+            lines += 1;
+        }
+        let img = question.getElementsByTagName("img")[0];
+        if (img) { //fix img type png jpeg .....
+                if (lines * lineHeight + Math.ceil(img.clientHeight / img.clientWidth * 300) >= pageHeight - lineHeight) {
+                    pdf.addPage();
+                    lines = 1;
+                }
+            pdf.addImage(img.src, 'png', lineHeight, lineHeight * lines, 300, Math.ceil(img.clientHeight / img.clientWidth * 300));
+            lines += Math.ceil(img.clientHeight / img.clientWidth * 300 / lineHeight) + 2;
+        }
+    }
     pdf.save("questions.pdf");
 }
 </script>

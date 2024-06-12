@@ -2,7 +2,8 @@
 import {ref} from "vue";
 import {jsPDF} from "jspdf";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
-import symbolsArr from "./symbols.json"
+import symbolsArr from "@/assets/info/symbols.json"
+import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
@@ -10,24 +11,27 @@ const form = ref(null);
 const questionsNum = ref(3);
 const symbols = symbolsArr["science"];
 
+jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
 
 function exportPdf() {
+    let pdf = new jsPDF("p", "pt", "A4");
+    pdf.setFont("ARIAL", "normal");
     let questionsText = "";
-    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
-        let question = document.querySelectorAll(".question")[j];
+    let questions = document.querySelectorAll(".question");
+    for (let j = 0; j < questions.length; j++) {
+        let question = questions[questions.length - j - 1];
         questionsText += "Question " + (j + 1) + ":\nColumn A:\n";
         for (let colA of shuffle(Array.from(question.querySelectorAll(".colA")))) {
-            questionsText += colA.textContent + "\n";
+            questionsText += pdf.splitTextToSize(colA.textContent, 500).join("\n") + "\n";
         }
         questionsText += "Column B:\n";
         for (let colB of shuffle(Array.from(question.querySelectorAll(".colB")))) {
-            questionsText += colB.textContent + "\n";
+            questionsText += pdf.splitTextToSize(colB.textContent, 500).join("\n") + "\n";
         }
         questionsText += "--------------------------------\n";
     }
-    let pdf = new jsPDF("p", "pt", "A4");
-    pdf.text(30, 30, questionsText);
+    pdf.text(questionsText, 30, 30);
     pdf.save("questions.pdf");
 }
 function shuffle(arr) {

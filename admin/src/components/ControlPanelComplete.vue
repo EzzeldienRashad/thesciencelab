@@ -2,23 +2,27 @@
 import {ref} from "vue";
 import {jsPDF} from "jspdf";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
-import symbolsArr from "./symbols.json"
+import symbolsArr from "@/assets/info/symbols.json"
+import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
 const form = ref(null);
 const symbols = symbolsArr["science"];
 
+jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
 
 function exportPdf() {
-    let questionsText = "";
-    for (let j = 0; j < document.querySelectorAll(".question").length; j++) {
-        let question = document.querySelectorAll(".question")[j];
-        questionsText += "\n" + (j + 1) + ") " + question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[0].textContent + "\n";
-    }
     let pdf = new jsPDF("p", "pt", "A4");
-    pdf.text(30, 30, questionsText);
+    pdf.setFont("ARIAL", "normal");
+    let questionsText = "";
+    let questions = document.querySelectorAll(".question");
+    for (let j = 0; j < questions.length; j++) {
+        let question = questions[questions.length - j - 1];
+        questionsText += "\n" + (j + 1) + ") " + pdf.splitTextToSize(question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[1].textContent, 535).join("\n") + "\n";
+    }
+    pdf.text(questionsText, 30, 30);
     pdf.save("questions.pdf");
 }
 </script>
