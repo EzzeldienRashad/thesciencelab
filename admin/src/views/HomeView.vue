@@ -19,9 +19,12 @@ fetch("http://127.0.0.1/info/functions/login.php", {
 
 <template>
     <section class="p-4 p-sm-5 row gx-0" data-cy="grades">
-        <div class="col-12">
-            <h2 class="d-inline-block">Grades:</h2>
-            <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning float-end fs-5 fw-bold text-decoration-none">uploaders</RouterLink>
+        <div class="col-12 d-flex mb-2 justify-content-end justify-content-between flex-wrap">
+            <h2>Grades:</h2>
+            <div>
+                <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning fs-5 fw-bold text-decoration-none flex-grow-1 me-2 admin-btn">uploaders</RouterLink>
+                <RouterLink to="/uploadedQuestions" v-if="member == 'admin'" class="btn btn-warning fs-5 fw-bold text-decoration-none flex-grow-1 ms-2 admin-btn">uploaded questions</RouterLink>
+            </div>
         </div>
         <div v-for="grade in grades" :key="grade" class="col-12 col-lg-6 p-2">
             <GradeLink :grade="grade"/>
@@ -69,5 +72,8 @@ fetch("http://127.0.0.1/info/functions/login.php", {
     font-family: "Amiri", serif;
     font-weight: 400;
     font-style: normal;
+}
+.admin-btn {
+    max-width: 300px;
 }
 </style>

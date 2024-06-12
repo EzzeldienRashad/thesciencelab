@@ -15,7 +15,7 @@ const props = defineProps(["label", "inputName", "symbols"]);
             }"><font-awesome-icon icon="fa-solid fa-caret-down" /></button>
     </div>
     <div class="symbols border height-0 d-flex flex-wrap align-items-start align-content-start">
-        <button type="button" v-for="symbol in props.symbols" :data-symbol="symbol" @click="$event => $event.currentTarget.parentElement.parentElement.getElementsByTagName('INPUT')[0].value += $event.currentTarget.dataset.symbol" class="d-inline-block p-2 bg-white border border-black rounded-2 h-auto flex-grow-1 flex-shrink-1">{{ symbol }}</button>
+        <button type="button" v-for="symbol in props.symbols" :data-symbol="symbol" @click="$event => $event.currentTarget.parentElement.parentElement.getElementsByTagName('INPUT')[0].value += $event.currentTarget.dataset.symbol" class="d-inline-block p-2 fs-5 bg-white border border-black rounded-2 h-auto flex-grow-1 flex-shrink-1">{{ symbol }}</button>
     </div>
 </div>
 </template>
@@ -29,6 +29,6 @@ const props = defineProps(["label", "inputName", "symbols"]);
     height: 0px;
 }
 .height-300 {
-    height: 300px;
+    height: 150px;
 }
 </style>

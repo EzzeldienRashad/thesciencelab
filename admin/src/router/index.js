@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import UploadersView from "@/views/UploadersView.vue";
+import UploadedQuestionsView from "@/views/UploadedQuestionsView.vue";
 import GamesView from "@/views/GamesView.vue";
 import ControlPanel from "@/views/ControlPanel.vue";
 
@@ -26,6 +27,11 @@ const routes = [
         path: "/uploaders",
         name: "uploaders",
         component: UploadersView
+    },
+    {
+        path: "/uploadedQuestions",
+        name: "uploadedQuestions",
+        component: UploadedQuestionsView
     },
     {
         path: "/:grade",

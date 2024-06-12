@@ -52,7 +52,7 @@ function exportPdf() {
             lines += Math.ceil(img.clientHeight / img.clientWidth * 300 / lineHeight) + 2;
         }
     }
-    pdf.save("questions.pdf");
+    pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
 }
 </script>
 

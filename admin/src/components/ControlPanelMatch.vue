@@ -32,7 +32,7 @@ function exportPdf() {
         questionsText += "--------------------------------\n";
     }
     pdf.text(questionsText, 30, 30);
-    pdf.save("questions.pdf");
+    pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
 }
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {

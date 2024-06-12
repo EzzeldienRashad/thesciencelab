@@ -16,7 +16,7 @@ if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biolo
     exit;
 }
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || empty($_POST)) {
-    print_r($_POST);exit;
+    exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
 if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") /*exit*/;
@@ -38,7 +38,7 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
             echo "typeerr";
             exit;
         }
-        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . $_FILES["image"]["name"]);
+        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
         $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]), $imgName)), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
         move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
     } else {
@@ -59,7 +59,7 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
             echo "typeerr";
             exit;
         }
-        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . $_FILES["image"]["name"]);
+        $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
         $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"], $imgName)), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
         move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
     } else {

@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const uploaders = ref([]);
 
-fetch("http://127.0.0.1/info/functions/uploaders.php", {
+fetch("http://127.0.0.1/info/functions/uploadersCount.php", {
     method: "GET",
     credentials: "include"
 })
@@ -12,7 +12,7 @@ fetch("http://127.0.0.1/info/functions/uploaders.php", {
 </script>
 
 <template>
-    <div v-for="uploader in uploaders" :key="uploader" class="card" dir="rtl">
-        <div class="card-header fs-5">{{ uploader[0] }}: {{ uploader[1] }} سؤال</div>
+    <div class="row p-2" dir="rtl" lang="ar">
+        <div v-for="uploader in uploaders" :key="uploader" class="fs-4 col-12 col-lg-6 border rounded-2 p-2 border-dark-subtle">{{ uploader[0] }}: {{ uploader[1] }} سؤال</div>
     </div>
 </template>

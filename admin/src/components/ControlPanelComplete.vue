@@ -23,7 +23,7 @@ function exportPdf() {
         questionsText += "\n" + (j + 1) + ") " + pdf.splitTextToSize(question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[1].textContent, 535).join("\n") + "\n";
     }
     pdf.text(questionsText, 30, 30);
-    pdf.save("questions.pdf");
+    pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
 }
 </script>
 
