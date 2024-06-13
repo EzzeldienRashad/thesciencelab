@@ -25,7 +25,6 @@ function exportPdf() {
         let question = questions[questions.length - j - 1];
         let numbered = false;
         let choices = "";
-        let newLines = 0;
         for (let questionPart of pdf.splitTextToSize(question.querySelector(".questionTitle").textContent, 535)) {
             if (lines * lineHeight >= pageHeight - lineHeight) {
                 pdf.addPage();
@@ -36,12 +35,16 @@ function exportPdf() {
             lines += 1;
         }
         for (let i = 0; i < 4; i++) {
-            choices += ["a) ", "b) ", "c) ", "d) "][i] + pdf.splitTextToSize(question.querySelectorAll(".choice")[i].textContent, 535).join("\n") + "     ";
-            newLines += pdf.splitTextToSize(question.querySelectorAll(".choice")[i].textContent, 535).length - 1;
+            choices += ["a)", "b)", "c)", "d)"][i] + question.querySelectorAll(".choice")[i].textContent + "     ";
         }
-        pdf.text(choices, lineHeight, lineHeight * lines);
-        lines += newLines + 1;
-        newLines = 0;
+        for (let choicesPart of pdf.splitTextToSize(choices, 535)) {
+            if (lines * lineHeight >= pageHeight - lineHeight) {
+                pdf.addPage();
+                lines = 1;
+            }
+            pdf.text(choicesPart, lineHeight, lineHeight * lines);
+            lines += 1;
+        }
         let img = question.getElementsByTagName("img")[0];
         if (img) { //fix img type png jpeg .....
             if (lines * lineHeight + Math.ceil(img.clientHeight / img.clientWidth * 300) >= pageHeight - lineHeight) {

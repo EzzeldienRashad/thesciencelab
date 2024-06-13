@@ -32,7 +32,7 @@ npm run build
 
 # Before upload
 
-* FETCH REMOTE JSON FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
+* FETCH REMOTE info/images FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
 * Change "http://127.0.0.1" to "https://thesciencelab.infinityfreeapp.com" or "http://localhost"
 
 *info:*
