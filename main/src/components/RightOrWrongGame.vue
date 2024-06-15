@@ -8,7 +8,7 @@ const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnsw
 const currentQuestion = computed(() => [questions.value[answeredQuestions.value]]);
 
 function checkAnswer(answer) {
-    const rightAnswer = Number(currentQuestion.value[0][1]);
+    const rightAnswer = Number(currentQuestion.value[0]["answer"]);
     document.querySelector(".answers").querySelectorAll("button")[Number(!rightAnswer)].parentElement.style.border = "5px solid blue";
     document.querySelector(".answers").querySelectorAll("button")[rightAnswer].style.opacity = "0";
     if (answer == rightAnswer) {
@@ -27,9 +27,9 @@ const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.heig
 
 <template>
     <TransitionGroup @after-enter="setMainWidth" @after-leave="unsetMainWidth">
-        <div v-for="[question, answer, img] in currentQuestion" :key="question" class="vw-100 p-2 p-sm-3 p-md-5 position-absolute overflow-hidden top-0 start-0 question">
-            <h2 class="mb-5" data-cy="question">{{ question }}</h2>
-            <div class="text-center"><img v-if="img" :src="'http://127.0.0.1/info/images/' + img" class="d-inline-block uploaded"/></div>
+        <div v-for="question in currentQuestion" :key="question['id']" class="vw-100 p-2 p-sm-3 p-md-5 position-absolute overflow-hidden top-0 start-0 question">
+            <h2 class="mb-5" data-cy="question">{{ question["question"] }}</h2>
+            <div class="text-center"><img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="d-inline-block uploaded"/></div>
             <br/>
             <div class="answers row p-3 p-md-5" data-cy="choices">
                 <div class="col-6">

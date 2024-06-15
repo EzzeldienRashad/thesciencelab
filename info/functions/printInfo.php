@@ -10,6 +10,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
     }
 }
 header("Access-Control-Allow-Credentials: true");
+session_start();
 if (!isset($_GET["grade"]) || !isset($_GET["game"])) exit;
 $isSecondary = str_contains($_GET["grade"], "secondary");
 if (!isset($_GET["unit"])) {
@@ -21,24 +22,42 @@ if (!isset($_GET["unit"])) {
     $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $questions = [];
-    if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
+    if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "rightOrWrong";
+    $requiredData = [];
+    switch ($_GET["game"]) {
+        case "choose":
+        case "biology":
+        case "physics":
+        case "chemistry":
+            $requiredData = ["question", "choiceA", "choiceB", "choiceC", "choiceD", "answer"];
+            break;
+        case "complete":
+            $requiredData = ["part1", "part2", "rightAnswer", "wrongAnswer"];
+            break;
+        case "match":
+            $requiredData = ["colA", "colB"];
+            break;
+        case "rightOrWrong":
+            $requiredData = ["question", "answer"];
+            break;
+    }
+    $queryString = "SELECT id, level";
+    foreach ($requiredData as $requiredItem) {
+        $queryString .= ", " . $requiredItem;
+    }
+    if ($_GET["game"] == "choose" || $_GET["game"] == "rightOrWrong") $queryString .= ", image";
+    if (isset($_SESSION["member"]) && $_SESSION["member"] == "admin") $queryString .= ", uploader";
+    $queryString .= " FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?";
+    if ($_GET["unit"] != "whole") $queryString .= " and unit = ?";
+    if ($isSecondary) $queryString .= " and subject = ?";
+    $getStmt = $pdo->prepare($queryString);
     if ($_GET["unit"] == "whole") {
-        $getStmt = $pdo->prepare("SELECT id, data FROM if0_36665133_TheScienceLab." . 
-            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?" .
-            ($isSecondary ? " and subject = ?" : ""));
         if (!$isSecondary) $getStmt->execute([$_GET["grade"]]);
         else $getStmt->execute([$_GET["grade"], $_GET["game"]]);
     } else {
-        $getStmt = $pdo->prepare("SELECT id, data FROM if0_36665133_TheScienceLab." . 
-            ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ? and unit = ?" .
-            ($isSecondary ? " and subject = ?" : ""));
         if (!$isSecondary) $getStmt->execute([$_GET["grade"], $_GET["unit"]]);
         else $getStmt->execute([$_GET["grade"], $_GET["unit"], $_GET["game"]]);
     };
-    $questions = array();
-    while ($data = $getStmt->fetch()) {
-        $questions[$data["id"]] = json_decode($data["data"]);
-    }
-    echo json_encode($questions);
+    echo json_encode($getStmt->fetchAll());
 }
 ?>

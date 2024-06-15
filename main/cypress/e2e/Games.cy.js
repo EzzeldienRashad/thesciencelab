@@ -18,7 +18,7 @@ describe("games", () => {
             ]);
         });
         cy.getByData("units").find("button").eq(0).click();
-        cy.contains("quick").click();
+        cy.contains("easy").click();
         cy.getByData("choices").find("button").should("have.length", 4);
         cy.getByData("choices").find("button").eq(2).click();
         cy.get("#next-arrow").click();
@@ -38,7 +38,7 @@ describe("games", () => {
             });
         });
         cy.getByData("units").find("button").eq(1).click();
-        cy.contains("comprehensive").click();
+        cy.contains("hard").click();
         cy.getByData("choices").find("button").should("have.length", 2);
         cy.getByData("choices").find("button").eq(0).click();
         cy.get("#next-arrow").click();
@@ -57,7 +57,7 @@ describe("games", () => {
             ]);
         });
         cy.getByData("units").find("button").eq(0).click();
-        cy.contains("comprehensive").click();
+        cy.contains("hard").click();
         cy.get("input").should("have.length", 5);
     });
     it("Match game works", () => {
@@ -74,7 +74,7 @@ describe("games", () => {
             ]);
         });
         cy.getByData("units").find("button").eq(0).click();
-        cy.contains("comprehensive").click();
+        cy.contains("hard").click();
         cy.get("table").contains("Column A");
         cy.get("table").contains("Column B");
     });

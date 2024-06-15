@@ -21,6 +21,7 @@ const inheritedVariables = {
     msgColor,
     deleteQuestion,
     addQuestion,
+    setLevel,
     member,
     uploaders,
     routeParams
@@ -107,6 +108,18 @@ function addQuestion(form) {
         }
     });
 }
+function setLevel(level, index) {
+    fetch("http://127.0.0.1/info/functions/setLevel.php?grade=" + routeParams.grade +
+    "&game=" + routeParams.game + "&unit=" + unit.value + "&questionnum=" + index + "&level=" + level, {
+        method: "get",
+        credentials: "include"
+    })
+    .then(res => res.text())
+    .then((msg) => {
+        if (msg == "logout") router.push({name: "login"});
+        else loadQuestions();
+    });
+}
 function exportPdf() {
     currentGame.value.exportPdf();
 }
@@ -121,7 +134,7 @@ function exportPdf() {
             </RouterLink>
             <div>
                 <button v-if="member == 'admin'" class="btn btn-warning" @click="exportPdf">export pdf</button>&nbsp;&nbsp;&nbsp;
-                <button v-if="/*member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')*/true" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success" data-cy="add-btn">+ add</button>
+                <button v-if="member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')" data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success" data-cy="add-btn">+ add</button>
             </div>
         </header>
         <main class="d-flex flex-column-reverse pt-2">

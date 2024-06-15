@@ -47,7 +47,7 @@ fetch("http://127.0.0.1/info/functions/login.php", {
                 <div class="row g-sm-2">
                     <NameCard title="مدير المديرية" description="الأستاذة سماح ابراهيم"/>
                     <NameCard title="وكيل المديرية" description="الأستاذ سعيد ندا"/>
-                    <NameCard title="مديرة الشئون التربوية" description="الدكتورة سماح ابراهيم"/>
+                    <NameCard title="مديرة الشئون التنفيذية" description="الدكتورة فوزية"/>
                     <NameCard title="مدير عام التوجيهات بالمديرية" description="الأستاذ إبراهيم الصغير"/>
                     <NameCard title="توجيه عام للعلوم بالقليوبية" description="الأستاذ علاء شعبان"/>
                     <NameCard title="موجه مركزى" description="الأستاذ محمد السيد مرسي"/>

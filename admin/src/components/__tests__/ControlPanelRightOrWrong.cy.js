@@ -6,10 +6,18 @@ describe("control panel right or wrong", () => {
         cy.mount(defineComponent({
             setup() {
                 const props = {
-                    questions: {
-                        0: ["Is it right?", 1],
-                        1: ["Is it wrong?", 0]
-                    }, 
+                    questions: [
+                        {
+                            "question": "Is it right?",
+                            "answer": 1,
+                            "id": 0
+                        },
+                        {
+                            "question": "Is it wrong?",
+                            "answer": 0,
+                            "id": 1
+                        }
+                    ], 
                     msg: ref(undefined), 
                     msgColor: ref(undefined), 
                     deleteQuestion: cy.stub().as("deleteQuestion"), 
@@ -37,7 +45,7 @@ describe("control panel right or wrong", () => {
     });
     it("deletes a question", function () {
         cy.getByData("delete-btn").eq(1).click().then(() => {
-            expect(this.deleteQuestion).to.have.been.calledOnceWith("1");
+            expect(this.deleteQuestion).to.have.been.calledOnceWith(1);
         });
     });
     it("adds a question", function () {

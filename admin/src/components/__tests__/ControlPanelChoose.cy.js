@@ -7,8 +7,22 @@ describe("control panel choose", () => {
             setup() {
                 const props = {
                     questions: [
-                        ["What is a?", ["a", "b", "c", "d"], 1],
-                        ["What is b?", ["a", "b", "c", "d"], 2],
+                        {
+                            "question": "What is a?",
+                            "choiceA": "a",
+                            "choiceB": "b",
+                            "choiceC": "c",
+                            "choiceD": "d",
+                            "answer": 1
+                        },
+                        {
+                            "question": "What is b?",
+                            "choiceA": "a",
+                            "choiceB": "b",
+                            "choiceC": "c",
+                            "choiceD": "d",
+                            "answer": 2
+                        }
                     ], 
                     msg: ref(undefined), 
                     msgColor: ref(undefined), 
@@ -34,7 +48,7 @@ describe("control panel choose", () => {
     it("displays available questions", () => {
         cy.getByData("question").should("have.length", 2);
         cy.getByData("question").eq(0).should("contain.text", "What is a?");
-        cy.getByData("question-cont").eq(0).findByData("answer").should("contain.text", "abcd")
+        cy.getByData("question-cont").eq(0).findByData("choice").should("contain.text", "abcd")
     });
     it("deletes a question", function () {
         cy.getByData("delete-btn").eq(0).click().then(() => {

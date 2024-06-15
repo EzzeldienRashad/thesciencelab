@@ -5,12 +5,12 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, uploaders, routeParams} = props;
 const form = ref(null);
 const questionsNum = ref(3);
 const symbols = symbolsArr["science"];
-
+console.log(questions.value)
 jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
 
@@ -62,7 +62,14 @@ function shuffle(arr) {
 </script>
 
 <template>
-    <div class="table-responsive" v-for="(questionGroup, index) in questions" :key="questionGroup">
+    <div class="table-responsive" v-for="cols in questions" :key="cols">
+        <tr v-if="member == 'admin'" class="d-flex flex-column pt-2 px-1 gap-1" :class="{'bg-success-subtle': cols['level'] == 'easy', 'bg-warning-subtle': cols['level'] == 'medium', 'bg-danger-subtle': cols['level'] == 'hard'}">
+            <td colspan="2" class="d-flex justify-content-center gap-2">
+                <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', cols['id'])"/></button>
+                <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', cols['id'])"/></button>
+                <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', cols['id'])"/></button>
+            </td>
+        </tr>
         <table class="question w-100 table table-bordered table-striped">
             <thead @click="$event => {if (member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')}">
                 <tr>
@@ -71,20 +78,20 @@ function shuffle(arr) {
                 </tr>
             </thead>
             <tbody @click="$event => $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')">
-                <tr v-for="(answer, question) in questionGroup" :key="question">
-                    <td class="colA">{{ question }}</td>
-                    <td class="colB">{{ answer }}</td>
+                <tr v-for="i in (JSON.parse(cols['colA']) || []).length" :key="i">
+                    <td class="colA">{{ JSON.parse(cols["colA"])[i - 1] }}</td>
+                    <td class="colB">{{ JSON.parse(cols["colB"])[i - 1] }}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr class="uploader-name d-none">
                     <td colspan="2" class="bg-body-secondary">
-                        <div dir="rtl">{{ uploaders[index] }}</div>
+                        <div dir="rtl">{{ cols["id"] }}</div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
+                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(cols['id'])" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>
@@ -119,5 +126,14 @@ table {
 .overlay {
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.8);
+}
+.right-mark {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 </style>

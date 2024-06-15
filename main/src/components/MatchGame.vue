@@ -4,16 +4,24 @@ import {computed, watch} from "vue";
 const props = defineProps(["answeredQuestions", "answered", "questions", "changeAnswerIsRight", "addRightAnswer", "changeAnswered"]);
 const {answeredQuestions, answered, questions, changeAnswerIsRight, addRightAnswer, changeAnswered} = props;
 let checked = false;
-let currentQuestion = {...questions.value[answeredQuestions.value]};
+let currentQuestion = {};
+for (let i = 0; i < JSON.parse(questions.value[answeredQuestions.value]["colA"]).length; i++) {
+    currentQuestion[JSON.parse(questions.value[answeredQuestions.value]["colA"])[i]] = JSON.parse(questions.value[answeredQuestions.value]["colB"])[i];
+}
 const shuffledQuestions = [];
 for (let questionGroup of questions.value) {
-    const shuffledKeys = shuffle(Object.keys(questionGroup));
-    const shuffledValues = shuffle(Object.values(questionGroup));
+    const shuffledKeys = shuffle(JSON.parse(questionGroup["colA"]));
+    const shuffledValues = shuffle(JSON.parse(questionGroup["colB"]));
     shuffledQuestions.push({"questions": shuffledKeys, "answers": shuffledValues});
 }
 const currentShuffledQuestion = computed(() => [shuffledQuestions[answeredQuestions.value]]);
 
-watch(answeredQuestions, (answeredQuestionsValue) => currentQuestion = {...questions.value[answeredQuestionsValue]});
+watch(answeredQuestions, (answeredQuestionsValue) => {
+    currentQuestion = {};
+    for (let i = 0; i < JSON.parse(questions.value[answeredQuestions.value]["colA"]).length; i++) {
+        currentQuestion[JSON.parse(questions.value[answeredQuestions.value]["colA"])[i]] = JSON.parse(questions.value[answeredQuestions.value]["colB"])[i];
+    }
+});
 
 function checkAnswer() {
     const questionTexts = document.querySelector(".answers").getElementsByClassName("question-text");
@@ -141,11 +149,11 @@ function rem2px(rem) {
                             <th class="text-center">Column A</th>
                             <th class="text-center">Column B</th>
                         </tr>
-                        <tr v-for="c in currentShuffledQuestion[0]['questions'].length" :key="c">
+                        <tr v-for="c in shuffledQuestion['questions'].length" :key="c">
                             <td class="py-3">
                                 <div class="d-flex">
-                                    <div :data-question="currentShuffledQuestion[0]['questions'][c - 1]" data-answer="" class="question-text flex-grow-1 border-end border-2 pe-2">
-                                        {{ currentShuffledQuestion[0]['questions'][c - 1] }}
+                                    <div :data-question="shuffledQuestion['questions'][c - 1]" data-answer="" class="question-text flex-grow-1 border-end border-2 pe-2">
+                                        {{ shuffledQuestion['questions'][c - 1] }}
                                     </div>
                                     <div class="circles-cont pe-5 ps-1s">
                                         <div>
@@ -168,8 +176,8 @@ function rem2px(rem) {
                                     <div class="ps-4 pe-1 border-end border-2 me-2">
                                         <div class="pin bg-dark rounded-circle pe-none"></div>
                                     </div>
-                                    <div :data-text="currentShuffledQuestion[0]['answers'][c - 1]" class="answer-text flex-grow-1">
-                                        {{ currentShuffledQuestion[0]['answers'][c - 1] }}
+                                    <div :data-text="shuffledQuestion['answers'][c - 1]" class="answer-text flex-grow-1">
+                                        {{ shuffledQuestion['answers'][c - 1] }}
                                     </div>
                                 </div>
                             </td>

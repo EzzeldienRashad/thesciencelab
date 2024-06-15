@@ -8,13 +8,13 @@ describe("control panel match", () => {
                 const props = {
                     questions: [
                         {
-                            "A is": "a",
-                            "B is": "b",
-                            "C is": "c"
+                            "colA": JSON.stringify(["A is", "B is", "C is"]),
+                            "colB": JSON.stringify(["a", "b", "c"])
                         },
                         {
-                            "D is": "d"
-                        }
+                            "colA": JSON.stringify(["D is"]),
+                            "colB": JSON.stringify(["d"])
+                        },
                     ], 
                     msg: ref(undefined), 
                     msgColor: ref(undefined), 
@@ -39,8 +39,8 @@ describe("control panel match", () => {
     });
     it("displays available questions", () => {
         cy.get("table").should("have.length", 2);
-        cy.get("tr td").eq(0).should("contain.text", "A is");
-        cy.get("tr td").eq(1).should("contain.text", "a");
+        cy.get("tr td").eq(1).should("contain.text", "A is");
+        cy.get("tr td").eq(2).should("contain.text", "a");
     });
     it("deletes a question", function () {
         cy.getByData("delete-btn").eq(0).click().then(() => {

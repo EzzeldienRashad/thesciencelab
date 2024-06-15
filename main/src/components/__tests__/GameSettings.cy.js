@@ -26,8 +26,8 @@ describe("game settings", () => {
         });
         cy.getByData("units").find("button").eq(0).should("have.text", "Unit1");
         cy.contains("The whole term").click();
-        cy.contains("quick");
-        cy.contains("normal");
-        cy.contains("comprehensive");
+        cy.contains("easy");
+        cy.contains("medium");
+        cy.contains("hard");
     });
 });

@@ -9,7 +9,7 @@ const choices = [];
 for (let questionGroup of questions.value) {
     const choicesArr = [];
     for (let question of questionGroup) {
-        choicesArr.push(...question[1]);
+        choicesArr.push(question["rightAnswer"], question["wrongAnswer"]);
     }    
     choices.push(shuffle(choicesArr));
 }
@@ -19,13 +19,13 @@ function checkAnswer() {
     const inputs = document.querySelector(".answers").querySelectorAll("input");
     let foundWrongAnswer = false;
     for (let i = 0; i < inputs.length; i++) {
-        if (currentQuestionGroupArr.value[0][i][1].length && inputs[i].value.trim().toLowerCase() == currentQuestionGroupArr.value[0][i][1][0].trim().toLowerCase()) {
+        if (currentQuestionGroupArr.value[0][i]["rightAnswer"] && currentQuestionGroupArr.value[0][i]["wrongAnswer"] && inputs[i].value.trim().toLowerCase() == currentQuestionGroupArr.value[0][i]["rightAnswer"].trim().toLowerCase()) {
             inputs[i].style.color = "green";
             inputs[i].style.borderBottom = "2px dotted green";
             inputs[i].disabled = true;
             currentQuestionGroupArr.value[0][i][1] = [];
             if (!checked) addRightAnswer();
-        } else if (currentQuestionGroupArr.value[0][i][1].length && inputs[i].value.trim().toLowerCase() != currentQuestionGroupArr.value[0][i][1][0].trim().toLowerCase()) {
+        } else if (currentQuestionGroupArr.value[0][i]["rightAnswer"] && currentQuestionGroupArr.value[0][i]["wrongAnswer"] && inputs[i].value.trim().toLowerCase() != currentQuestionGroupArr.value[0][i]["rightAnswer"].trim().toLowerCase()) {
             if (!checked) {
                 inputs[i].style.borderBottom = "2px solid red";
             }
@@ -61,10 +61,10 @@ function shuffle(arr) {
                 </template>
             </div>
             <ol class="answers border border-2 border-dark rounded-2 mt-3 py-2" data-cy="questions">
-                <li v-for="question in currentQuestionGroup" :key="question" class="pb-3">
-                    {{ question[0] }}
+                <li v-for="question in currentQuestionGroup" :key="question['id']" class="pb-3">
+                    {{ question["part1"] }}
                     <input :disabled="answered" size="10" type="text" class="bg-light border-top-0 border-start-0 border-end-0 answer-input"/>
-                    {{ question[2] }}
+                    {{ question["part2"] }}
                 </li>
             </ol>
             <button @click="!answered && checkAnswer()" :disabled="answered" class="w-100 p-2 h-3 text-bg-primary rounded-2 fw-bold" :class="{'opacity-dec': answered}">check</button>

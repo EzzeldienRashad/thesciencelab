@@ -5,8 +5,8 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, uploaders, routeParams} = props;
 const form = ref(null);
 const symbols = symbolsArr["science"];
 
@@ -47,12 +47,19 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="(questionAnswer, index) in questions" :key="questionAnswer[0]" @click="$event => {if ($event.target.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');}" class="question p-3 m-3 rounded" :class="[parseInt(questionAnswer[1]) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
-        <span class="questionTitle">{{ questionAnswer[0] }}</span>
-        <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
-        <br/>
-        <img v-if="questionAnswer[2]" :src="'http://127.0.0.1/info/images/' + questionAnswer[2]" class="uploaded"/>
-        <div class="p-1 uploader-name d-none" dir="rtl">{{ uploaders[index] }}</div>
+    <div v-for="question in questions" :key="question['id']" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');}" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
+        <div>
+            <span class="questionTitle">{{ question['question'] }}</span>
+            <button class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
+            <br/>
+            <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
+        </div>
+        <div v-if="member == 'admin'" class="d-flex flex-row p-1 px-1 gap-1 rounded-3 level-indicator" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', question['id'])"/></button>
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>
+        </div>
+        <div class="p-1 uploader-name d-none" dir="rtl">{{ uploaders[question["id"]] }}</div>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -84,5 +91,17 @@ function exportPdf() {
 .overlay {
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.8);
+}
+.right-mark {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+.level-indicator {
+    background-color: whitesmoke;
 }
 </style>

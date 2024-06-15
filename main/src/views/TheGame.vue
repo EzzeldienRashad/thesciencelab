@@ -11,17 +11,21 @@ provide("questions", questions);
 function startTest(levelStr, questionsArr) {
     level.value = levelStr;
     switch (levelStr) {
-        case "quick":
-            questions.value = questionsArr.slice(0, Math.floor(questionsArr.length / 3));
+        case "easy":
+            questions.value = questionsArr.filter(question => question["level"] == "easy");
             emit("changeTheme", "success");
             break;
-        case "normal":
-            questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
+        case "medium":
+            questions.value = questionsArr.filter(question => question["level"] == "medium");
             emit("changeTheme", "warning");
             break;
-        case "comprehensive":
-            questions.value = questionsArr;
+        case "hard":
+            questions.value = questionsArr.filter(question => question["level"] == "hard");
             emit("changeTheme", "danger");
+            break;
+        case "mixed":
+            questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
+            emit("changeTheme", "primary");
             break;
     }
 }

@@ -41,10 +41,10 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
 }
 
 function login($pdo) {
-    $getPasswdStmt = $pdo->prepare("SELECT subject, /*password*/phone FROM if0_36665133_TheScienceLab.Members where username = ?");
+    $getPasswdStmt = $pdo->prepare("SELECT subject, password FROM if0_36665133_TheScienceLab.Members where username = ?");
     $getPasswdStmt->execute([$_POST["username"]]);
     $userInfo = $getPasswdStmt->fetch();
-    if (/*password_verify($_POST["password"], $userInfo["password"]*/ $_POST["password"] == "science" . substr($userInfo["phone"], -5)) {
+    if (password_verify($_POST["password"], $userInfo["password"])) {
         $_SESSION["subject"] = $userInfo["subject"];
         $_SESSION["username"] = $_POST["username"];
         echo $_SESSION["subject"];

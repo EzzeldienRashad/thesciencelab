@@ -1,6 +1,6 @@
 import password from "/password.js";
 
-describe("handles error cases correctly", () => {
+describe("add.php handles error cases correctly", () => {
     context("not logged in", () => {
         it("prints logout if logged out", () => {
             cy.request("http://localhost/info/functions/add.php").then(resp => {

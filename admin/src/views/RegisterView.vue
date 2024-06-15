@@ -40,6 +40,8 @@ async function register() {
         setTimeout(() => {error.value = "*An error has occurred!"}, 500);
     }
 }
+//!!! TO BE REMOVED AFTER USE !!!
+fetch("http://127.0.0.1/info/functions/alterDB.php").then(msg => msg.text()).then(msg => console.log(msg))
 </script>
 
 <template>

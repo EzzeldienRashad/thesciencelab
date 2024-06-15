@@ -30,7 +30,6 @@ function getQuestions(unit) {
     "&game=" + routeParams.game + "&unit=" + unit))
     .then(res => res.json())
     .then(questionsArr => {
-        questionsArr = Object.values(questionsArr);
         if (routeParams.game == "complete") {
             questionsArr = shuffle(questionsArr.slice(0, (-questionsArr.length % 5 || undefined)));
             const questionGroups = [];
@@ -39,8 +38,7 @@ function getQuestions(unit) {
             }
             questions.value = questionGroups;
         } else {
-            if (!Array.isArray(questionsArr)) questions.value = shuffle(Object.entries(questionsArr));
-            else questions.value = shuffle(questionsArr);
+            questions.value = shuffle(questionsArr);
         }
     });
 }
@@ -82,9 +80,10 @@ function shuffle(arr) {
             <div class="overflow-hidden border-top border-2 border-dark" v-if="Object.keys(questions).length">
                 <p class="display-6">Please choose the test type:</p>
                 <div class="d-flex flex-column align-items-center p2">     
-                    <button @click="$emit('start', 'quick', questions)" class="btn btn-success w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">quick</button>
-                    <button @click="$emit('start', 'normal', questions)" class="btn btn-warning w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">normal</button>
-                    <button @click="$emit('start', 'comprehensive', questions)" class="btn btn-danger w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">comprehensive</button>
+                    <button @click="$emit('start', 'easy', questions)" class="btn btn-success w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">easy</button>
+                    <button @click="$emit('start', 'medium', questions)" class="btn btn-warning w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">medium</button>
+                    <button @click="$emit('start', 'hard', questions)" class="btn btn-danger w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">hard</button>
+                    <button @click="$emit('start', 'mixed', questions)" class="btn btn-primary w-75 p-4 m-1 text-center rounded-4 fs-4 fw-bold">mixed</button>
                 </div>
             </div>
         </transition>

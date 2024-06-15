@@ -6,8 +6,8 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "member", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, member, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevels, member, uploaders, routeParams} = props;
 const form = ref(null);
 const symbols = symbolsArr[routeParams.game == "choose" ? "science" : routeParams.game];
 
@@ -60,21 +60,28 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="(question, index) in questions" :key="question[0]" class="question card mb-2 border-dark" data-cy="question-cont">
-        <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
-            {{ question[0] }}
-            <button v-if="/*member == routeParams.game || member == 'admin' || !routeParams.grade.includes('secondary')*/true" class='btn btn-danger btn-close float-end' @click="deleteQuestion(index)" data-cy="delete-btn"></button>
-            <br/>
-            <img v-if="question[3]" :src="'http://127.0.0.1/info/images/' + question[3]" class="uploaded"/>
+    <div v-for="question in questions" :key="question['id']" class="question card mb-2 border-dark d-flex flex-row" data-cy="question-cont">
+        <div v-if="member == 'admin'" class="d-flex flex-column pt-2 px-1 gap-1" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', question['id'])"/></button>
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
+            <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>
         </div>
-        <div class="card-body p-0">
-            <div class="row g-0">
-                <div v-for="answer in question[1]" class="col-12 col-sm-6 col-lg-3 border px-1" :class="{'text-bg-success': answer == question[1][question[2] - 1]}">
-                    <div class="h-100 choice" data-cy="answer">{{ answer }}</div>
+        <div class="flex-grow-1">
+            <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+                {{ question["question"] }}
+                <button v-if="member == routeParams.game || member == 'admin' || !routeParams.grade.includes('secondary')" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
+                <br/>
+                <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
+            </div>
+            <div class="card-body p-0">
+                <div class="row g-0">
+                    <div v-for="i in [1, 2, 3, 4]" class="col-12 col-sm-6 col-lg-3 border px-1" :class="{'text-bg-success': question['answer'] == i}">
+                        <div class="h-100 choice" data-cy="choice">{{ question["choice" + ["A", "B", "C", "D"][i - 1]] }}</div>
+                    </div>
                 </div>
             </div>
+            <div class="card-footer p-1 text-bg-secondary d-none uploader-name" dir="rtl">{{ uploaders[question["id"]] }}</div>
         </div>
-        <div class="card-footer p-1 text-bg-secondary d-none uploader-name" dir="rtl">{{ uploaders[index] }}</div>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -108,3 +115,15 @@ function exportPdf() {
         </div>
     </div>
 </template>
+
+<style scoped>
+.right-mark {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+</style>

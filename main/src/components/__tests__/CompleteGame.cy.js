@@ -6,11 +6,34 @@ describe("complete game", () => {
         const props = {
             answeredQuestions: ref(0),
             answered: ref(false), 
-            questions: ref([
-                [["I", ["love", "hate"], "science."],
-                ["", ["Banana", "Apple"], "is banana."]],
-                [["Ant is", ["ant", "arm"], ""]]
-            ]),
+            questions: ref(
+                [
+                    [
+                        {
+                            "part1": "I",
+                            "rightAnswer": "love",
+                            "wrongAnswer": "hate",
+                            "part2": "science",
+                            "id": 0
+                        },
+                        {
+                            "part1": "",
+                            "rightAnswer": "Banana",
+                            "wrongAnswer": "Apple",
+                            "part2": "is banana.",
+                            "id": 1
+                        }
+                    ],
+                    [
+                        {
+                            "part1": "Ant is",
+                            "rightAnswer": "ant",
+                            "wrongAnswer": "arm",
+                            "part2": "",
+                            "id": 2
+                        }
+                    ],
+            ]), 
             changeAnswerIsRight() {},
             addRightAnswer() {},
             changeAnswered() {

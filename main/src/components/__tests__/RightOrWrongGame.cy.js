@@ -7,9 +7,17 @@ describe("right or wrong game", () => {
             answeredQuestions: ref(0),
             answered: ref(false), 
             questions: ref([
-                ["Is it right?", "1"],
-                ["Is it wrong?", "0"]
-            ]),
+                {
+                    "question": "Is it right?",
+                    "answer": 1,
+                    "id": 0
+                },
+                {
+                    "question": "Is it wrong?",
+                    "answer": 0,
+                    "id": 1
+                }
+            ]), 
             changeAnswerIsRight() {},
             addRightAnswer() {},
             changeAnswered() {

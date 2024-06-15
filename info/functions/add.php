@@ -19,7 +19,7 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
     exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
-if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") /*exit*/;
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
@@ -28,7 +28,8 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         echo "infoerr";
         exit;
     }
-    $addStmt = $pdo->prepare("insert into ChooseQuestions (data, grade, subject, unit, uploader) values (?, ?, ?, ?, ?)");
+    $addStmt = $pdo->prepare("insert into ChooseQuestions (question, choiceA, choiceB, choiceC, choiceD, answer, image, grade, subject, unit, uploader) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $imgName = null;
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
         if ($_FILES["image"]["size"] > 1 * 1024 * 1024) {
             echo "big";
@@ -39,17 +40,16 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
             exit;
         }
         $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-        $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]), $imgName)), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
         move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
-    } else {
-        $addStmt->execute([json_encode(array($_POST["question"], array($_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"]), ((int) $_POST["number"]))), $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
     }
+    $addStmt->execute([$_POST["question"], $_POST["first"], $_POST["second"], $_POST["third"], $_POST["fourth"], ((int) $_POST["number"]), $imgName, $_GET["grade"], ($isSecondary ? $_GET["game"] : "science"), $_GET["unit"], $_SESSION["username"]]);
 } elseif ($_GET["game"] == "right-or-wrong") {
     if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
         echo "infoerr";
         exit;
     }
-    $addStmt = $pdo->prepare("insert into RightOrWrongQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
+    $addStmt = $pdo->prepare("insert into RightOrWrongQuestions (question, answer, image, grade, unit, uploader) values (?, ?, ?, ?, ?, ?)");
+    $imgName = null;
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
         if ($_FILES["image"]["size"] > 1 * 1024 * 1024) {
             echo "big";
@@ -60,23 +60,21 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
             exit;
         }
         $imgName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-        $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"], $imgName)), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
         move_uploaded_file($_FILES["image"]["tmp_name"], "../images/" . $imgName);
-    } else {
-        $addStmt->execute([json_encode(array(trim($_POST["question"]), $_POST["answer"])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
     }
+    $addStmt->execute([trim($_POST["question"]), $_POST["answer"], $imgName, $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
 } elseif ($_GET["game"] == "complete") {
     if (!isset($_POST["question"]) || !isset($_POST["right"]) || !isset($_POST["wrong"])) {
         echo "infoerr";
         exit;
     }
     $questionParts = preg_split('/\\.{3,}/', $_POST["question"]);
-    if (count($questionParts) != 2) {
+    if (count($questionParts) != 2 || (!$questionParts[0] && !$questionParts[1])) {
         echo "spacenumerr";
         exit;
     } else {
-        $addStmt = $pdo->prepare("insert into CompleteQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
-        $addStmt->execute([json_encode(array($questionParts[0], array($_POST["right"], $_POST["wrong"]), $questionParts[1])), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
+        $addStmt = $pdo->prepare("insert into CompleteQuestions (part1, part2, rightAnswer, wrongAnswer, grade, unit, uploader) values (?, ?, ?, ?, ?, ?, ?)");
+        $addStmt->execute([$questionParts[0], $questionParts[1], $_POST["right"], $_POST["wrong"], $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
     }
 } elseif ($_GET["game"] == "match") {
     if (!isset($_POST["questions"]) || !isset($_POST["answers"])) {
@@ -86,12 +84,14 @@ if (in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")))
         echo "answernumerr";
         exit;
     }
-    $arr = array();
+    $colA = array();
+    $colB = array();
     for ($i = 0; $i < count($_POST["questions"]); $i++) {
-        $arr[$_POST["questions"][$i]] = $_POST["answers"][$i];
+        array_push($colA, $_POST["questions"][$i]);
+        array_push($colB, $_POST["answers"][$i]);
     }
-    $addStmt = $pdo->prepare("insert into MatchQuestions (data, grade, unit, uploader) values (?, ?, ?, ?)");
-    $addStmt->execute([json_encode($arr), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
+    $addStmt = $pdo->prepare("insert into MatchQuestions (colA, colB, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+    $addStmt->execute([json_encode($colA), json_encode($colB), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
 }
 echo "successful";
 ?>

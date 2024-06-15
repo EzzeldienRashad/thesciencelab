@@ -8,14 +8,14 @@ describe("match game", () => {
             answered: ref(false), 
             questions: ref([
                 {
-                    "A is": "a",
-                    "B is": "b",
-                    "C is": "c"
+                    "colA": JSON.stringify(["A is", "B is", "C is"]),
+                    "colB": JSON.stringify(["a", "b", "c"])
                 },
                 {
-                    "D is": "d"
-                }
-            ]),
+                    "colA": JSON.stringify(["D is"]),
+                    "colB": JSON.stringify(["d"])
+                },
+            ]), 
             changeAnswerIsRight() {},
             addRightAnswer() {},
             changeAnswered() {

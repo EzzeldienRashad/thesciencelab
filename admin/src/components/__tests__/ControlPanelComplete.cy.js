@@ -7,9 +7,24 @@ describe("control panel complete", () => {
             setup() {
                 const props = {
                     questions: [
-                        ["I", ["love", "hate"], "science."],
-                        ["", ["Banana", "Apple"], "is banana."],
-                        ["Ant is", ["ant", "arm"], ""]
+                        {
+                            "part1": "I",
+                            "rightAnswer": "love",
+                            "wrongAnswer": "hate",
+                            "part2": "science"
+                        },
+                        {
+                            "part1": "",
+                            "rightAnswer": "Banana",
+                            "wrongAnswer": "Apple",
+                            "part2": "is banana."
+                        },
+                        {
+                            "part1": "Ant is",
+                            "rightAnswer": "ant",
+                            "wrongAnswer": "arm",
+                            "part2": ""
+                        },
                     ], 
                     msg: ref(undefined), 
                     msgColor: ref(undefined), 

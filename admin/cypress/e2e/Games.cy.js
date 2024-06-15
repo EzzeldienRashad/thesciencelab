@@ -19,7 +19,7 @@ describe("games", () => {
         cy.contains("Added successfully!");
         cy.get(".modal-body > .btn-danger").click();
         cy.getByData("question").eq(-1).should("contain.text", "test question");
-        cy.getByData("question-cont").eq(-1).findByData("answer").eq(3).should("contain", "fourth answer");
+        cy.getByData("question-cont").eq(-1).findByData("choice").eq(3).should("contain", "fourth answer");
         cy.getByData("delete-btn").eq(-1).click();
         cy.getByData("question-cont").eq(-1).should("not.contain.text", "test question");
     });
@@ -55,7 +55,7 @@ describe("games", () => {
         cy.getByData("delete-btn").eq(-1).click();
         cy.getByData("question").eq(-1).should("not.contain.text", "This is a");
     });
-    it('complete game control panel works', () => {
+    it('Match game control panel works', () => {
         cy.contains("Match").click();
         cy.getByData("units").find("button").eq(0).click();
         cy.getByData("add-btn").click();
