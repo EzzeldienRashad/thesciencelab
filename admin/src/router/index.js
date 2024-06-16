@@ -63,7 +63,12 @@ router.beforeEach(async to => {
         method: "get",
         credentials: "include",
     });
-    member = await member.text();
+    let memberArr = await member.text();
+    try {        
+        member = JSON.parse(memberArr)[0];
+    } catch (e) {
+        member = memberArr;
+    }
     if (!["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name != "login") {
         return {name: "login"};
     } else if (["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name == "login") {

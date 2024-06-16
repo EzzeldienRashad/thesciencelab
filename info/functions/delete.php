@@ -24,7 +24,11 @@ if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
-$deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
-$deleteStmt->execute()
+$getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+$getStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
+$getStmt->execute();
+if ($getStmt->fetchColumn() != $_SESSION["username"]) exit;
+// $deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+// $deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
+// $deleteStmt->execute();
 ?>

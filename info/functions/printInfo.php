@@ -41,7 +41,7 @@ if (!isset($_GET["unit"])) {
             $requiredData = ["question", "answer"];
             break;
     }
-    $queryString = "SELECT id, level";
+    $queryString = "SELECT id, level, uploader";
     foreach ($requiredData as $requiredItem) {
         $queryString .= ", " . $requiredItem;
     }

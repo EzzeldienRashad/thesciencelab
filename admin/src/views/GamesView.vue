@@ -1,6 +1,5 @@
 <script setup>
 import {ref} from "vue";
-import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import removeDashes from "@/modules/removeDashes.js";
 import chooseImg from "@/assets/images/choose.webp";
@@ -11,8 +10,6 @@ import biologyImg from "@/assets/images/biology.webp";
 import physicsImg from "@/assets/images/physics.webp";
 import chemistryImg from "@/assets/images/chemistry.webp";
 
-const router = useRouter();
-const member = ref("");
 const grade = useRoute().params.grade;
 const gradeName = removeDashes(grade);
 const games = ref(grade.includes("secondary") ? ["biology", "physics", "chemistry"] : ["choose", "right-or-wrong", "complete", "match"]);
@@ -25,13 +22,6 @@ const gamesImages = {
     "physics": physicsImg,
     "chemistry": chemistryImg,
 };
-
-fetch("http://127.0.0.1/info/functions/login.php", {
-        method: "get",
-        credentials: "include",
-    })
-    .then(res => res.text())
-    .then(memberValue => member.value = memberValue);
 </script>
 
 <template>

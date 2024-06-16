@@ -5,8 +5,8 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams} = props;
 const form = ref(null);
 const questionsNum = ref(3);
 const symbols = symbolsArr["science"];
@@ -91,7 +91,7 @@ function shuffle(arr) {
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(cols['id'])" data-cy="delete-btn"></button>
+                        <button v-if="question['uploader'] == username || member == 'admin'" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(cols['id'])" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>

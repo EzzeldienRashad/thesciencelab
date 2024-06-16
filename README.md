@@ -33,6 +33,7 @@ npm run build
 # Before upload
 
 * FETCH REMOTE info/images FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
+move info folder from localhost to project root
 * Change "http://127.0.0.1" to "https://thesciencelab.infinityfreeapp.com" or "http://localhost"
 
 *info:*

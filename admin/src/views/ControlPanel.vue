@@ -12,6 +12,7 @@ const uploaders = ref({});
 const routeParams = useRoute().params;
 const router = useRouter();
 const member = ref("");
+const username = ref("");
 const questions = ref([]);
 const msg = ref("");
 const msgColor = ref("");
@@ -23,6 +24,7 @@ const inheritedVariables = {
     addQuestion,
     setLevel,
     member,
+    username,
     uploaders,
     routeParams
 }
@@ -33,7 +35,15 @@ fetch("http://127.0.0.1/info/functions/login.php", {
         credentials: "include",
     })
     .then(res => res.text())
-    .then(memberValue => member.value = memberValue);
+    .then(userInfo => {
+        try {
+            userInfo = JSON.parse(userInfo)
+        } catch (e) {
+
+        }
+        member.value = userInfo[0];
+        username.value = userInfo[1];
+    });
 
 function loadQuestions() {
     fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +

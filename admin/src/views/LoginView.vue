@@ -20,7 +20,12 @@ async function login() {
             "password": passwordField.value.value,
         })
     });
-    member = await member.text();
+    let memberArr = await member.text();
+    try {
+        member = JSON.parse(memberArr)[0];
+    } catch (e) {
+        member = memberArr;
+    }
     if (["biology", "physics", "chemistry", "admin", "none"].includes(member)) {
         router.push({name: "home"});
     } else if (member == "blocked") {

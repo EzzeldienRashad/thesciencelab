@@ -12,8 +12,13 @@ fetch("http://127.0.0.1/info/functions/login.php", {
         credentials: "include",
     })
     .then(res => res.text())
-    .then(memberValue => {
-        member.value = memberValue;
+    .then(userInfo => {
+        try {
+            userInfo = JSON.parse(userInfo);
+        } catch (e) {
+            
+        }
+        member.value = userInfo[0];
     });
 </script>
 
