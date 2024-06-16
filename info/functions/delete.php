@@ -28,7 +28,7 @@ $getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab." . ($
 $getStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $getStmt->execute();
 if ($getStmt->fetchColumn() != $_SESSION["username"]) exit;
-// $deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
-// $deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
-// $deleteStmt->execute();
+$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+$deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
+$deleteStmt->execute();
 ?>

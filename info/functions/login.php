@@ -13,7 +13,7 @@ header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
 if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
-    echo $_SESSION["subject"];
+    echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
 } elseif (isset($_POST["password"]) && isset($_POST["username"])) {
     require "password.php";
     $maxLoginAttempts = 5;
@@ -47,7 +47,7 @@ function login($pdo) {
     if (password_verify($_POST["password"], $userInfo["password"])) {
         $_SESSION["subject"] = $userInfo["subject"];
         $_SESSION["username"] = $_POST["username"];
-        echo $_SESSION["subject"];
+        echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
     } else {
         $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES (" . time() . ", ?)");
         $logStmt->execute([$_POST["username"]]);
