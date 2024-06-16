@@ -49,7 +49,7 @@ function loadQuestions() {
     fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value))
     .then(res => res.json())
-    .then(questionsArr => questions.value = questionsArr);
+    .then(questionsArr => questions.value = questionsArr.sort((a, b) => (a["uploader"] == username.value) - (b["uploader"] == username.value)));
     if (member.value == "admin") {
         fetch("http://127.0.0.1/info/functions/printUploaders.php?grade=" + routeParams.grade +
             "&game=" + routeParams.game + "&unit=" + unit.value, {
