@@ -45,7 +45,7 @@ if (!isset($_GET["unit"])) {
     foreach ($requiredData as $requiredItem) {
         $queryString .= ", " . $requiredItem;
     }
-    if ($_GET["game"] == "choose" || $_GET["game"] == "rightOrWrong") $queryString .= ", image";
+    if ($_GET["game"] == "choose" || $_GET["game"] == "physics" || $_GET["game"] == "chemistry" || $_GET["game"] == "biology" || $_GET["game"] == "rightOrWrong") $queryString .= ", image";
     if (isset($_SESSION["member"]) && $_SESSION["member"] == "admin") $queryString .= ", uploader";
     $queryString .= " FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?";
     if ($_GET["unit"] != "whole") $queryString .= " and unit = ?";
