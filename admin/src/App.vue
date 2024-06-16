@@ -13,7 +13,7 @@ function logout() {
 </script>
 
 <template>
-    <main class="p-2 p-sm-3">
+    <main class="p-1 p-sm-2">
         <RouterView/>
     </main>
     <footer v-if="useRoute().path != '/login'" class="p-3">

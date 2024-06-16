@@ -6,13 +6,14 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams", "chosenQuestions", "creatingTest"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams, chosenQuestions, creatingTest} = props;
 const form = ref(null);
 const symbols = symbolsArr[routeParams.game == "choose" ? "science" : routeParams.game];
 
 jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
+defineEmits(["changeChosenQuestions"])
 
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
@@ -60,7 +61,7 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="question in questions" :key="question['id']" class="question card mb-2 border-dark d-flex flex-row" data-cy="question-cont">
+    <div v-for="question in questions" :key="question['id']" @click="() => {if (creatingTest) $emit('changeChosenQuestions', question['id'])}" class="question card mb-2 border-dark d-flex flex-row" :class="{'chosen': chosenQuestions.includes(question['id'])}" data-cy="question-cont">
         <div v-if="member == 'admin'" class="d-flex flex-column pt-2 pt-lg-0 px-1 gap-1 gap-lg-0" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
