@@ -69,7 +69,7 @@ function exportPdf() {
         <div class="flex-grow-1">
             <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
                 {{ question["question"] }}
-                <button v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && question['uploader'] == username) || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
+                <button v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && question['uploader'].toLowerCase() == username.toLowerCase()) || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
                 <br/>
                 <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
             </div>

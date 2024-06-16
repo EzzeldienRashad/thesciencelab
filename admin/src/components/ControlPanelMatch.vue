@@ -91,7 +91,7 @@ function shuffle(arr) {
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center p-0 d-table-cell">
-                        <button v-if="question['uploader'] == username || member == 'admin'" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(cols['id'])" data-cy="delete-btn"></button>
+                        <button v-if="cols['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn text-bg-danger btn-close py-2 px-0 w-100' @click="deleteQuestion(cols['id'])" data-cy="delete-btn"></button>
                     </td>
                 </tr>
             </tfoot>

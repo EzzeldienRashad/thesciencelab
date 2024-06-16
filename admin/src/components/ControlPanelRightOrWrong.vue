@@ -50,7 +50,7 @@ function exportPdf() {
     <div v-for="question in questions" :key="question['id']" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');}" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
         <div>
             <span class="questionTitle">{{ question['question'] }}</span>
-            <button v-if="question['uploader'] == username || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
+            <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
             <br/>
             <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
         </div>

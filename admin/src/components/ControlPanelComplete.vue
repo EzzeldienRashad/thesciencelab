@@ -43,7 +43,7 @@ function exportPdf() {
             <span class='badge text-bg-success me-1'>{{ question["rightAnswer"] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question["wrongAnswer"] }}</span>
             <span class="questionTitle">{{ question["part2"] }}</span>
-            <button v-if="question['uploader'] == username || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
+            <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
             <div class="p-1 m-1 rounded-2 bg-body-secondary d-none uploader-name" dir="rtl">{{ uploaders[question["id"]] }}</div>
         </div>
         <div v-if="member == 'admin'" class="d-flex flex-row justify-content-center pt-2 px-1 gap-1" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
