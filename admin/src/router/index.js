@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, createWebHashHistory} from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import addInfoView from "@/views/AddInfoView.vue";
 import UploadersView from "@/views/UploadersView.vue";
 import UploadedQuestionsView from "@/views/UploadedQuestionsView.vue";
 import resourcesView from "@/views/ResourcesView.vue";
@@ -23,6 +24,11 @@ const routes = [
         path: "/register",
         name: "register",
         component: RegisterView
+    },
+    {
+        path: "/addInfo",
+        name: "addInfo",
+        component: addInfoView
     },
     {
         path: "/uploaders",
