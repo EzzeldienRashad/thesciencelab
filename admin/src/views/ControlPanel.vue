@@ -17,6 +17,8 @@ const questions = ref([]);
 const msg = ref("");
 const msgColor = ref("");
 const creatingTest = ref(false);
+const form = ref(null);
+const testClose = ref(null);
 const chosenQuestions = ref([]);
 const inheritedVariables = {
     questions,
@@ -137,6 +139,45 @@ function setLevel(level, index) {
 function exportPdf() {
     currentGame.value.exportPdf();
 }
+function beginTest(form) {
+    let testForm = new FormData(form);
+    testForm.append("chosenQuestions", JSON.stringify(chosenQuestions.value));
+    fetch("http://127.0.0.1/info/functions/beginTest.php?grade=" + routeParams.grade +
+    "&game=" + routeParams.game, {
+        method: "post",
+        credentials: "include",
+        body: testForm
+    })
+    .then(res => res.text())
+    .then(msgValue => {
+        form.parentElement.scrollTo(0, 0);
+        msgColor.value = "danger";
+        switch (msgValue) {
+            case "logout":
+                msg.value = "You are not logged in.";
+                setTimeout(() => router.push({name: "login"}), 1500);
+                break;
+            case "infoerr":
+                msg.value = "Please fill in all the fields!";
+                setTimeout(() => msg.value = "", 1500);
+                break;
+            case "successful":
+                msgColor.value = "success"
+                form.reset();
+                msg.value = "The test has begun!";
+                setTimeout(() => {
+                    msg.value = "";
+                    testClose.value.click();
+                    creatingTest.value = false;
+                    chosenQuestions.value = [];
+                }, 1000);
+                break;
+            default:
+                msg.value = "An error occured.";
+                setTimeout(() => msg.value = "", 1500);            
+        }
+    });
+}
 function exportWord() {
     //todo
 }
@@ -180,8 +221,10 @@ function exportWord() {
                         <label>
                             Number of the right answer: <input type="text" name="testCode" autocomplete="off" class="form-control w-50" required/>
                         </label>
-                        <label>
-                            Number of the right answer: <input type="number" name="testDuration" autocomplete="off" class="form-control w-50" required/>
+                        <br/>
+                        <br/>
+                        <label class="w-100">
+                            The test is valid for <input type="number" name="testDuration" ref="testduration" required/> &nbsp; minutes
                         </label>
                         <br/>
                         <br/>
