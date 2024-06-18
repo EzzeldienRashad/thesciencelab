@@ -18,18 +18,12 @@ if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") exit;
     $uploadedQuestions = array();
     $grades = array_keys(json_decode(file_get_contents("../units.json"), true));
     foreach ($grades as $grade) {
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.ChooseQuestions where grade = ?");
-        $getStmt->execute([$grade]);
-        $uploadedQuestions[$grade] = count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.RightOrWrongQuestions where grade = ?");
-        $getStmt->execute([$grade]);
-        $uploadedQuestions[$grade] += count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.CompleteQuestions where grade = ?");
-        $getStmt->execute([$grade]);
-        $uploadedQuestions[$grade] += count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.MatchQuestions where grade = ?");
-        $getStmt->execute([$grade]);
-        $uploadedQuestions[$grade] += count($getStmt->fetchAll());
+        $uploadedQuestions[$grade] = 0;
+        foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay"] as $game) {
+            $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab." . $game . "Questions where grade = ?");
+            $getStmt->execute([$grade]);
+            $uploadedQuestions[$grade] += count($getStmt->fetchAll());
+        }
     }
     echo json_encode($uploadedQuestions);
 ?>

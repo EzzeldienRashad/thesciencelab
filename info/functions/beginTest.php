@@ -27,10 +27,28 @@ require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 $testStmt = $pdo->prepare("insert into Tests (questionId, grade, game, validFor, code) values (?, ?, ?, ?, ?)");
-$game = in_array($_GET["game"], array("choose", "biology", "physics", "chemistry")) ? "ChooseQuestions" : 
-    ($_GET["game"] == "right-or-wrong" ? "RightOrWrongQuestions" : 
-    ($_GET["game"] == "complete" ? "CompleteQuestions" : 
-    ($_GET["game"] == "match" ? "MatchQuestions" : "")));
+$game = "";
+switch ($_GET["game"]) {
+    case "choose":
+    case "biology":
+    case "physics":
+    case "chemistry":
+        $game = "ChooseQuestions";
+        break;
+    case "right-or-wrong":
+        $game = "RightOrWrongQuestions";
+        break;
+    case "complete":
+        $game = "CompleteQuestions";
+        break;
+    case "match":
+        $game = "MatchQuestions";
+        break;
+    case "give-reason":
+    case "what-happens-when":
+        $game = "EssayQuestions";
+        break;
+}
 foreach (json_decode($_POST["chosenQuestions"]) as $questionId) {
     $testStmt->execute([$questionId, $_GET["grade"], $game, date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . "+" . $_POST["testDuration"] . " minutes")), $_POST["testCode"]]);
 }

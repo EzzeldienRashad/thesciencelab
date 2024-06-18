@@ -68,7 +68,7 @@ function exportPdf() {
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>
         </div>
         <div class="flex-grow-1">
-            <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+            <div class="questionTitle card-header p-2 fw-bold" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin' && !creatingTest) $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
                 {{ question["question"] }}
                 <button v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && question['uploader'].toLowerCase() == username.toLowerCase()) || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
                 <br/>

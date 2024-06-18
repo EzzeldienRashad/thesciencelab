@@ -5,14 +5,15 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams", "chosenQuestions", "creatingTest"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams, chosenQuestions, creatingTest} = props;
 const form = ref(null);
 const questionsNum = ref(3);
 const symbols = symbolsArr["science"];
-console.log(questions.value)
+
 jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
+defineEmits(["changeChosenQuestions"])
 
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
@@ -62,7 +63,7 @@ function shuffle(arr) {
 </script>
 
 <template>
-    <div class="table-responsive" v-for="cols in questions" :key="cols">
+    <div class="table-responsive my-1" v-for="cols in questions" :key="cols" @click="if (creatingTest) $emit('changeChosenQuestions', cols['id']);" :class="{'chosen': chosenQuestions.includes(cols['id'])}">
         <tr v-if="member == 'admin'" class="d-flex flex-column pt-2 px-1 gap-1" :class="{'bg-success-subtle': cols['level'] == 'easy', 'bg-warning-subtle': cols['level'] == 'medium', 'bg-danger-subtle': cols['level'] == 'hard'}">
             <td colspan="2" class="d-flex justify-content-center gap-2">
                 <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', cols['id'])"/></button>
@@ -71,7 +72,7 @@ function shuffle(arr) {
             </td>
         </tr>
         <table class="question w-100 table table-bordered table-striped">
-            <thead @click="$event => {if (member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')}">
+            <thead @click="$event => {if (member == 'admin' && !creatingTest) $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none')}">
                 <tr>
                     <th scope="col">Question</th>
                     <th scope="col">Answer</th>
@@ -86,7 +87,7 @@ function shuffle(arr) {
             <tfoot>
                 <tr class="uploader-name d-none">
                     <td colspan="2" class="bg-body-secondary">
-                        <div dir="rtl">{{ cols["id"] }}</div>
+                        <div dir="rtl">{{ cols["uploader"] }}</div>
                     </td>
                 </tr>
                 <tr>

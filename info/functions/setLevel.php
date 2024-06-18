@@ -19,11 +19,32 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
     exit;
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
-if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
+$game = "";
+switch ($_GET["game"]) {
+    case "choose":
+    case "biology":
+    case "physics":
+    case "chemistry":
+        $game = "ChooseQuestions";
+        break;
+    case "right-or-wrong":
+        $game = "RightOrWrongQuestions";
+        break;
+    case "complete":
+        $game = "CompleteQuestions";
+        break;
+    case "match":
+        $game = "MatchQuestions";
+        break;
+    case "give-reason":
+    case "what-happens-when":
+        $game = "EssayQuestions";
+        break;
+}
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$levelStmt = $pdo->prepare("UPDATE if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions SET level = ? WHERE id = ?");
+$levelStmt = $pdo->prepare("UPDATE if0_36665133_TheScienceLab.$game SET level = ? WHERE id = ?");
 $levelStmt->bindParam(1, $_GET["level"], PDO::PARAM_STR);
 $levelStmt->bindParam(2, $_GET["questionnum"], PDO::PARAM_INT);
 $levelStmt->execute();

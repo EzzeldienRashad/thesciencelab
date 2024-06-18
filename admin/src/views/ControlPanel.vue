@@ -192,7 +192,7 @@ function exportWord() {
             </RouterLink>
             <div class="d-flex flex-wrap-reverse gap-1 ms-2 justify-content-end flex-grow-1">
                 <label for="test" v-if="member == 'admin'" @click="creatingTest = !creatingTest" class="btn btn-primary border border-primary border-5" :class="[['btn-primary', 'border-primary'], ['btn-danger', 'border-danger']][Number(creatingTest)]">{{ ['Create test', 'cancel test'][Number(creatingTest)] }}</label>&nbsp;&nbsp;&nbsp;
-                <button v-if="member == 'admin' && chosenQuestions.length" class="btn btn-primary border border-danger border-5" data-bs-toggle="testModal" data-bs-target="#testOverlay">Start test!</button>&nbsp;&nbsp;&nbsp;
+                <button v-if="member == 'admin' && chosenQuestions.length && creatingTest" class="btn btn-primary border border-danger border-5" data-bs-toggle="modal" data-bs-target="#testOverlay">Start test!</button>&nbsp;&nbsp;&nbsp;
                 <div>
                     <button v-if="member == 'admin'" class="btn btn-warning border border-5 border-warning" @click="exportDocx">export docx</button>&nbsp;&nbsp;&nbsp;
                     <button v-if="member == 'admin'" class="btn btn-warning border border-5 border-warning" @click="exportPdf">export pdf</button>&nbsp;&nbsp;&nbsp;
@@ -206,9 +206,9 @@ function exportWord() {
         <main class="d-flex flex-column-reverse pt-2">
             <input type="checkbox" id="test" class="d-none"/>
             <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)"/>
-            <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="newChosenQuestions => chosenQuestions = newChosenQuestions"/>
-            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="newChosenQuestions => chosenQuestions = newChosenQuestions"/>
-            <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="newChosenQuestions => chosenQuestions = newChosenQuestions"/>
+            <ControlPanelComplete v-else-if="useRoute().params.game == 'complete'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)"/>
+            <ControlPanelRightOrWrong v-else-if="useRoute().params.game == 'right-or-wrong'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)"/>
+            <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables" ref="currentGame" @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)"/>
         </main>
     </div>
     <div class="testModal" id="testOverlay">
@@ -242,10 +242,7 @@ function exportWord() {
         max-height: 500px;
         min-width: 300px;
     }
-    input[type="checkbox"]:checked ~ .question.chosen {
+    input[type="checkbox"]:checked ~ .question.chosen, input[type="checkbox"]:checked ~ .table-responsive.chosen {
         border: 5px solid blue !important;
-    }
-    input[type="checkbox"]:checked ~ .question.chosen .uploader-name {
-        display: none !important;
     }
 </style>

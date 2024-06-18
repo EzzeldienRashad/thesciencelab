@@ -20,11 +20,33 @@ if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || 
 }
 $isSecondary = str_contains($_GET["grade"], "secondary");
 if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
-if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "RightOrWrong";
+$game = "";
+switch ($_GET["game"]) {
+    case "choose":
+    case "biology":
+    case "physics":
+    case "chemistry":
+        $game = "ChooseQuestions";
+        break;
+    case "right-or-wrong":
+        $game = "RightOrWrongQuestions";
+        break;
+    case "complete":
+        $game = "CompleteQuestions";
+        break;
+    case "match":
+        $game = "MatchQuestions";
+        break;
+    case "give-reason":
+    case "what-happens-when":
+        $game = "EssayQuestions";
+        break;
+}
+if (in_array($_GET["game"], ["give-reason", "what-happens-when"])) $_GET["game"] = "Essay";
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+$getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab." . $game . "Questions WHERE id = ?");
 $getStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $getStmt->execute();
 if ($getStmt->fetchColumn() != $_SESSION["username"]) exit;

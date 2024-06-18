@@ -5,13 +5,14 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams", "chosenQuestions", "creatingTest"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams, chosenQuestions, creatingTest} = props;
 const form = ref(null);
 const symbols = symbolsArr["science"];
 
 jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
+defineEmits(["changeChosenQuestions"])
 
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
@@ -37,8 +38,8 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="question in questions" :key="question['id']" class="question border border-2 d-flex flex-column p-2">
-        <div class="w-100" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
+    <div v-for="question in questions" :key="question['id']" @click="if (creatingTest) $emit('changeChosenQuestions', question['id']);" class="question border border-2 d-flex flex-column p-2" :class="{'border-dark': creatingTest, 'chosen': chosenQuestions.includes(question['id'])}">
+        <div class="w-100" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin' && !creatingTest) $event.currentTarget.parentElement.querySelector('.uploader-name').classList.toggle('d-none');}" data-cy="question">
             <span class="questionTitle">{{ question["part1"] }}</span>
             <span class='badge text-bg-success me-1'>{{ question["rightAnswer"] }}</span>
             <span class='badge text-bg-danger me-1'>{{ question["wrongAnswer"] }}</span>

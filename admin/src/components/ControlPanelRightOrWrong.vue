@@ -5,13 +5,14 @@ import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 
-const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams"]);
-const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams} = props;
+const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams", "chosenQuestions", "creatingTest"]);
+const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams, chosenQuestions, creatingTest} = props;
 const form = ref(null);
 const symbols = symbolsArr["science"];
 
 jsPDF.API.events.push(["addFonts", callAddFont]);
 defineExpose({exportPdf});
+defineEmits(["changeChosenQuestions"])
 
 function exportPdf() {
     let pdf = new jsPDF("p", "pt", "A4");
@@ -47,7 +48,7 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="question in questions" :key="question['id']" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin') $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');}" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger']" data-cy="question">
+    <div v-for="question in questions" :key="question['id']" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none'); if (creatingTest) $emit('changeChosenQuestions', question['id']);}" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger', chosenQuestions.includes(question['id']) ?  'chosen' : '']" data-cy="question">
         <div>
             <span class="questionTitle">{{ question['question'] }}</span>
             <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>

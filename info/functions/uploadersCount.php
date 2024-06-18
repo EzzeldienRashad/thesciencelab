@@ -21,18 +21,12 @@ if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") exit;
     $membersArabicStmt = $pdo->query("SELECT name FROM if0_36665133_TheScienceLab.Members");
     $membersArabic = $membersArabicStmt->fetchAll(PDO::FETCH_COLUMN);
     for ($i = 0; $i < count($members); $i++) {
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.ChooseQuestions where uploader = ?");
-        $getStmt->execute([$members[$i]]);
-        $uploaders[$membersArabic[$i]] = count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.RightOrWrongQuestions where uploader = ?");
-        $getStmt->execute([$members[$i]]);
-        $uploaders[$membersArabic[$i]] += count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.CompleteQuestions where uploader = ?");
-        $getStmt->execute([$members[$i]]);
-        $uploaders[$membersArabic[$i]] += count($getStmt->fetchAll());
-        $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab.MatchQuestions where uploader = ?");
-        $getStmt->execute([$members[$i]]);
-        $uploaders[$membersArabic[$i]] += count($getStmt->fetchAll());
+        $uploaders[$membersArabic[$i]] = 0;
+        foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay"] as $game) {            
+            $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab." . $game . "Questions where uploader = ?");
+            $getStmt->execute([$members[$i]]);
+            $uploaders[$membersArabic[$i]] += count($getStmt->fetchAll());
+        }
     }
     echo json_encode($uploaders);
 ?>

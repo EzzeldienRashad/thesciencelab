@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -41,13 +44,36 @@ if (!isset($_GET["unit"])) {
             $requiredData = ["question", "answer"];
             break;
     }
+    $game = "";
+    switch ($_GET["game"]) {
+        case "choose":
+        case "biology":
+        case "physics":
+        case "chemistry":
+            $game = "ChooseQuestions";
+            break;
+        case "right-or-wrong":
+            $game = "RightOrWrongQuestions";
+            break;
+        case "complete":
+            $game = "CompleteQuestions";
+            break;
+        case "match":
+            $game = "MatchQuestions";
+            break;
+        case "give-reason":
+        case "what-happens-when":
+            $game = "EssayQuestions";
+            break;
+    }    
     $queryString = "SELECT id, level, uploader";
     foreach ($requiredData as $requiredItem) {
         $queryString .= ", " . $requiredItem;
     }
-    if ($_GET["game"] == "choose" || $_GET["game"] == "physics" || $_GET["game"] == "chemistry" || $_GET["game"] == "biology" || $_GET["game"] == "rightOrWrong") $queryString .= ", image";
+    if ($game == "ChooseQuestions" || $game == "RightOrWrongQuestions") $queryString .= ", image";
     if (isset($_SESSION["member"]) && $_SESSION["member"] == "admin") $queryString .= ", uploader";
-    $queryString .= " FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions where grade = ?";
+    $queryString .= " FROM if0_36665133_TheScienceLab.$game where grade = ?";
+    if ($game == "EssayQuestions") $queryString .= " and type = " . $_GET["game"];
     if ($_GET["unit"] != "whole") $queryString .= " and unit = ?";
     if ($isSecondary) $queryString .= " and subject = ?";
     $getStmt = $pdo->prepare($queryString);
