@@ -48,14 +48,12 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="question in questions" :key="question['id']" @click="$event => {if (!$event.target.closest('button') && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none'); if (creatingTest) $emit('changeChosenQuestions', question['id']);}" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger', chosenQuestions.includes(question['id']) ?  'chosen' : '']" data-cy="question">
+    <div v-for="question in questions" :key="question['id']" @click="$event => {if (!$event.target.closest('button') && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none'); if (creatingTest) $emit('changeChosenQuestions', question['id']);}" class="question p-2 m-1 rounded d-flex flex-column card" :class="[chosenQuestions.includes(question['id']) ?  'chosen' : '']" data-cy="question">
         <div>
-            <span class="questionTitle">{{ question['question'] }}</span>
+            <span class="questionTitle px-1">{{ question['question'] }}</span>
             <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
-            <br/>
-            <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
         </div>
-        <div v-if="member == 'admin'" class="d-flex flex-row p-1 px-1 gap-1 rounded-3 level-indicator" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
+        <div v-if="member == 'admin'" class="d-flex flex-row p-1 px-1 gap-1 rounded-3 level-indicator justify-content-center" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>
@@ -70,15 +68,6 @@ function exportPdf() {
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form ref="form" type="multipart/form-data" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <ScienceFormInput label="Question: " inputName="question" :symbols/>
-                        <div class="row px-3">
-                            <div class="col-6 form-check"><input id="right" type="radio" class="form-check-input" name="answer" value="1"/><label for="right" class="form-check-label">right</label></div>
-                            <div class="col-6 form-check"><input id="wrong" type="radio" class="form-check-input" name="answer" value="0"/><label for="wrong" class="form-check-label">wrong</label></div>
-                        </div>
-                        <br/>
-                        <label>
-                            Upload an image: <input type="file" name="image" data-cy="file-upload"/>
-                        </label>
-                        <br/>
                         <br/>
                         <input type="submit" name="submit" value="add" class="btn btn-success" data-cy="submit"/>
                     </form>

@@ -38,7 +38,7 @@ function exportPdf() {
 </script>
 
 <template>
-    <div v-for="question in questions" :key="question['id']" @click="$event => {if ($event.target.tagName != 'BUTTON' && $event.target.parentElement.tagName != 'BUTTON' && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');if (creatingTest) $emit('changeChosenQuestions', question['id'])}" class="question border border-2 d-flex flex-column p-2 bg-body-tertiary" :class="{'border-dark': creatingTest, 'chosen': chosenQuestions.includes(question['id'])}">
+    <div v-for="question in questions" :key="question['id']" @click="$event => {if (!$event.target.closest('button') && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');if (creatingTest) $emit('changeChosenQuestions', question['id'])}" class="question border border-2 d-flex flex-column p-2 bg-body-tertiary" :class="{'border-dark': creatingTest, 'chosen': chosenQuestions.includes(question['id'])}">
         <div class="w-100" data-cy="question">
             <span class="questionTitle">{{ question["part1"] }}</span>
             <span class='badge text-bg-success me-1'>{{ question["rightAnswer"] }}</span>
