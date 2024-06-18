@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {ref, nextTick} from "vue";
 import {useRouter, useRoute} from "vue-router";
 import ControlPanelChoose from "@/components/ControlPanelChoose.vue";
 import ControlPanelComplete from "@/components/ControlPanelComplete.vue";
@@ -55,7 +55,9 @@ function loadQuestions() {
     fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
     "&game=" + routeParams.game + "&unit=" + unit.value))
     .then(res => res.json())
-    .then(questionsArr => questions.value = questionsArr.sort((a, b) => (a["uploader"].toLowerCase() == username.value.toLowerCase()) - (b["uploader"].toLowerCase() == username.value.toLowerCase())));
+    .then(questionsArr => {
+        questions.value = questionsArr.sort((a, b) => (a["uploader"].toLowerCase() == username.value.toLowerCase()) - (b["uploader"].toLowerCase() == username.value.toLowerCase()));
+    });
     if (member.value == "admin") {
         fetch("http://127.0.0.1/info/functions/printUploaders.php?grade=" + routeParams.grade +
             "&game=" + routeParams.game + "&unit=" + unit.value, {
