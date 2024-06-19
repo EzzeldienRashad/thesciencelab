@@ -15,17 +15,20 @@ if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") {
     echo "logout";
     exit;
 }
+require "password.php";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
+$pdo = new PDO($dsn, "if0_36665133", $password);
+$deleteStmt = $pdo->query("DELETE FROM Tests WHERE validFor < '" . date("Y-m-d H:i:s") . "'");
 if (!isset($_GET["grade"]) || !isset($_GET["game"])) {
+    $getStmt = $pdo->query("SELECT code, id, grade, game, questionId, validFor FROM Tests");
+    echo json_encode($getStmt->fetchAll(PDO::FETCH_GROUP));
     exit;
 }
+$isSecondary = str_contains($_GET["grade"], "secondary");
 if (!isset($_POST["testCode"]) || !isset($_POST["testDuration"]) || !isset($_POST["chosenQuestions"])) {
     echo "infoerr";
     exit;
 }
-$isSecondary = str_contains($_GET["grade"], "secondary");
-require "password.php";
-$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
-$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 $testStmt = $pdo->prepare("insert into Tests (questionId, grade, game, validFor, code) values (?, ?, ?, ?, ?)");
 $game = "";
 switch ($_GET["game"]) {
@@ -50,7 +53,7 @@ switch ($_GET["game"]) {
         break;
 }
 foreach (json_decode($_POST["chosenQuestions"]) as $questionId) {
-    $testStmt->execute([$questionId, $_GET["grade"], $game, date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . "+" . $_POST["testDuration"] . " minutes")), $_POST["testCode"]]);
+    $testStmt->execute([$questionId, $_GET["grade"], $game, date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . " +" . $_POST["testDuration"] . " minutes")), $_POST["testCode"]]);
 }
 echo "successful";
 ?>
