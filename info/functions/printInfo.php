@@ -43,6 +43,9 @@ if (!isset($_GET["unit"])) {
         case "what-happens-when":
             $requiredData = ["question"];
             break;
+        case "scientific-term":
+            $requiredData = ["question", "answer"];
+            break;
     }
     $game = "";
     switch ($_GET["game"]) {
@@ -64,6 +67,9 @@ if (!isset($_GET["unit"])) {
         case "give-reason":
         case "what-happens-when":
             $game = "EssayQuestions";
+            break;
+        case "scientific-term":
+            $game = "ScientificTermQuestions";
             break;
     }   
     $queryString = "SELECT id, level, uploader";

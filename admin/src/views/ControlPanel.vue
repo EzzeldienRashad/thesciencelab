@@ -5,6 +5,7 @@ import ControlPanelChoose from "@/components/ControlPanelChoose.vue";
 import ControlPanelComplete from "@/components/ControlPanelComplete.vue";
 import ControlPanelRightOrWrong from "@/components/ControlPanelRightOrWrong.vue";
 import ControlPanelEssay from "@/components/ControlPanelEssay.vue";
+import ControlPanelScientificTerm from "@/components/ControlPanelScientificTerm.vue";
 import ControlPanelMatch from "@/components/ControlPanelMatch.vue";
 import GradeUnits from "@/components/GradeUnits.vue";
 
@@ -103,6 +104,7 @@ function addQuestion(form) {
     })
         .then(res => res.text())
         .then(msgValue => {
+            console.log(msgValue)
             form.parentElement.scrollTo(0, 0);
             msgColor.value = "danger";
             switch (msgValue) {
@@ -243,6 +245,10 @@ function exportWord() {
                 @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)" />
             <ControlPanelEssay
                 v-else-if="useRoute().params.game == 'give-reason' || useRoute().params.game == 'what-happens-when'"
+                v-bind="inheritedVariables" ref="currentGame"
+                @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)" />
+            <ControlPanelScientificTerm
+                v-else-if="useRoute().params.game == 'scientific-term'"
                 v-bind="inheritedVariables" ref="currentGame"
                 @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)" />
             <ControlPanelMatch v-else-if="useRoute().params.game == 'match'" v-bind="inheritedVariables"

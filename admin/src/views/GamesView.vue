@@ -7,6 +7,7 @@ import completeImg from "@/assets/images/complete.webp";
 import rightOrWrongImg from "@/assets/images/right-or-wrong.webp";
 import giveReasonImg from "@/assets/images/give-reason.webp";
 import whatHappensWhenImg from "@/assets/images/what-happens-when.webp";
+import scientificTermImg from "@/assets/images/scientific-term.webp";
 import matchImg from "@/assets/images/match.webp";
 import biologyImg from "@/assets/images/biology.webp";
 import physicsImg from "@/assets/images/physics.webp";
@@ -14,7 +15,7 @@ import chemistryImg from "@/assets/images/chemistry.webp";
 
 const grade = useRoute().params.grade;
 const gradeName = removeDashes(grade);
-const games = ref(grade.includes("secondary") ? ["biology", "physics", "chemistry"] : ["choose", "right-or-wrong", "complete", "match", "give-reason", "what-happens-when"]);
+const games = ref(grade.includes("secondary") ? ["biology", "physics", "chemistry"] : ["choose", "right-or-wrong", "complete", "match", "give-reason", "what-happens-when", "scientific-term"]);
 const gamesImages = {
     "choose": chooseImg,
     "complete": completeImg,
@@ -22,6 +23,7 @@ const gamesImages = {
     "match": matchImg,
     "give-reason": giveReasonImg,
     "what-happens-when": whatHappensWhenImg,
+    "scientific-term": scientificTermImg,
     "biology": biologyImg,
     "physics": physicsImg,
     "chemistry": chemistryImg,

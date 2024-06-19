@@ -22,7 +22,7 @@ if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") exit;
     $membersArabic = $membersArabicStmt->fetchAll(PDO::FETCH_COLUMN);
     for ($i = 0; $i < count($members); $i++) {
         $uploaders[$membersArabic[$i]] = 0;
-        foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay"] as $game) {            
+        foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay", "ScientificTerm"] as $game) {            
             $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab." . $game . "Questions where uploader = ?");
             $getStmt->execute([$members[$i]]);
             $uploaders[$membersArabic[$i]] += count($getStmt->fetchAll());

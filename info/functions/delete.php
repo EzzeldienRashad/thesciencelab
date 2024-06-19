@@ -41,6 +41,9 @@ switch ($_GET["game"]) {
     case "what-happens-when":
         $game = "EssayQuestions";
         break;
+    case "scientific-term":
+        $game = "ScientificTermQuestions";
+        break;
 }
 if (in_array($_GET["game"], ["give-reason", "what-happens-when"])) $_GET["game"] = "Essay";
 require "password.php";

@@ -51,6 +51,9 @@ switch ($_GET["game"]) {
     case "what-happens-when":
         $game = "EssayQuestions";
         break;
+    case "scientific-term":
+        $game = "ScientificTermQuestions";
+        break;
 }
 foreach (json_decode($_POST["chosenQuestions"]) as $questionId) {
     $testStmt->execute([$questionId, $_GET["grade"], $game, date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . " +" . $_POST["testDuration"] . " minutes")), $_POST["testCode"]]);

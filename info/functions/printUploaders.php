@@ -37,6 +37,9 @@ switch ($_GET["game"]) {
     case "what-happens-when":
         $game = "EssayQuestions";
         break;
+    case "scientific-term":
+        $game = "ScientificTermQuestions";
+        break;
 }    
 $getStmt = $pdo->prepare("SELECT id, uploader FROM if0_36665133_TheScienceLab.$game where grade = ?" .
     ($isSecondary ? " and subject = ?" : ""));

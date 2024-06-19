@@ -40,6 +40,9 @@ switch ($_GET["game"]) {
     case "what-happens-when":
         $game = "EssayQuestions";
         break;
+    case "scientific-term":
+        $game = "ScientificTermQuestions";
+        break;
 }
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";

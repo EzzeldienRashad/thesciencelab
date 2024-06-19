@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -108,6 +111,14 @@ switch ($_GET["game"]) {
         }
         $addStmt = $pdo->prepare("insert into EssayQuestions (question, grade, unit, uploader, type) values (?, ?, ?, ?, ?)");
         $addStmt->execute([trim($_POST["question"]), $_GET["grade"], $_GET["unit"], $_SESSION["username"], $_GET["game"]]);
+        break;
+    case "scientific-term":
+        if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
+            echo "infoerr";
+            exit;
+        }
+        $addStmt = $pdo->prepare("insert into ScientificTermQuestions (question, answer, grade, unit, uploader) values (?, ?, ?, ?, ?)");
+        $addStmt->execute([trim($_POST["question"]), trim($_POST["answer"]), $_GET["grade"], $_GET["unit"], $_SESSION["username"]]);
         break;
 }
 echo "successful";
