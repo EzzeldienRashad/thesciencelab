@@ -46,11 +46,11 @@ if (in_array($_GET["game"], ["give-reason", "what-happens-when"])) $_GET["game"]
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab." . $game . "Questions WHERE id = ?");
+$getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab.$game WHERE id = ?");
 $getStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $getStmt->execute();
 if ($getStmt->fetchColumn() != $_SESSION["username"]) exit;
-$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab." . ($isSecondary ? "Choose" : ucfirst($_GET["game"])) . "Questions WHERE id = ?");
+$deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab.$game WHERE id = ?");
 $deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $deleteStmt->execute();
 ?>

@@ -3,7 +3,7 @@ import {ref, inject} from "vue";
 import BouncingBallsDecoration from "@/components/BouncingBallsDecoration.vue";
 import GradeLink from "@/components/GradeLink.vue";
 import NameCard from "@/components/NameCard.vue";
-import logo from "@/assets/icons/logo.webp";
+import logo from "/public/favicon.ico";
 
 const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
 const documentWidth = inject("documentWidth");

@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -25,7 +22,6 @@ if (!isset($_GET["unit"])) {
     $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $questions = [];
-    if ($_GET["game"] == "right-or-wrong") $_GET["game"] = "rightOrWrong";
     $requiredData = [];
     switch ($_GET["game"]) {
         case "choose":
@@ -40,8 +36,12 @@ if (!isset($_GET["unit"])) {
         case "match":
             $requiredData = ["colA", "colB"];
             break;
-        case "rightOrWrong":
+        case "right-or-wrong":
             $requiredData = ["question", "answer"];
+            break;
+        case "give-reason":
+        case "what-happens-when":
+            $requiredData = ["question"];
             break;
     }
     $game = "";
@@ -65,7 +65,7 @@ if (!isset($_GET["unit"])) {
         case "what-happens-when":
             $game = "EssayQuestions";
             break;
-    }    
+    }   
     $queryString = "SELECT id, level, uploader";
     foreach ($requiredData as $requiredItem) {
         $queryString .= ", " . $requiredItem;
@@ -73,7 +73,7 @@ if (!isset($_GET["unit"])) {
     if ($game == "ChooseQuestions" || $game == "RightOrWrongQuestions") $queryString .= ", image";
     if (isset($_SESSION["member"]) && $_SESSION["member"] == "admin") $queryString .= ", uploader";
     $queryString .= " FROM if0_36665133_TheScienceLab.$game where grade = ?";
-    if ($game == "EssayQuestions") $queryString .= " and type = " . $_GET["game"];
+    if ($game == "EssayQuestions") $queryString .= " and type = '" . $_GET["game"] . "'";
     if ($_GET["unit"] != "whole") $queryString .= " and unit = ?";
     if ($isSecondary) $queryString .= " and subject = ?";
     $getStmt = $pdo->prepare($queryString);

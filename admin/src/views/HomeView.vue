@@ -23,6 +23,10 @@ fetch("http://127.0.0.1/info/functions/login.php", {
 </script>
 
 <template>
+    <section class="d-flex justify-content-between py-2 align-items-center border-bottom mx-5">
+        <h1>Welcome to The Science Lab</h1>
+        <img src="/favicon.ico" alt="the science lab logo" height="70"/>
+    </section>
     <section class="p-2 p-sm-4 p-sm-5 row gx-0" data-cy="grades">
         <div class="col-12 d-flex mb-2 justify-content-end justify-content-between flex-wrap">
             <h2>Grades:</h2>

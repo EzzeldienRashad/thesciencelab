@@ -1,6 +1,6 @@
 <script setup>
 import {ref, onBeforeUnmount, provide} from "vue";
-import logo from "@/assets/icons/logo.webp";
+import logo from "/public/favicon.ico";
 
 const nav = ref(null);
 const navbarCollapse = ref(null);

@@ -58,6 +58,19 @@ function loadQuestions() {
     .then(res => res.json())
     .then(questionsArr => {
         questions.value = questionsArr.sort((a, b) => (a["uploader"].toLowerCase() == username.value.toLowerCase()) - (b["uploader"].toLowerCase() == username.value.toLowerCase()));
+        nextTick(() => {
+            for (
+                let node of Array.from(document.getElementsByClassName("questionTitle"))
+                .concat(Array.from(document.getElementsByClassName("choice")))
+                .concat(Array.from(document.getElementsByClassName("colA")))
+                .concat(Array.from(document.getElementsByClassName("colB")))
+                .concat(Array.from(document.getElementsByClassName("right-answer")))
+                .concat(Array.from(document.getElementsByClassName("wrong-answer")))
+            ) {
+                node.innerHTML = node.innerHTML.replaceAll("//", "<br/>");
+                node.innerHTML = node.innerHTML.replaceAll(/--((\d+)|\(s\)|\(l\)|\(q\)|\(aq\))/g, "<sub>$1</sub>");
+            }
+        });
     });
     if (member.value == "admin") {
         fetch("http://127.0.0.1/info/functions/printUploaders.php?grade=" + routeParams.grade +

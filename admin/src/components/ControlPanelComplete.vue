@@ -41,8 +41,8 @@ function exportPdf() {
     <div v-for="question in questions" :key="question['id']" @click="$event => {if (!$event.target.closest('button') && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none');if (creatingTest) $emit('changeChosenQuestions', question['id'])}" class="question border border-2 d-flex flex-column p-2 bg-body-tertiary" :class="{'border-dark': creatingTest, 'chosen': chosenQuestions.includes(question['id'])}">
         <div class="w-100" data-cy="question">
             <span class="questionTitle">{{ question["part1"] }}</span>
-            <span class='badge text-bg-success me-1'>{{ question["rightAnswer"] }}</span>
-            <span class='badge text-bg-danger me-1'>{{ question["wrongAnswer"] }}</span>
+            <span class='badge text-bg-success me-1 right-answer'>{{ question["rightAnswer"] }}</span>
+            <span class='badge text-bg-danger me-1 wrong-answer'>{{ question["wrongAnswer"] }}</span>
             <span class="questionTitle">{{ question["part2"] }}</span>
             <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
             <div class="p-1 m-1 rounded-2 bg-body-secondary d-none uploader-name" dir="rtl">{{ uploaders[question["id"]] }}</div>
