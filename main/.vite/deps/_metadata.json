@@ -1,47 +1,47 @@
 {
-  "hash": "7af78816",
-  "browserHash": "ac543136",
+  "hash": "fb0cb838",
+  "browserHash": "ee449cb9",
   "optimized": {
     "vue": {
       "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "eb1cedb5",
+      "fileHash": "4ac5c0a7",
       "needsInterop": false
     },
     "bootstrap": {
       "src": "../../node_modules/bootstrap/dist/js/bootstrap.esm.js",
       "file": "bootstrap.js",
-      "fileHash": "1c78898e",
+      "fileHash": "4fd51e18",
       "needsInterop": false
     },
     "@fortawesome/fontawesome-svg-core": {
       "src": "../../node_modules/@fortawesome/fontawesome-svg-core/index.mjs",
       "file": "@fortawesome_fontawesome-svg-core.js",
-      "fileHash": "db817393",
+      "fileHash": "2dcd9efc",
       "needsInterop": false
     },
     "@fortawesome/vue-fontawesome": {
       "src": "../../node_modules/@fortawesome/vue-fontawesome/index.es.js",
       "file": "@fortawesome_vue-fontawesome.js",
-      "fileHash": "5b2fa685",
+      "fileHash": "5d8aa395",
       "needsInterop": false
     },
     "@fortawesome/free-solid-svg-icons": {
       "src": "../../node_modules/@fortawesome/free-solid-svg-icons/index.mjs",
       "file": "@fortawesome_free-solid-svg-icons.js",
-      "fileHash": "af512ded",
+      "fileHash": "c5403946",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-R225DL6P": {
-      "file": "chunk-R225DL6P.js"
+    "chunk-XSWAMETM": {
+      "file": "chunk-XSWAMETM.js"
     },
-    "chunk-2ZOPDH6N": {
-      "file": "chunk-2ZOPDH6N.js"
+    "chunk-TTGUZHUR": {
+      "file": "chunk-TTGUZHUR.js"
     },
-    "chunk-JC4IRQUL": {
-      "file": "chunk-JC4IRQUL.js"
+    "chunk-SSYGV25P": {
+      "file": "chunk-SSYGV25P.js"
     }
   }
 }

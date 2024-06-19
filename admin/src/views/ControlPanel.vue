@@ -250,7 +250,7 @@ function exportWord() {
                 @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)" />
         </main>
     </div>
-    <div class="testModal" id="testOverlay">
+    <div class="modal" id="testOverlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-light">
                 <div class="modal-body">
