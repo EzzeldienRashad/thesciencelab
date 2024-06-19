@@ -5,7 +5,8 @@ import RegisterView from "@/views/RegisterView.vue";
 import addInfoView from "@/views/AddInfoView.vue";
 import UploadersView from "@/views/UploadersView.vue";
 import UploadedQuestionsView from "@/views/UploadedQuestionsView.vue";
-import resourcesView from "@/views/ResourcesView.vue";
+import ResourcesView from "@/views/ResourcesView.vue";
+import TestsView from "@/views/TestsView.vue";
 import GamesView from "@/views/GamesView.vue";
 import ControlPanel from "@/views/ControlPanel.vue";
 
@@ -43,7 +44,12 @@ const routes = [
     {
         path: "/resources",
         name: "resources",
-        component: resourcesView
+        component: ResourcesView
+    },
+    {
+        path: "/tests",
+        name: "tests",
+        component: TestsView
     },
     {
         path: "/:grade",

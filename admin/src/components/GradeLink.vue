@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import {onMounted, ref, inject} from "vue";
+import {onMounted, ref} from "vue";
 import removeDashes from "@/modules/removeDashes.js";
 
 const props = defineProps({

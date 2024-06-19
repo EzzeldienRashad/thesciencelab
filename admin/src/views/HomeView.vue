@@ -6,7 +6,6 @@ import { RouterLink } from "vue-router";
 
 const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
 const member = ref("");
-const tests = ref([]);
 
 fetch("http://127.0.0.1/info/functions/login.php", {
         method: "get",
@@ -20,9 +19,6 @@ fetch("http://127.0.0.1/info/functions/login.php", {
             
         }
         member.value = userInfo[0];
-        if (member.value == "admin") {
-            fetch("")
-        }
     });
 </script>
 
@@ -43,12 +39,10 @@ fetch("http://127.0.0.1/info/functions/login.php", {
             <GradeLink :grade="grade"/>
         </div>
         <RouterLink class="btn btn-primary d-block w-100 p-3 fs-4 fw-bold rounded-3" to="/resources">Download Resources</RouterLink>
-    </section>
-    <section class="row">
-        <h2 class="text-primary-emphasis col-12">Running Tests:</h2>
-        <div class="col-4">
-
-        </div>
+        <RouterLink class="btn btn-info d-block w-100 p-2 fs-4 fw-bold rounded-3 mt-2" to="/tests">
+            Running tests
+            <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
+        </RouterLink>
     </section>
     <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
             <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>

@@ -27,3 +27,9 @@ function logout() {
         </ul>
     </footer>
 </template>
+
+<style scoped>
+main {
+    min-height: 90vh
+}
+</style>

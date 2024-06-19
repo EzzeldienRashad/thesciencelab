@@ -206,7 +206,7 @@ function exportWord() {
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
             </RouterLink>
             <div class="d-flex flex-wrap-reverse gap-1 ms-2 justify-content-end flex-grow-1">
-                <label for="test" v-if="member == 'admin'" @click="creatingTest = !creatingTest"
+                <label for="test" v-if="member == 'admin'"
                     class="btn btn-primary border border-primary border-5"
                     :class="[['btn-primary', 'border-primary'], ['btn-danger', 'border-danger']][Number(creatingTest)]">{{
                         ['Create test', 'cancel test'][Number(creatingTest)] }}</label>
@@ -231,7 +231,7 @@ function exportWord() {
             </div>
         </header>
         <main class="d-flex flex-column-reverse pt-2">
-            <input type="checkbox" id="test" class="d-none" />
+            <input type="checkbox" id="test" class="d-none" v-model="creatingTest"/>
             <ControlPanelChoose v-if="['choose', 'biology', 'physics', 'chemistry'].includes(useRoute().params.game)"
                 v-bind="inheritedVariables" ref="currentGame"
                 @changeChosenQuestions="id => chosenQuestions.includes(id) ? chosenQuestions = chosenQuestions.filter(item => item != id) : chosenQuestions.push(id)" />
