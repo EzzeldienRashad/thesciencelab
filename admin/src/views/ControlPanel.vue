@@ -277,7 +277,7 @@ function beginTest(form) {
 .question img {
     max-width: 100%;
     max-height: 500px;
-    min-width: 300px;
+    min-width: 280px;
 }
 
 input[type="checkbox"]:checked~.question.chosen,

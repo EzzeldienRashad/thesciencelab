@@ -76,7 +76,7 @@ async function exportDocx() {
         }));
         const img = question.getElementsByTagName("img")[0];
         if (img) {
-            const response = await fetch(document.getElementsByTagName("img")[0].src);
+            const response = await fetch(img.src);
             const blob = await response.blob();
             const buffer = await readBlobAsArrayBuffer(blob);
             function readBlobAsArrayBuffer(blob) {
