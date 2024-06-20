@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import {jsPDF} from "jspdf";
+import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
 import symbolsArr from "@/assets/info/symbols.json"
 import { callAddFont } from "@/assets/fonts/ARIAL-normal";
@@ -8,10 +9,10 @@ import { callAddFont } from "@/assets/fonts/ARIAL-normal";
 const props = defineProps(["questions", "msg", "msgColor", "deleteQuestion", "addQuestion", "setLevel", "member", "username", "uploaders", "routeParams", "chosenQuestions", "creatingTest"]);
 const {questions, msg, msgColor, deleteQuestion, addQuestion, setLevel, member, username, uploaders, routeParams, chosenQuestions, creatingTest} = props;
 const form = ref(null);
-const symbols = symbolsArr["science"];
+const symbols = symbolsArr;
 
 jsPDF.API.events.push(["addFonts", callAddFont]);
-defineExpose({exportPdf});
+defineExpose({exportPdf, exportDocx});
 defineEmits(["changeChosenQuestions"])
 
 function exportPdf() {
@@ -34,6 +35,34 @@ function exportPdf() {
         }
     }
     pdf.save(routeParams.grade + "-" + routeParams.game + "-game.pdf");
+}
+async function exportDocx() {
+    const children = [];
+    const questions = document.querySelectorAll(".question");
+    for (let j = 0; j < questions.length; j++) {
+        const question = questions[questions.length - j - 1];
+        children.push(new Paragraph({
+            "children": [new TextRun((j + 1) + ") " + question.querySelectorAll(".questionTitle")[0].textContent + " ....... " + question.querySelectorAll(".questionTitle")[1].textContent)]
+        }));
+    }
+    const doc = new Document({
+        sections: [{children}],
+        styles: {
+            default: {
+                document: {
+                    run: {
+                        size: "14pt"
+                    }
+                }
+            }
+        }
+    });
+    Packer.toBlob(doc).then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = routeParams.grade + "-" + routeParams.game + "-game.docx";
+        link.click();
+    })
 }
 </script>
 

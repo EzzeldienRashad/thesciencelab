@@ -61,10 +61,10 @@ onMounted(() => {
         <div v-for="(test, code) in tests" :key="code" class="col-6 col-sm-4 text-center">
             <button @click="() => showTest(code)" class="btn btn-warning rounded-4 p-3 my-2 position-relative">
                 {{ code }}
-                <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                <!--<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
                     <button class="btn-close fs-5"></button>
                     <span class="visually-hidden">Close</span>
-                </span>
+                </span>-->
             </button>
             <br/>
             {{ removeDashes(test[0]["grade"]) }}
@@ -125,4 +125,10 @@ onMounted(() => {
         </table>
     </div>
 </section>
+<section v-else-if="currentGame = 'ScientificTermQuestions'">
+        <div v-for="question in questions" :key="question['id']" class="question p-3 m-3 rounded d-flex flex-column">
+            <span class="questionTitle">{{ question['question'] }}</span>
+            <span class="border border-2 border-dark fw-bold p-1 rounded-3 m-2">{{ question['answer'] }}</span>
+        </div>
+    </section>
 </template>
