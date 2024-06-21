@@ -18,7 +18,7 @@ if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") {
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password);
-$deleteStmt = $pdo->query("DELETE FROM Tests WHERE validFor < '" . date("Y-m-d H:i:s") . "'");
+$pdo->query("DELETE FROM Tests WHERE validFor < '" . date("Y-m-d H:i:s") . "'");
 if (!isset($_GET["grade"]) || !isset($_GET["game"])) {
     $getStmt = $pdo->query("SELECT code, id, grade, game, questionId, validFor FROM Tests");
     echo json_encode($getStmt->fetchAll(PDO::FETCH_GROUP));

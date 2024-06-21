@@ -4,11 +4,13 @@ import GameSettings from "@/components/GameSettings.vue";
 import TheTest from "@/components/TheTest.vue";
 const questions = ref([]);
 const level = ref("");
+const name = ref("");
+const code = ref("");
 const emit = defineEmits(["changeTheme"]);
 
 provide("questions", questions);
 
-function startTest(levelStr, questionsArr) {
+function startTest(levelStr, questionsArr, nameValue, codeValue) {
     level.value = levelStr;
     switch (levelStr) {
         case "easy":
@@ -27,14 +29,24 @@ function startTest(levelStr, questionsArr) {
             questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));
             emit("changeTheme", "primary");
             break;
+        case "all":
+            questions.value = questionsArr;
+            emit("changeTheme", "primary");
+            if (nameValue) {
+                name.value = nameValue;
+            if (codeValue) {
+                code.value = codeValue;
+            }
+            break;
+        }
     }
 }
 </script>
 
 <template>
     <transition mode="out-in">
-        <GameSettings @start="(level, questions) => startTest(level, questions)" v-if="!Object.keys(questions).length" />
-        <TheTest @changeTheme="theme => $emit('changeTheme', theme)" v-else />
+        <GameSettings @start="(level, questions, name, code) => startTest(level, questions, name, code)" v-if="!Object.keys(questions).length" />
+        <TheTest @changeTheme="theme => $emit('changeTheme', theme)" :name :code v-else />
     </transition>
 </template>
 

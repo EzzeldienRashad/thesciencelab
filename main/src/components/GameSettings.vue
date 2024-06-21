@@ -5,19 +5,22 @@ import vueRouter from "@/modules/vue-router";
 const {useRoute} = vueRouter;
 import removeDashes from "@/modules/removeDashes.js";
 
-defineEmits(["start"]);
+const emit = defineEmits(["start"]);
 
 const router = useRouter();
 const routeParams = useRoute().params
 const game = routeParams.game;
 const units = ref([]);
 const questions = ref([]);
+const msg = ref("");
 const trans = ref(null);
+const name = ref(null);
+const code = ref(null);
 const lessonsMaxHeight = ref("");
 let currentTheme = 0;
 
-fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
-    "&game=" + routeParams.game))
+fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+    "&game=" + encodeURIComponent(routeParams.game))
     .then(res => res.json())
     .then(unitsJson => {
         if (unitsJson.length) units.value = unitsJson;
@@ -26,8 +29,8 @@ fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routePa
     });
 
 function getQuestions(unit) {
-    fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
-    "&game=" + routeParams.game + "&unit=" + unit))
+    fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+    "&game=" + encodeURIComponent(routeParams.game) + "&unit=" + encodeURIComponent(unit))
     .then(res => res.json())
     .then(questionsArr => {
         if (routeParams.game == "complete") {
@@ -52,6 +55,43 @@ function shuffle(arr) {
     }
     return arr;
 }
+function enterTest() {
+    fetch("http://127.0.0.1/info/functions/enterTest.php?game=" + encodeURIComponent(routeParams.game) +
+    "&grade=" + encodeURIComponent(routeParams.grade) + "&name=" + encodeURIComponent(name.value) +
+    "&code=" + encodeURIComponent(code.value))
+    .then(res => res.text())
+    .then(questionsArr => {
+        try {
+            questionsArr = JSON.parse(questionsArr);
+        } catch (e) {
+            switch (questionsArr) {
+                case "notfound":
+                    msg.value = ".....";
+                    setTimeout(() => msg.value = "*This test does not exist!", 500);
+                    return;
+                case "taken":
+                    msg.value = ".....";
+                    setTimeout(() => msg.value = "*You can take this test only one time!", 500);
+                    return;
+                default:
+                    msg.value = ".....";
+                    setTimeout(() => msg.value = "*An error has occurred!", 500);
+                    return;
+            }
+        }
+        if (routeParams.game == "complete") {
+            questionsArr = shuffle(questionsArr.slice(0, (-questionsArr.length % 5 || undefined)));
+            const questionGroups = [];
+            for (let i = 0; i < questionsArr.length; i += 5) {
+                questionGroups.push(questionsArr.slice(i, i + 5));
+            }
+            questions.value = questionGroups;
+        } else {
+            questions.value = shuffle(questionsArr);
+        }
+        emit('start', 'all', questions.value, name.value, code.value);
+    });
+}
 </script>
 
 <template>
@@ -70,9 +110,25 @@ function shuffle(arr) {
                             <button :data-unit="unit" @click="getQuestions(unit)" class="btn btn-primary w-100 h-100 p-3 fs-5">{{ removeDashes(unit) }}</button>
                         </div>
                     </template>
-                    <div class="col">
+                    <div class="col-12">
                         <button @click="getQuestions('whole')" class="btn btn-primary w-100 h-100 p-3 fs-5">The whole term</button>
                     </div>
+                    <hr/>
+                    <div class="col-12 text-center">
+                        <h3>OR</h3>
+                        <hr/>
+                    </div>
+                    <form @submit.prevent="enterTest" class="col-sm-6 w-100 p-5 text-center">
+                        <div class="text-danger fs-5">{{ msg }}</div>
+                        <label class="form-label fs-4" for="name">Enter your name:</label>&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="name" v-model="name" id="name" class="form-control d-inline-block w-auto" autocomplete="off"/>
+                        <br/>
+                        <label class="form-label fs-4" for="testCode">Enter the test code:</label>&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="testCode" id="testCode" v-model="code" class="form-control d-inline-block w-auto" autocomplete="off"/>
+                        <br/>
+                        <br/>
+                        <input type="submit" value="Enter" class="btn btn-primary fs-5"/>
+                    </form>
                 </div>
             </div>
         </transition>

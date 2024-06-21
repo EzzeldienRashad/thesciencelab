@@ -1,9 +1,12 @@
 <script setup>
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 import { onBeforeRouteLeave } from "vue-router";
 import GamesContainer from "@/components/GamesContainer.vue";
 import TestResult from "@/components/TestResult.vue";
 
+const routeParams = useRoute().params;
+const props = defineProps(["name", "code"]);
 const emit = defineEmits(["changeTheme"]);
 const state = ref("READY...");
 const started = ref(false);
@@ -16,6 +19,9 @@ setTimeout(() => state.value = "GO!", 1000);
 setTimeout(() => started.value = true, 1500);
 
 function result(scoreValue, totalValue) {
+    fetch("http://127.0.0.1/info/functions/modifyDeviceInTest.php?game=" + encodeURIComponent(routeParams.game) +
+    "&grade=" + encodeURIComponent(routeParams.grade) + "&name=" + encodeURIComponent(props.name) +
+    "&code=" + encodeURIComponent(props.code) + "&result=" + (Math.round((scoreValue / totalValue * 100 + Number.EPSILON) * 100) / 100))
     score.value = scoreValue;
     total.value = totalValue;
     done.value = true;

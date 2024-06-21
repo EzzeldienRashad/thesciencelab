@@ -53,6 +53,7 @@ const inheritedVariables = {
     }
 };
 
+scrollTo(0, 0)
 function next() {
     answeredQuestions.value += 1;
     if (answeredQuestions.value >= questionsLength) {

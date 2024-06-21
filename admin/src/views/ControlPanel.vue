@@ -54,8 +54,8 @@ fetch("http://127.0.0.1/info/functions/login.php", {
     });
 
 function loadQuestions() {
-    fetch(encodeURI("http://127.0.0.1/info/functions/printInfo.php?grade=" + routeParams.grade +
-        "&game=" + routeParams.game + "&unit=" + unit.value))
+    fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+        "&game=" + encodeURIComponent(routeParams.game) + "&unit=" + encodeURIComponent(unit.value))
         .then(res => res.json())
         .then(questionsArr => {
             questions.value = questionsArr.sort((a, b) => (a["uploader"].toLowerCase() == username.value.toLowerCase()) - (b["uploader"].toLowerCase() == username.value.toLowerCase()));
@@ -191,8 +191,14 @@ function beginTest(form) {
     <GradeUnits v-if="!unit" @setUnit="unitValue => { unit = unitValue; loadQuestions() }" />
     <div v-else class="p-2 rounded-3">
         <header class="d-flex justify-content-between align-items-center pb-2 border-bottom border-2">
-            <RouterLink to="/" class="text-dark" v-if="!creatingTest">
-                <font-awesome-icon icon="fa-solid fa-left-long" size="2x" />
+            <RouterLink to="/" class="text-dark position-absolute top-0 start-0 ms-3 mt-3">
+                <font-awesome-icon icon="fa-solid fa-left-long" size="2x" @click="$event => {
+                    if (creatingTest) {
+                    $event.stopPropagation();
+                    $event.preventDefault();
+                    unit = '';
+                }
+            }"/>
             </RouterLink>
             <div class="d-flex flex-wrap-reverse gap-1 ms-2 justify-content-end flex-grow-1">
                 <label for="test" v-if="member == 'admin'"
