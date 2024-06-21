@@ -12,7 +12,10 @@ fetch("http://127.0.0.1/info/functions/uploadersCount.php", {
 </script>
 
 <template>
-    <div class="row p-2" dir="rtl" lang="ar">
-        <div v-for="uploader in uploaders" :key="uploader" class="fs-4 col-12 col-lg-6 border rounded-2 p-2 border-dark-subtle">{{ uploader[0] }}: {{ uploader[1] }} سؤال</div>
-    </div>
+    <section dir="rtl" lang="ar">
+        <h2>المشاركون فى الموقع:</h2>
+        <div class="row p-2">
+            <div v-for="uploader in uploaders" :key="uploader" class="fs-4 col-12 col-lg-6 p-1">{{ uploader[0] }}: {{ uploader[1] }} سؤال</div>
+        </div>
+    </section>
 </template>

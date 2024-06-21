@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -12,7 +15,23 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
-if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
+    
+
+
+$username = isset($_SESSION["username"]) ? $_SESSION["username"] : $_POST["username"];
+require "password.php";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
+$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+$questionsNum = 0;
+foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay", "ScientificTerm"] as $game) {            
+    $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab." . $game . "Questions where uploader = ?");
+    $getStmt->execute([$username]);
+    $questionsNum += count($getStmt->fetchAll());
+}
+if ($questionsNum <= 0) exit;
+
+
+if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
     echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
 } elseif (isset($_POST["password"]) && isset($_POST["username"])) {
     require "password.php";

@@ -11,7 +11,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
-if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
+if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
     echo "logout";
     exit;
 }
@@ -52,7 +52,7 @@ $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE =>
 $getStmt = $pdo->prepare("Select uploader FROM if0_36665133_TheScienceLab.$game WHERE id = ?");
 $getStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $getStmt->execute();
-if ($getStmt->fetchColumn() != $_SESSION["username"]) exit;
+if ($getStmt->fetchColumn() != $_SESSION["username"] && $_SESSION["subject"] != "admin") exit;
 $deleteStmt = $pdo->prepare("DELETE FROM if0_36665133_TheScienceLab.$game WHERE id = ?");
 $deleteStmt->bindParam(1, $_GET["questionnum"], PDO::PARAM_INT);
 $deleteStmt->execute();

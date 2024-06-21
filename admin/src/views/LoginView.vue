@@ -26,7 +26,7 @@ async function login() {
     } catch (e) {
         member = memberArr;
     }
-    if (["biology", "physics", "chemistry", "admin", "none"].includes(member)) {
+    if (["biology", "physics", "chemistry", "admin", "science"].includes(member)) {
         router.push({name: "home"});
     } else if (member == "blocked") {
         error.value = "....";

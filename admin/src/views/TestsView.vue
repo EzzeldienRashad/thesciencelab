@@ -1,6 +1,7 @@
 <script setup>
 import {ref, onMounted} from "vue";
 import removeDashes from "../modules/removeDashes";
+import { onBeforeRouteLeave } from "vue-router";
 
 const member = ref("");
 const tests = ref([]);
@@ -8,6 +9,7 @@ const currentGame = ref("");
 const questions = ref([]);
 const devicesInTest = ref([]);
 const date = ref("");
+let fetchDevicesInterval;
 
 fetch("http://127.0.0.1/info/functions/login.php", {
         method: "get",
@@ -42,7 +44,7 @@ function showTest(code) {
             .then(devicesArr => devicesInTest.value = devicesArr);
     }
     fetchDevicesInTest();
-    setInterval(fetchDevicesInTest, 5000);
+    fetchDevicesInterval = setInterval(fetchDevicesInTest, 5000);
     fetch("http://127.0.0.1/info/functions/testQuestions.php?game=" + tests.value[code][0]["game"], {
         method: "post",
         headers: {
@@ -59,6 +61,9 @@ function showTest(code) {
 }
 onMounted(() => {
     fetch("http://127.0.0.1/info/functions/getDate.php").then(res => res.text()).then(res => date.value = res);
+});
+onBeforeRouteLeave(() => {
+    clearInterval(fetchDevicesInterval)
 });
 </script>
 
@@ -124,7 +129,7 @@ onMounted(() => {
     </div>
 </section>
 <section v-else-if="currentGame = 'RightOrWrongQuestions'">
-    <div v-for="question in questions" :key="question['id']" class="question p-3 m-3 rounded d-flex flex-column">
+    <div v-for="question in questions" :key="question['id']" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger']">
         <span class="questionTitle">{{ question['question'] }}</span>
         <br/>
         <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>

@@ -11,7 +11,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
-if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "none"))) {
+if (!isset($_SESSION["subject"]) || !in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
     echo "logout";
     exit;
 }

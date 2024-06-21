@@ -91,7 +91,6 @@ function addQuestion(form) {
     })
         .then(res => res.text())
         .then(msgValue => {
-            console.log(msgValue)
             form.parentElement.scrollTo(0, 0);
             msgColor.value = "danger";
             switch (msgValue) {

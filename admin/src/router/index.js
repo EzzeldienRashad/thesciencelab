@@ -87,9 +87,9 @@ router.beforeEach(async to => {
     } catch (e) {
         member = memberArr;
     }
-    if (!["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name != "login") {
+    if (!["biology", "physics", "chemistry", "admin", "science"].includes(member) && to.name != "login") {
         return {name: "login"};
-    } else if (["biology", "physics", "chemistry", "admin", "none"].includes(member) && to.name == "login") {
+    } else if (["biology", "physics", "chemistry", "admin", "science"].includes(member) && to.name == "login") {
         return {name: "home"};
     }
 });
