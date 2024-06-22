@@ -23,56 +23,38 @@ if (!isset($_GET["unit"])) {
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $questions = [];
     $requiredData = [];
-    switch ($_GET["game"]) {
-        case "choose":
-        case "biology":
-        case "physics":
-        case "chemistry":
-            $requiredData = ["question", "choiceA", "choiceB", "choiceC", "choiceD", "answer"];
-            break;
-        case "complete":
-            $requiredData = ["part1", "part2", "rightAnswer", "wrongAnswer"];
-            break;
-        case "match":
-            $requiredData = ["colA", "colB"];
-            break;
-        case "right-or-wrong":
-            $requiredData = ["question", "answer"];
-            break;
-        case "give-reason":
-        case "what-happens-when":
-            $requiredData = ["question"];
-            break;
-        case "scientific-term":
-            $requiredData = ["question", "answer"];
-            break;
-    }
     $game = "";
     switch ($_GET["game"]) {
         case "choose":
         case "biology":
         case "physics":
         case "chemistry":
+            $requiredData = ["question", "choiceA", "choiceB", "choiceC", "choiceD", "answer"];
             $game = "ChooseQuestions";
             break;
-        case "right-or-wrong":
-            $game = "RightOrWrongQuestions";
-            break;
         case "complete":
+            $requiredData = ["part1", "part2", "rightAnswer", "wrongAnswer"];
             $game = "CompleteQuestions";
             break;
         case "match":
+            $requiredData = ["colA", "colB"];
             $game = "MatchQuestions";
+            break;
+        case "right-or-wrong":
+            $requiredData = ["question", "answer"];
+            $game = "RightOrWrongQuestions";
             break;
         case "give-reason":
         case "what-happens-when":
+            $requiredData = ["question", "answer"];
             $game = "EssayQuestions";
             break;
         case "scientific-term":
+            $requiredData = ["question", "answer"];
             $game = "ScientificTermQuestions";
             break;
-    }   
-    $queryString = "SELECT id, level, uploader";
+    }
+        $queryString = "SELECT id, level, uploader";
     foreach ($requiredData as $requiredItem) {
         $queryString .= ", " . $requiredItem;
     }

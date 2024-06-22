@@ -102,12 +102,12 @@ switch ($_GET["game"]) {
         break;
     case "give-reason":
     case "what-happens-when":
-        if (!isset($_POST["question"])) {
+        if (!isset($_POST["question"]) || !isset($_POST["answer"])) {
             echo "infoerr";
             exit;
         }
-        $addStmt = $pdo->prepare("insert into EssayQuestions (question, grade, unit, uploader, type) values (?, ?, ?, ?, ?)");
-        $addStmt->execute([trim($_POST["question"]), $_GET["grade"], $_GET["unit"], $_SESSION["username"], $_GET["game"]]);
+        $addStmt = $pdo->prepare("insert into EssayQuestions (question, answer, grade, unit, uploader, type) values (?, ?, ?, ?, ?, ?)");
+        $addStmt->execute([trim($_POST["question"]), $_POST["answer"], $_GET["grade"], $_GET["unit"], $_SESSION["username"], $_GET["game"]]);
         break;
     case "scientific-term":
         if (!isset($_POST["question"]) || !isset($_POST["answer"])) {

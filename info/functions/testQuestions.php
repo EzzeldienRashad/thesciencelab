@@ -31,7 +31,7 @@ switch ($_GET["game"]) {
         $requiredData = ["question", "answer"];
         break;
     case "EssayQuestions":
-        $requiredData = ["question"];
+        $requiredData = ["question", "answer"];
         break;
     case "ScientificTermQuestions":
         $requiredData = ["question", "answer"];

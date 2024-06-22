@@ -70,7 +70,9 @@ async function exportDocx() {
 <template>
     <div v-for="question in questions" :key="question['id']" @click="$event => {if (!$event.target.closest('button') && member == 'admin' && !creatingTest) $event.currentTarget.querySelector('.uploader-name').classList.toggle('d-none'); if (creatingTest) $emit('changeChosenQuestions', question['id']);}" class="question p-2 m-1 rounded d-flex flex-column card" :class="[chosenQuestions.includes(question['id']) ?  'chosen' : '']" data-cy="question">
         <div>
-            <span class="questionTitle px-1">{{ question['question'] }}</span>
+            <span class="questionTitle px-1 fw-bold">{{ question['question'] }}</span>
+            <br/>
+            <span class="questionTitle px-1">{{ question['answer'] }}</span>
             <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
         </div>
         <div v-if="member == 'admin'" class="d-flex flex-row p-1 px-1 gap-1 rounded-3 level-indicator justify-content-center" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
@@ -88,6 +90,8 @@ async function exportDocx() {
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
                     <form ref="form" type="multipart/form-data" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <ScienceFormInput label="Question: " inputName="question" :symbols/>
+                        <br/>
+                        <ScienceFormInput label="Answer: " inputName="answer" :symbols/>
                         <br/>
                         <input type="submit" name="submit" value="add" class="btn btn-success" data-cy="submit"/>
                     </form>
