@@ -11,29 +11,33 @@ const devicesInTest = ref([]);
 const date = ref("");
 let fetchDevicesInterval;
 
-fetch("http://127.0.0.1/info/functions/login.php", {
-        method: "get",
-        credentials: "include",
-    })
-    .then(res => res.text())
-    .then(userInfo => {
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            
-        }
-        member.value = userInfo[0];
-        if (member.value == "admin") {
-            fetch("http://127.0.0.1/info/functions/beginTest.php", {
-                method: "get",
-                credentials: "include"
-            })
-            .then(res => res.json())
-            .then(testsArr => {
-                tests.value = testsArr
-            })
-        }
-    });
+getTests()
+
+function getTests() {
+    fetch("http://127.0.0.1/info/functions/login.php", {
+            method: "get",
+            credentials: "include",
+        })
+        .then(res => res.text())
+        .then(userInfo => {
+            try {
+                userInfo = JSON.parse(userInfo);
+            } catch (e) {
+                
+            }
+            member.value = userInfo[0];
+            if (member.value == "admin") {
+                fetch("http://127.0.0.1/info/functions/beginTest.php", {
+                    method: "get",
+                    credentials: "include"
+                })
+                .then(res => res.json())
+                .then(testsArr => {
+                    tests.value = testsArr
+                })
+            }
+        });
+    }
 function showTest(code) {
     currentGame.value = tests.value[code][0]["game"];
     function fetchDevicesInTest() {
@@ -57,6 +61,19 @@ function showTest(code) {
         .then(res => res.json())
         .then(questionsArr => {
             questions.value = questionsArr;
+        })
+}
+function deleteTest(code) {
+    if (!confirm("Are you sure you want to delete this test?")) return;
+    fetch("http://127.0.0.1/info/functions/deleteTest.php?code=" + encodeURIComponent(code), {
+        method: "get",
+        credentials: "include"
+    })
+        .then(res => res.text())
+        .then(msg => {
+            if (msg == "successful") {
+                getTests()
+            }
         })
 }
 onMounted(() => {
@@ -97,10 +114,10 @@ onBeforeRouteLeave(() => {
     <div v-for="(test, code) in tests" :key="code" class="col-6 col-sm-4 text-center">
         <button @click="() => showTest(code)" class="btn btn-warning rounded-4 p-3 my-2 position-relative">
             {{ code }}
-            <!--<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+            <span @click.stop="() => deleteTest(code)" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
                 <button class="btn-close fs-5"></button>
                 <span class="visually-hidden">Close</span>
-            </span>-->
+            </span>
         </button>
         <br/>
         {{ removeDashes(test[0]["grade"]) }}

@@ -71,6 +71,7 @@ function loadQuestions() {
     }
 }
 async function deleteQuestion(questionData) {
+    if (!confirm("Are you sure you want to delete this question?")) return;
     fetch("http://127.0.0.1/info/functions/delete.php?grade=" + routeParams.grade +
         "&game=" + routeParams.game + "&unit=" + unit.value + "&questionnum=" + questionData, {
         method: "get",
