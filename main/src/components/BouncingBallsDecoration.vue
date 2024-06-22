@@ -6,16 +6,11 @@ const ballId = ref(0);
 const balls = ref([]);
 const image = ref(null);
 let maxBallsNumber = 17;
-let interval;
 
-onMounted(() => {
-    interval = setInterval(createBall, 1000);
-});
-onBeforeRouteLeave(() => {
-    clearInterval(interval);
-});
+onMounted(createBall);
 
 function createBall() {
+    let createsBall = true;
     if (balls.value.length >= maxBallsNumber || !image.value) return
     const diameter = 20;
     const horizontalSpeed = Math.floor(Math.random() + 1);
@@ -40,6 +35,10 @@ function createBall() {
         ball.value.top += verticalSpeed;
         if (ball.value.top + diameter >= image.value.clientHeight || ball.value.top <= 0) {
             verticalSpeed = -verticalSpeed;
+        }
+        if (ball.value.left > 70 && createsBall) {
+            createBall()
+            createsBall = false;
         }
         if (ball.value.left > image.value.clientWidth) {
             balls.value.splice(balls.value.map(el => el.value.id).indexOf(ball.value.id), 1);
