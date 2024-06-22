@@ -8,7 +8,7 @@ describe("games", () => {
         cy.contains("Choose").click();
         cy.getByData("units").find("button").its("length").should("be.at.least", 2);
         cy.getByData("units").find("button").eq(0).then(btn => {
-            cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=grade-4-first-term&game=choose&unit=" + btn[0].dataset.unit, [
+            cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=grade-4-first-term&game=choose&unit=" + btn[0].dataset.unit, [
                 ["What is a?", ["a", "b", "c", "d"], 1],
                 ["What is b?", ["a", "b", "c", "d"], 2],
                 ["What is c?", ["a", "b", "c", "d"], 3],
@@ -33,7 +33,7 @@ describe("games", () => {
         cy.contains("Right or wrong").click();
         cy.getByData("units").find("button").its("length").should("be.at.least", 2);
         cy.getByData("units").find("button").eq(1).then(btn => {
-            cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=grade-4-first-term&game=right-or-wrong&unit=" + btn[0].dataset.unit, {
+            cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=grade-4-first-term&game=right-or-wrong&unit=" + btn[0].dataset.unit, {
                 0: ["Is it right?", 1]
             });
         });
@@ -48,7 +48,7 @@ describe("games", () => {
         cy.contains("Complete").click();
         cy.getByData("units").find("button").its("length").should("be.at.least", 2);
         cy.getByData("units").find("button").eq(0).then(btn => {
-            cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=grade-4-first-term&game=complete&unit=" + btn[0].dataset.unit, [
+            cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=grade-4-first-term&game=complete&unit=" + btn[0].dataset.unit, [
                 ["A is ", ["a", "b"], ""],
                 ["", ["A", "B"], " is b"],
                 ["A is ", ["a", "b"], ""],
@@ -64,7 +64,7 @@ describe("games", () => {
         cy.contains("Match").click();
         cy.getByData("units").find("button").its("length").should("be.at.least", 2);
         cy.getByData("units").find("button").eq(0).then(btn => {
-            cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=grade-4-first-term&game=match&unit=" + btn[0].dataset.unit, [
+            cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=grade-4-first-term&game=match&unit=" + btn[0].dataset.unit, [
                 {
                     "Question 1 is":"answer 1",
                     "Question 2 is":"answer 2",

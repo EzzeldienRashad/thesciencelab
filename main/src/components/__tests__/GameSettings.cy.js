@@ -13,8 +13,8 @@ describe("game settings", () => {
         });
     });
     it("displays units and test type", () => {
-        cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=my-grade&game=my-game", ["unit1", "unit2", "unit3"]);
-        cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=my-grade&game=my-game&unit=whole", [
+        cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=my-grade&game=my-game", ["unit1", "unit2", "unit3"]);
+        cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=my-grade&game=my-game&unit=whole", [
             ["What is a?", ["a", "b", "c", "d"], 1],
             ["What is b?", ["a", "b", "c", "d"], 2],
         ]);

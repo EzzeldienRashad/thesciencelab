@@ -9,7 +9,7 @@ const error = ref("");
 const showPassword = ref(false);
 
 async function login() {
-    let member = await fetch("http://127.0.0.1/info/functions/login.php", {
+    let member = await fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -21,6 +21,7 @@ async function login() {
         })
     });
     let memberArr = await member.text();
+    console.log(memberArr)
     try {
         member = JSON.parse(memberArr)[0];
     } catch (e) {
@@ -43,7 +44,7 @@ async function login() {
 
 <template>
     <div class="d-flex justify-content-center">
-        <form method="post" @submit.prevent="login" action="http://127.0.0.1/info/functions/login.php" class="w-75 py-3">
+        <form method="post" @submit.prevent="login" action="http://127.0.0.1/thesciencelab/info/functions/login.php" class="w-75 py-3">
             <span class="text-danger fs-5">{{ error }}</span>
             <br/>
             <label class="form-label fs-4" for="username">Username: </label>

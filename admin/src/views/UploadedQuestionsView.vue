@@ -4,7 +4,7 @@ import removeDashes from "@/modules/removeDashes.js";
 
 const uploadedQuestions = ref([]);
 
-fetch("http://127.0.0.1/info/functions/uploadedQuestionsCount.php", {
+fetch("http://127.0.0.1/thesciencelab/info/functions/uploadedQuestionsCount.php", {
     method: "GET",
     credentials: "include"
 })

@@ -19,7 +19,7 @@ const code = ref(null);
 const lessonsMaxHeight = ref("");
 let currentTheme = 0;
 
-fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+fetch("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
     "&game=" + encodeURIComponent(routeParams.game))
     .then(res => res.json())
     .then(unitsJson => {
@@ -29,7 +29,7 @@ fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponen
     });
 
 function getQuestions(unit) {
-    fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
     "&game=" + encodeURIComponent(routeParams.game) + "&unit=" + encodeURIComponent(unit))
     .then(res => res.json())
     .then(questionsArr => {
@@ -56,7 +56,7 @@ function shuffle(arr) {
     return arr;
 }
 function enterTest() {
-    fetch("http://127.0.0.1/info/functions/enterTest.php?game=" + encodeURIComponent(routeParams.game) +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/enterTest.php?game=" + encodeURIComponent(routeParams.game) +
     "&grade=" + encodeURIComponent(routeParams.grade) + "&name=" + encodeURIComponent(name.value) +
     "&code=" + encodeURIComponent(code.value))
     .then(res => res.text())

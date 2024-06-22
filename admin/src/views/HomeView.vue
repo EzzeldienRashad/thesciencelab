@@ -12,7 +12,7 @@ const uploadsData = ref(null);
 const gradesData = ref(null);
 const userDetails = ref([]);
 
-fetch("http://127.0.0.1/info/functions/login.php", {
+fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
         method: "get",
         credentials: "include",
     })
@@ -25,7 +25,7 @@ fetch("http://127.0.0.1/info/functions/login.php", {
         }
         member.value = userInfo[0];
         if (member.value != "admin") {
-            fetch("http://127.0.0.1/info/functions/getMemberInfo.php", {
+            fetch("http://127.0.0.1/thesciencelab/info/functions/getMemberInfo.php", {
                     method: "get",
                     credentials: "include",
                 })

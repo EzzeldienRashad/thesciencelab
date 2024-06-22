@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const uploaders = ref([]);
 
-fetch("http://127.0.0.1/info/functions/uploadersCount.php", {
+fetch("http://127.0.0.1/thesciencelab/info/functions/uploadersCount.php", {
     method: "GET",
     credentials: "include"
 })

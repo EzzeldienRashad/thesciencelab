@@ -38,7 +38,7 @@ const inheritedVariables = {
 }
 const currentGame = ref(null);
 
-fetch("http://127.0.0.1/info/functions/login.php", {
+fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
     method: "get",
     credentials: "include",
 })
@@ -54,14 +54,14 @@ fetch("http://127.0.0.1/info/functions/login.php", {
     });
 
 function loadQuestions() {
-    fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +
         "&game=" + encodeURIComponent(routeParams.game) + "&unit=" + encodeURIComponent(unit.value))
         .then(res => res.json())
         .then(questionsArr => {
             questions.value = questionsArr.sort((a, b) => (a["uploader"].toLowerCase() == username.value.toLowerCase()) - (b["uploader"].toLowerCase() == username.value.toLowerCase()));
         });
     if (member.value == "admin") {
-        fetch("http://127.0.0.1/info/functions/printUploaders.php?grade=" + routeParams.grade +
+        fetch("http://127.0.0.1/thesciencelab/info/functions/printUploaders.php?grade=" + routeParams.grade +
             "&game=" + routeParams.game + "&unit=" + unit.value, {
             method: "get",
             credentials: "include"
@@ -72,7 +72,7 @@ function loadQuestions() {
 }
 async function deleteQuestion(questionData) {
     if (!confirm("Are you sure you want to delete this question?")) return;
-    fetch("http://127.0.0.1/info/functions/delete.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/delete.php?grade=" + routeParams.grade +
         "&game=" + routeParams.game + "&unit=" + unit.value + "&questionnum=" + questionData, {
         method: "get",
         credentials: "include"
@@ -84,7 +84,7 @@ async function deleteQuestion(questionData) {
         });
 }
 function addQuestion(form) {
-    fetch("http://127.0.0.1/info/functions/add.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/add.php?grade=" + routeParams.grade +
         "&game=" + routeParams.game + "&unit=" + unit.value, {
         method: "post",
         credentials: "include",
@@ -129,7 +129,7 @@ function addQuestion(form) {
         });
 }
 function setLevel(level, index) {
-    fetch("http://127.0.0.1/info/functions/setLevel.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/setLevel.php?grade=" + routeParams.grade +
         "&game=" + routeParams.game + "&unit=" + unit.value + "&questionnum=" + index + "&level=" + level, {
         method: "get",
         credentials: "include"
@@ -149,7 +149,7 @@ function exportDocx() {
 function beginTest(form) {
     let testForm = new FormData(form);
     testForm.append("chosenQuestions", JSON.stringify(chosenQuestions.value));
-    fetch("http://127.0.0.1/info/functions/beginTest.php?grade=" + routeParams.grade +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php?grade=" + routeParams.grade +
         "&game=" + routeParams.game, {
         method: "post",
         credentials: "include",

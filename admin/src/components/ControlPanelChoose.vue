@@ -1,5 +1,5 @@
 <script setup>
-import {ref, defineExpose} from "vue";
+import {ref} from "vue";
 import {jsPDF} from "jspdf";
 import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
 import ScienceFormInput from "@/components/ScienceFormInput.vue";
@@ -132,7 +132,7 @@ async function exportDocx() {
                 <span class="questionTitle">{{ question["question"] }}</span>
                 <button v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && question['uploader'].toLowerCase() == username.toLowerCase()) || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
                 <br/>
-                <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
+                <img v-if="question['image']" :src="'http://127.0.0.1/thesciencelab/info/images/' + question['image']" class="uploaded"/>
             </div>
             <div class="card-body p-0">
                 <div class="row g-0">

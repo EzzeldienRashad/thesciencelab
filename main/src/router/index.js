@@ -23,7 +23,7 @@ const routes = [
     {
         path: "/:grade",
         name: "grade",
-        component: () => import("@/views/GamesView.vue"),
+        component: () => import("@/views/ShowGamesView.vue"),
     },
     {
         path: "/:grade/:game",

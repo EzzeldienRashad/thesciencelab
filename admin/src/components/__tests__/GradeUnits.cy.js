@@ -4,7 +4,7 @@ import vueRouter from "@/modules/vue-router";
 
 describe("grade units", () => {
     it("shows available units", () => {
-        cy.intercept("http://127.0.0.1/info/functions/printInfo.php?grade=my-grade&game=my-game", ["unit-1", "unit-2", "unit-3"]);
+        cy.intercept("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=my-grade&game=my-game", ["unit-1", "unit-2", "unit-3"]);
         cy.stub(vueRouter, "useRoute").returns({
             params: {
                 grade: "my-grade",

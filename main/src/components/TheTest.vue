@@ -19,7 +19,7 @@ setTimeout(() => state.value = "GO!", 1000);
 setTimeout(() => started.value = true, 1500);
 
 function result(scoreValue, totalValue) {
-    fetch("http://127.0.0.1/info/functions/modifyDeviceInTest.php?game=" + encodeURIComponent(routeParams.game) +
+    fetch("http://127.0.0.1/thesciencelab/info/functions/modifyDeviceInTest.php?game=" + encodeURIComponent(routeParams.game) +
     "&grade=" + encodeURIComponent(routeParams.grade) + "&name=" + encodeURIComponent(props.name) +
     "&code=" + encodeURIComponent(props.code) + "&result=" + (Math.round((scoreValue / totalValue * 100 + Number.EPSILON) * 100) / 100))
     score.value = scoreValue;

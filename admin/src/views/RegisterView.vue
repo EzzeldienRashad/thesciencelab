@@ -11,7 +11,7 @@ const error = ref("");
 const done = ref("");
 
 async function register() {
-    let resp = await fetch("http://127.0.0.1/info/functions/register.php", {
+    let resp = await fetch("http://127.0.0.1/thesciencelab/info/functions/register.php", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -44,7 +44,7 @@ async function register() {
 
 <template>
     <div class="d-flex justify-content-center">
-        <form method="post" @submit.prevent="register" action="http://127.0.0.1/info/functions/register.php" class="w-75 py-3">
+        <form method="post" @submit.prevent="register" action="http://127.0.0.1/thesciencelab/info/functions/register.php" class="w-75 py-3">
             <span class="text-danger fs-5">{{ error }}</span>
             <span class="text-success fs-5">{{ done }}</span>
             <br/>

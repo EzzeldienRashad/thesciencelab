@@ -16,7 +16,7 @@ const books = ref({
 <template>
     <div class="row p-4">
         <a v-for="book in Object.keys(books)" :href="books[book]" class="col-12 col-sm-6 col-md-4 col-xl-3 py-3 text-decoration-none fs-4 text-center">
-                <img :src="'http://127.0.0.1/info/books/' + book + '.png'" class="w-100"/>
+                <img :src="'http://127.0.0.1/thesciencelab/info/books/' + book + '.png'" class="w-100"/>
                 <span class="d-block w-100">{{ removeDashes(book) }}</span>
             </a>
     </div>

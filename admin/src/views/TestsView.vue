@@ -14,7 +14,7 @@ let fetchDevicesInterval;
 getTests()
 
 function getTests() {
-    fetch("http://127.0.0.1/info/functions/login.php", {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
             method: "get",
             credentials: "include",
         })
@@ -27,7 +27,7 @@ function getTests() {
             }
             member.value = userInfo[0];
             if (member.value == "admin") {
-                fetch("http://127.0.0.1/info/functions/beginTest.php", {
+                fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php", {
                     method: "get",
                     credentials: "include"
                 })
@@ -41,7 +41,7 @@ function getTests() {
 function showTest(code) {
     currentGame.value = tests.value[code][0]["game"];
     function fetchDevicesInTest() {
-        fetch("http://127.0.0.1/info/functions/showDevicesInTest.php?game=" + encodeURIComponent(currentGame.value) +
+        fetch("http://127.0.0.1/thesciencelab/info/functions/showDevicesInTest.php?game=" + encodeURIComponent(currentGame.value) +
             "&grade=" + encodeURIComponent(tests.value[code][0]["grade"]) +
             "&code=" + encodeURIComponent(code))
             .then(res => res.json())
@@ -49,7 +49,7 @@ function showTest(code) {
     }
     fetchDevicesInTest();
     fetchDevicesInterval = setInterval(fetchDevicesInTest, 5000);
-    fetch("http://127.0.0.1/info/functions/testQuestions.php?game=" + tests.value[code][0]["game"], {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/testQuestions.php?game=" + tests.value[code][0]["game"], {
         method: "post",
         headers: {
             "content-type": "multipart/form-data"
@@ -65,7 +65,7 @@ function showTest(code) {
 }
 function deleteTest(code) {
     if (!confirm("Are you sure you want to delete this test?")) return;
-    fetch("http://127.0.0.1/info/functions/deleteTest.php?code=" + encodeURIComponent(code), {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/deleteTest.php?code=" + encodeURIComponent(code), {
         method: "get",
         credentials: "include"
     })
@@ -77,7 +77,7 @@ function deleteTest(code) {
         })
 }
 onMounted(() => {
-    fetch("http://127.0.0.1/info/functions/getDate.php").then(res => res.text()).then(res => date.value = res);
+    fetch("http://127.0.0.1/thesciencelab/info/functions/getDate.php").then(res => res.text()).then(res => date.value = res);
 });
 onBeforeRouteLeave(() => {
     clearInterval(fetchDevicesInterval)
@@ -133,7 +133,7 @@ onBeforeRouteLeave(() => {
             <div class="card-header p-2 fw-bold">
                 <span class="questionTitle">{{ question["question"] }}</span>
                 <br/>
-                <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
+                <img v-if="question['image']" :src="'http://127.0.0.1/thesciencelab/info/images/' + question['image']" class="uploaded"/>
             </div>
             <div class="card-body p-0">
                 <div class="row g-0">
@@ -149,7 +149,7 @@ onBeforeRouteLeave(() => {
     <div v-for="question in questions" :key="question['id']" class="question p-3 m-3 rounded d-flex flex-column" :class="[parseInt(question['answer']) ? 'text-bg-success' : 'text-bg-danger']">
         <span class="questionTitle">{{ question['question'] }}</span>
         <br/>
-        <img v-if="question['image']" :src="'http://127.0.0.1/info/images/' + question['image']" class="uploaded"/>
+        <img v-if="question['image']" :src="'http://127.0.0.1/thesciencelab/info/images/' + question['image']" class="uploaded"/>
     </div>
 </section>
 <section v-else-if="currentGame = 'CompleteQuestions'">

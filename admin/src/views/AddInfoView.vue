@@ -13,7 +13,7 @@ const error = ref("");
 const done = ref("");
 
 async function addInfo() {
-    let resp = await fetch("http://127.0.0.1/info/functions/addInfo.php", {
+    let resp = await fetch("http://127.0.0.1/thesciencelab/info/functions/addInfo.php", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -52,7 +52,7 @@ async function addInfo() {
 
 <template>
     <div class="d-flex justify-content-center">
-        <form method="post" @submit.prevent="addInfo" action="http://127.0.0.1/info/functions/addInfo.php" class="w-75 py-3">
+        <form method="post" @submit.prevent="addInfo" action="http://127.0.0.1/thesciencelab/info/functions/addInfo.php" class="w-75 py-3">
             <label class="form-label fs-4" for="username">Existing username: </label>
             <input type="text" name="username" id="username" ref="usernameField" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username" required/>
             <hr/>

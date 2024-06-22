@@ -12,22 +12,6 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
-    
-
-
-$username = isset($_POST["username"]) ? $_POST["username"] : $_SESSION["username"];
-require "password.php";
-$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
-$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-$questionsNum = 0;
-foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay", "ScientificTerm"] as $game) {            
-    $getStmt = $pdo->prepare("SELECT 1 FROM if0_36665133_TheScienceLab." . $game . "Questions where uploader = ?");
-    $getStmt->execute([$username]);
-    $questionsNum += count($getStmt->fetchAll());
-}
-if ($questionsNum <= 0 && !in_array($username, ["salehmohamed", "emadmahmoud", "atefseleman", "nevenlotfy", "hebatollahmoustafa", "hebatollahmoustafa2"])) exit;
-
-
 if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
     echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
 } elseif (isset($_POST["password"]) && isset($_POST["username"])) {
@@ -36,6 +20,7 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
     $waitTime = "5 minutes";
     $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
     $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+    $getLoginsStmt = $pdo->query("DELETE FROM if0_36665133_TheScienceLab.FailedLogins where date < '" . date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . " -5 minutes")) . "'");
     $getLoginsStmt = $pdo->prepare("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins where username = ?");
     $getLoginsStmt->execute([$_POST["username"]]);
     $dates = $getLoginsStmt->fetchAll();
@@ -45,7 +30,7 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
             $deleteStmt->bindParam(1, $dates[count($dates) - $maxLoginAttempts]["id"], PDO::PARAM_INT);
             $deleteStmt->execute();
         }
-        if ((int) $dates[count($dates) - $maxLoginAttempts]["date"] > strtotime("-" . $waitTime)) {
+        if ((int) strtotime($dates[count($dates) - $maxLoginAttempts]["date"]) > strtotime("-" . $waitTime)) {
             echo "blocked";
             exit;
         } else {
@@ -65,7 +50,7 @@ function login($pdo) {
         $_SESSION["username"] = $_POST["username"];
         echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
     } else {
-        $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES (" . time() . ", ?)");
+        $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES ('" . date("Y-m-d H:i:s") . "', ?)");
         $logStmt->execute([$_POST["username"]]);
         echo "not allowed";
     }

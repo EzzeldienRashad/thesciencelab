@@ -10,7 +10,7 @@ let units = ref([]);
 let currentTheme = 0;
 defineEmits(["setUnit"]);
 
-fetch("http://127.0.0.1/info/functions/printInfo.php?grade=" + useRoute().params.grade +
+fetch("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=" + useRoute().params.grade +
     "&game=" + useRoute().params.game)
     .then(res => res.json())
     .then(unitsArr => {
