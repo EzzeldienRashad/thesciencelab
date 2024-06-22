@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -18,7 +15,7 @@ if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true)
     
 
 
-$username = isset($_SESSION["username"]) ? $_SESSION["username"] : $_POST["username"];
+$username = isset($_POST["username"]) ? $_POST["username"] : $_SESSION["username"];
 require "password.php";
 $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
 $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
@@ -28,7 +25,7 @@ foreach (["Choose", "RightOrWrong", "Complete", "Match", "Essay", "ScientificTer
     $getStmt->execute([$username]);
     $questionsNum += count($getStmt->fetchAll());
 }
-if ($questionsNum <= 0) exit;
+if ($questionsNum <= 0 && !in_array($username, ["salehmohamed", "emadmahmoud", "atefseleman", "nevenlotfy", "hebatollahmoustafa", "hebatollahmoustafa2"])) exit;
 
 
 if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
