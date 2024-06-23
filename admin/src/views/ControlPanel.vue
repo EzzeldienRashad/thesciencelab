@@ -260,7 +260,7 @@ function beginTest(form) {
                     <form ref="form" method="post" type="multipart/form-data" @submit.prevent="beginTest(form)"
                         class="mt-2">
                         <label class="w-100">
-                            test code: <input type="text" name="testCode" autocomplete="off" class="form-control"
+                            test code: <input type="text" name="testCode" autocomplete="off" max="100" class="form-control"
                                 required />
                         </label>
                         <br />

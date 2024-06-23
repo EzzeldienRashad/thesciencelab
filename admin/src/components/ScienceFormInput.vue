@@ -17,7 +17,7 @@ function toggleSymbols(event) {
 <div>
     <label class="form-label" :for="props.inputName">{{ props.label }}</label>
     <div class="input-group">
-        <input type="text" :name="props.inputName" :id="props.inputName" class="form-control" autocomplete="off"/>
+        <input type="text" :name="props.inputName" :id="props.inputName" class="form-control" maxlength="500" autocomplete="off"/>
         <button type="button" class="input-group-text" @click="$event => toggleSymbols($event)"><font-awesome-icon icon="fa-solid fa-caret-down" /></button>
     </div>
     <div class="symbols border height-0 d-flex flex-wrap align-items-start align-content-start invisible">
