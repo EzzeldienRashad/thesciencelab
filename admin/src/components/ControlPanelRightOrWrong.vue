@@ -121,7 +121,7 @@ async function exportDocx() {
             <div class="modal-content bg-light">
                 <div class="modal-body">
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
-                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
+                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close" data-cy="closeRightOrWrong"></button>
                     <form ref="form" type="multipart/form-data" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <ScienceFormInput label="Question: " inputName="question" :symbols/>
                         <div class="row px-3">

@@ -111,10 +111,10 @@ onBeforeRouteLeave(() => {
 </section>
 <section v-if="!questions.length" class="row g-4">
     <h2 class="text-primary-emphasis col-12">Running Tests:</h2>
-    <div v-for="(test, code) in tests" :key="code" class="col-6 col-sm-4 text-center">
+    <div v-for="(test, code) in tests" :key="code" class="col-6 col-sm-4 text-center" :data-cy="code">
         <button @click="() => showTest(code)" class="btn btn-warning rounded-4 p-3 my-2 position-relative">
             {{ code }}
-            <span @click.stop="() => deleteTest(code)" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+            <span @click.stop="() => deleteTest(code)" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" data-cy="deleteTest">
                 <button class="btn-close fs-5"></button>
                 <span class="visually-hidden">Close</span>
             </span>

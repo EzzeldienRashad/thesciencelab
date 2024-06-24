@@ -59,7 +59,7 @@ onUpdated(() => {
                 <GradeLink :grade="grade"/>
             </div>
             <RouterLink class="btn btn-primary d-block w-100 p-3 fs-4 fw-bold rounded-3" to="/resources">Download Resources</RouterLink>
-            <RouterLink v-if="member == 'admin'" class="btn btn-info d-block w-100 p-2 fs-4 fw-bold rounded-3 mt-2" to="/tests">
+            <RouterLink v-if="member == 'admin'" class="btn btn-info d-block w-100 p-2 fs-4 fw-bold rounded-3 mt-2" to="/tests" data-cy="runningTests">
                 Running tests
                 <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
             </RouterLink>

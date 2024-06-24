@@ -201,13 +201,13 @@ function beginTest(form) {
             }"/>
             </RouterLink>
             <div class="d-flex flex-wrap-reverse gap-1 ms-2 justify-content-end flex-grow-1">
-                <label for="test" v-if="member == 'admin'"
+                <label for="test" v-if="member == 'admin'" data-cy="createTest"
                     class="btn btn-primary border border-primary border-5"
                     :class="[['btn-primary', 'border-primary'], ['btn-danger', 'border-danger']][Number(creatingTest)]">{{
                         ['Create test', 'cancel test'][Number(creatingTest)] }}</label>
                 <button v-if="member == 'admin' && chosenQuestions.length && creatingTest"
                     class="btn btn-primary border border-danger border-5" data-bs-toggle="modal"
-                    data-bs-target="#testOverlay">Start test!</button>
+                    data-bs-target="#testOverlay" data-cy="startTest">Start test!</button>
                 <div v-if="!creatingTest" class="ps-2">
                     <button v-if="member == 'admin'" class="btn btn-warning border border-5 border-warning"
                         @click="exportDocx">export docx</button>&nbsp;&nbsp;&nbsp;
@@ -256,22 +256,22 @@ function beginTest(form) {
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center'
                         :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
                     <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"
-                        ref="testClose"></button>
+                        ref="testClose" data-cy="testModalDismiss"></button>
                     <form ref="form" method="post" type="multipart/form-data" @submit.prevent="beginTest(form)"
                         class="mt-2">
                         <label class="w-100">
                             test code: <input type="text" name="testCode" autocomplete="off" max="100" class="form-control"
-                                required />
+                                data-cy="testCode" required/>
                         </label>
                         <br />
                         <br />
                         <label class="w-100">
                             The test is valid for <input type="number" name="testDuration" ref="testduration"
-                                required /> &nbsp; minutes
+                                data-cy="testValidFor" required/> &nbsp; minutes
                         </label>
                         <br />
                         <br />
-                        <input type="submit" name="submit" value="Begin test" class="btn btn-success" />
+                        <input type="submit" name="submit" value="Begin test" class="btn btn-success" data-cy="testSubmit"/>
                     </form>
                 </div>
             </div>

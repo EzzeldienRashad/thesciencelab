@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 import rightImg from "@/assets/icons/right.webp";
 import wrongImg from "@/assets/icons/wrong.webp";
 
@@ -22,15 +22,15 @@ function checkAnswer(answer) {
     changeAnswered();
 }
 const setMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = document.getElementsByClassName('question')[0].offsetHeight + 50 + 'px';
-const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = "";
-setTimeout(setMainWidth, 0);
+const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = ""; console.log(2)
+onMounted(setMainWidth)
 </script>
 
 <template>
     <TransitionGroup @after-enter="setMainWidth" @after-leave="unsetMainWidth">
         <div v-for="question in currentQuestion" :key="question['id']" class="vw-100 p-2 p-sm-3 p-md-5 position-absolute overflow-hidden top-0 start-0 question">
             <h2 class="mb-5" data-cy="question">{{ question["question"] }}</h2>
-            <div class="text-center"><img v-if="question['image']" :src="'http://127.0.0.1/thesciencelab/info/images/' + question['image']" class="d-inline-block uploaded"/></div>
+            <div class="text-center"><img v-if="question['image']" @load="setMainWidth" :src="'http://127.0.0.1/thesciencelab/info/images/' + question['image']" class="d-inline-block uploaded"/></div>
             <br/>
             <div class="answers row p-3 p-md-5" data-cy="choices">
                 <div class="col-6">

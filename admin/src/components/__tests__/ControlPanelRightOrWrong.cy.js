@@ -10,24 +10,29 @@ describe("control panel right or wrong", () => {
                         {
                             "question": "Is it right?",
                             "answer": 1,
-                            "id": 0
+                            "id": 0,
+                            "uploader": "ezzeldien"
                         },
                         {
                             "question": "Is it wrong?",
                             "answer": 0,
-                            "id": 1
-                        }
+                            "id": 1,
+                            "uploader": "ezzeldien"
+                        },
                     ], 
                     msg: ref(undefined), 
                     msgColor: ref(undefined), 
                     deleteQuestion: cy.stub().as("deleteQuestion"), 
                     addQuestion: cy.stub().as("addQuestion"),
                     member: "admin",
+                    username: "ezzeldien",
                     uploaders: ["مستخدم 1", "مستخدم 2"],
                     routeParams: {
-                        game: "choose",
+                        game: "right-or-wrong",
                         grade: "grade-4-first-term"
-                    }
+                    },
+                    chosenQuestions: [0],
+                    creatingTest: false
                 }
                 cy.wrap(props).as("props");
                 return {props};

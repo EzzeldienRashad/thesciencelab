@@ -13,7 +13,9 @@ describe("control panel choose", () => {
                             "choiceB": "b",
                             "choiceC": "c",
                             "choiceD": "d",
-                            "answer": 1
+                            "answer": 1,
+                            "id": 0,
+                            "uploader": "ezzeldien"
                         },
                         {
                             "question": "What is b?",
@@ -21,7 +23,9 @@ describe("control panel choose", () => {
                             "choiceB": "b",
                             "choiceC": "c",
                             "choiceD": "d",
-                            "answer": 2
+                            "answer": 2,
+                            "id": 1,
+                            "uploader": "ezzeldien"
                         }
                     ], 
                     msg: ref(undefined), 
@@ -29,11 +33,14 @@ describe("control panel choose", () => {
                     deleteQuestion: cy.stub(), 
                     addQuestion: cy.stub(),
                     member: "admin",
+                    username: "ezzeldien",
                     uploaders: ["مستخدم 1", "مستخدم 2"],
                     routeParams: {
                         game: "choose",
                         grade: "grade-4-first-term"
-                    }
+                    },
+                    chosenQuestions: [0],
+                    creatingTest: false
                 }
                 cy.wrap(props).as("props");
                 return {props};

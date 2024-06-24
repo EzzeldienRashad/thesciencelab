@@ -1,20 +1,20 @@
 import {ref, defineComponent} from "vue/dist/vue.esm-bundler.js";
-import ControlPanelMatch from "../ControlPanelMatch.vue";
+import ControlPanelScientificTerm from "../ControlPanelScientificTerm.vue";
 
-describe("control panel match", () => {
+describe("control panel scientific term", () => {
     beforeEach(() => {
         cy.mount(defineComponent({
             setup() {
                 const props = {
                     questions: [
                         {
-                            "colA": JSON.stringify(["A is", "B is", "C is"]),
-                            "colB": JSON.stringify(["a", "b", "c"]),
+                            "question": "A material that conducts heat",
+                            "answer": "metal",
                             "uploader": "ezzeldien"
                         },
                         {
-                            "colA": JSON.stringify(["D is"]),
-                            "colB": JSON.stringify(["d"]),
+                            "question": "A material that doesn't conduct heat",
+                            "answer": "nonmetal",
                             "uploader": "ezzeldien"
                         },
                     ], 
@@ -26,7 +26,7 @@ describe("control panel match", () => {
                     username: "ezzeldien",
                     uploaders: ["مستخدم 1", "مستخدم 2"],
                     routeParams: {
-                        game: "match",
+                        game: "scientific-term",
                         grade: "grade-4-first-term"
                     },
                     chosenQuestions: [0],
@@ -37,15 +37,15 @@ describe("control panel match", () => {
             },
             template: `
             <button data-bs-toggle="modal" data-bs-target="#overlay" class="btn btn-success">+ add</button>
-            <ControlPanelMatch v-bind="props" />
+            <ControlPanelScientificTerm v-bind="props" />
             `,
-            components: {ControlPanelMatch}
+            components: {ControlPanelScientificTerm}
         }));
     });
     it("displays available questions", () => {
-        cy.get("table").should("have.length", 2);
-        cy.get("tr td").eq(1).should("contain.text", "A is");
-        cy.get("tr td").eq(2).should("contain.text", "a");
+        cy.getByData("question").should("have.length", 2);
+        cy.getByData("question").eq(0).should("contain.text", "A material that conducts heat");
+        cy.getByData("question").eq(1).should("contain.text", "nonmetal");
     });
     it("deletes a question", function () {
         cy.getByData("delete-btn").eq(0).click().then(() => {
@@ -55,20 +55,8 @@ describe("control panel match", () => {
     it("adds a question", function () {
         cy.contains("add").click();
         cy.contains("Question:").click()
-        cy.focused().type("q1");
-        cy.contains("Answer:").click()
-        cy.focused().type("a1");
-        cy.get("input").eq(2).type("q2");
-        cy.get("input").eq(3).type("a2");
-        cy.get("input").its("length").as("inputsNum");
-        cy.contains("+ question").click().then(function () {
-            cy.get("input").its("length").should("be.equal", this.inputsNum + 2);
-        });
-        cy.contains("- question").click();
-        cy.contains("- question").click();
-        cy.then(function () {
-            cy.get("input").its("length").should("be.equal", this.inputsNum - 2);
-        });;
+        cy.focused().type("Write the scientific term");
+        cy.get("input").eq(1).type("answer")
         cy.getByData("submit").click().then(() => {
             expect(this.addQuestion).to.have.been.calledOnce;
         });

@@ -121,13 +121,13 @@ function enterTest() {
                     <form @submit.prevent="enterTest" class="col-sm-6 w-100 p-5 text-center">
                         <div class="text-danger fs-5">{{ msg }}</div>
                         <label class="form-label fs-4" for="name">Enter your name:</label>&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="name" v-model="name" id="name" class="form-control d-inline-block w-auto" autocomplete="off" max="100"/>
+                        <input type="text" name="name" v-model="name" id="name" class="form-control d-inline-block w-auto" autocomplete="off" max="100" data-cy="deviceName"/>
                         <br/>
                         <label class="form-label fs-4" for="testCode">Enter the test code:</label>&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="testCode" id="testCode" v-model="code" class="form-control d-inline-block w-auto" autocomplete="off" max="100"/>
+                        <input type="text" name="testCode" id="testCode" v-model="code" class="form-control d-inline-block w-auto" autocomplete="off" max="100" data-cy="testCode"/>
                         <br/>
                         <br/>
-                        <input type="submit" value="Enter" class="btn btn-primary fs-5"/>
+                        <input type="submit" value="Enter" class="btn btn-primary fs-5" data-cy="testSubmit"/>
                     </form>
                 </div>
             </div>

@@ -11,19 +11,22 @@ describe("control panel complete", () => {
                             "part1": "I",
                             "rightAnswer": "love",
                             "wrongAnswer": "hate",
-                            "part2": "science"
+                            "part2": "science",
+                            "uploader": "ezzeldien"
                         },
                         {
                             "part1": "",
                             "rightAnswer": "Banana",
                             "wrongAnswer": "Apple",
-                            "part2": "is banana."
+                            "part2": "is banana.",
+                            "uploader": "ezzeldien"
                         },
                         {
                             "part1": "Ant is",
                             "rightAnswer": "ant",
                             "wrongAnswer": "arm",
-                            "part2": ""
+                            "part2": "",
+                            "uploader": "ezzeldien"
                         },
                     ], 
                     msg: ref(undefined), 
@@ -31,11 +34,14 @@ describe("control panel complete", () => {
                     deleteQuestion: cy.stub().as("deleteQuestion"), 
                     addQuestion: cy.stub().as("addQuestion"),
                     member: "admin",
+                    username: "ezzeldien",
                     uploaders: ["مستخدم 1", "مستخدم 2"],
                     routeParams: {
-                        game: "choose",
+                        game: "complete",
                         grade: "grade-4-first-term"
-                    }
+                    },
+                    chosenQuestions: [0],
+                    creatingTest: false
                 }
                 cy.wrap(props).as("props");
                 return {props};

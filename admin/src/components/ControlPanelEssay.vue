@@ -80,14 +80,14 @@ async function exportDocx() {
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>
         </div>
-        <div class="p-1 uploader-name d-none" dir="rtl">{{ uploaders[question["id"]] }}</div>
+        <div class="p-1 uploader-name d-none" dir="rtl" data-cy="uploader-name">{{ uploaders[question["id"]] }}</div>
     </div>
     <div class="modal" id="overlay">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-light">
                 <div class="modal-body">
                     <div v-if="msg" class='alert text-center h3 p-2 d-flex align-items-center' :class="'alert-' + (msgColor || 'primary')">{{ msg }}</div>
-                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close"></button>
+                    <button class="btn btn-danger btn-close float-end" data-bs-dismiss="modal" aria-label="close" data-cy="closeEssay"></button>
                     <form ref="form" type="multipart/form-data" method="post" @submit.prevent="addQuestion(form)" class="mt-2">
                         <ScienceFormInput label="Question: " inputName="question" :symbols/>
                         <br/>
