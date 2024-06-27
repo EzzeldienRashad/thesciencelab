@@ -43,6 +43,11 @@ const routes = [
         component: () => import("@/views/TestsView.vue")
     },
     {
+        path: "/videoConference",
+        name: "videoConference",
+        component: () => import("@/views/VideoConferenceView.vue")
+    },
+    {
         path: "/:grade",
         component: () => import("@/views/ShowGamesView.vue")
     },
@@ -54,7 +59,10 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    routes
+    routes,
+    scrollBehavior() {
+        return {top: 1};
+    }
 });
 const hashRouter = createRouter({
     history: createWebHashHistory(),
@@ -62,6 +70,12 @@ const hashRouter = createRouter({
 });
 
 router.beforeEach(async to => {
+    // close navbar
+    if (document.getElementById("offcanvasNavbar") && 
+    document.getElementById("offcanvasNavbar").classList.contains("show") && 
+    document.querySelector("#offcanvasNavbar .btn-close")) {
+        document.querySelector("#offcanvasNavbar .btn-close").click();
+    }    
     if (document.querySelector(".modal-backdrop")) {
         document.querySelector(".modal-backdrop").remove();
         document.body.style.overflow = "";

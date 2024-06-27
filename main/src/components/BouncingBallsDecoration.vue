@@ -15,7 +15,7 @@ function createBall() {
     const diameter = 20;
     const horizontalSpeed = Math.floor(Math.random() + 1);
     let verticalSpeed = Math.floor(Math.random() + 1) * [-1, 1][Math.floor(Math.random() * 2)];
-    const left = ref(0);
+    const left = ref(-20);
     const top = ref(Math.random() * (image.value.clientHeight - diameter));
     const letters = '0123456789ABCDEF';
     let backgroundColor = '#';
@@ -62,7 +62,7 @@ function createBall() {
 
 <style scoped>
 .game {
-    height: 50vh;
+    height: max(50vh, 300px);
 }
 .image {
     background-image: url("@/assets/images/scienceBackground.webp");

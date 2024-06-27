@@ -21,7 +21,6 @@ async function login() {
         })
     });
     let memberArr = await member.text();
-    console.log(memberArr)
     try {
         member = JSON.parse(memberArr)[0];
     } catch (e) {
