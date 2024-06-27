@@ -48,21 +48,10 @@ onUpdated(() => {
 <section class="d-flex">
     <section class="p-1 p-sm-2 row gx-0 col-12 col-xl-5 col-xxl-4 d-inline-block" data-cy="grades">
         <div ref="gradesData">
-            <div class="col-12 d-flex mb-2 justify-content-end justify-content-between flex-wrap">
-                <h2>Grades:</h2>
-                <div class="d-xl-none">
-                    <RouterLink to="/uploaders" v-if="member == 'admin'" class="btn btn-warning fw-bold text-decoration-none flex-grow-1 me-1 me-sm-2 admin-btn p-1 p-sm-2 fs-5">uploaders</RouterLink>
-                    <RouterLink to="/uploadedQuestions" v-if="member == 'admin'" class="btn btn-warning fw-bold text-decoration-none flex-grow-2 ms-1 ms-sm-1 admin-btn p-1 p-sm-2 fs-5">uploaded questions</RouterLink>
-                </div>
-            </div>
+            <h2 class="col-12">Grades:</h2>
             <div v-for="grade in grades" :key="grade" class="col-12 p-2">
                 <GradeLink :grade="grade"/>
             </div>
-            <RouterLink class="btn btn-primary d-block w-100 p-3 fs-4 fw-bold rounded-3" to="/resources">Download Resources</RouterLink>
-            <RouterLink v-if="member == 'admin'" class="btn btn-info d-block w-100 p-2 fs-4 fw-bold rounded-3 mt-2" to="/tests" data-cy="runningTests">
-                Running tests
-                <font-awesome-icon class="float-end next-arrow" icon="fa-solid fa-right-long" size="2x"/>
-            </RouterLink>
         </div>
     </section>
     <section ref="uploadsData" class="p-1 p-sm-2 col-xl-7 col-xxl-8 d-none d-xl-inline-block overflow-scroll">

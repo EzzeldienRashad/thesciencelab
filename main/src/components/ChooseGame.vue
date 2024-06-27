@@ -20,7 +20,7 @@ function checkAnswer(event) {
     changeAnswered();
 }
 const setMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = document.getElementsByClassName('question')[0].offsetHeight + 50 + 'px';
-const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = ""; console.log(2)
+const unsetMainWidth = () => document.getElementsByTagName('MAIN')[0].style.height = "";
 onMounted(setMainWidth)
 </script>
 

@@ -14,16 +14,13 @@ function startTest(levelStr, questionsArr, nameValue, codeValue) {
     level.value = levelStr;
     switch (levelStr) {
         case "easy":
-            questions.value = questionsArr.filter(question => question["level"] == "easy");
-            emit("changeTheme", "success");
+            if ((questions.value = questionsArr.filter(question => question["level"] == "easy")).length) emit("changeTheme", "success");
             break;
         case "medium":
-            questions.value = questionsArr.filter(question => question["level"] == "medium");
-            emit("changeTheme", "warning");
+            if ((questions.value = questionsArr.filter(question => question["level"] == "medium")).length) emit("changeTheme", "warning");
             break;
         case "hard":
-            questions.value = questionsArr.filter(question => question["level"] == "hard");
-            emit("changeTheme", "danger");
+            if ((questions.value = questionsArr.filter(question => question["level"] == "hard")).length) emit("changeTheme", "danger");
             break;
         case "mixed":
             questions.value = questionsArr.slice(0, Math.floor(questionsArr.length * 2 / 3));

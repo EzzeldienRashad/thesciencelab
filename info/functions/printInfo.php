@@ -59,7 +59,7 @@ if (!isset($_GET["unit"])) {
         $queryString .= ", " . $requiredItem;
     }
     if ($game == "ChooseQuestions" || $game == "RightOrWrongQuestions") $queryString .= ", image";
-    if (isset($_SESSION["member"]) && $_SESSION["member"] == "admin") $queryString .= ", uploader";
+    if (isset($_SESSION["subject"]) && $_SESSION["subject"] == "admin") $queryString .= ", uploader";
     $queryString .= " FROM if0_36665133_TheScienceLab.$game where grade = ?";
     if ($game == "EssayQuestions") $queryString .= " and type = '" . $_GET["game"] . "'";
     if ($_GET["unit"] != "whole") $queryString .= " and unit = ?";
