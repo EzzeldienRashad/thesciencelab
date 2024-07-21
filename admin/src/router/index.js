@@ -48,6 +48,11 @@ const routes = [
         component: () => import("@/views/VideoConferenceView.vue")
     },
     {
+        path: "/uploadWork",
+        name: "uploadWork",
+        component: () => import("@/views/UploadWorkView.vue")
+    },
+    {
         path: "/:grade",
         component: () => import("@/views/ShowGamesView.vue")
     },

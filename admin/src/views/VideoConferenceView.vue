@@ -44,15 +44,17 @@ function loadMeetings() {
     })
 }
 function deleteMeeting(id) {
-    fetch("http://127.0.0.1/thesciencelab/info/functions/videoConference.php?meetingId=" + encodeURIComponent(id), {
-        method: "get",
-        credentials: "include"
-    })
-    .then(() => {
-        msg.value = ".....";
-        setTimeout(() => {msg.value = "Deleted successfully!"}, 500);
-        loadMeetings();
-    })
+    if (confirm("Are you sure you want to delete this meeting?")) {
+        fetch("http://127.0.0.1/thesciencelab/info/functions/videoConference.php?meetingId=" + encodeURIComponent(id), {
+            method: "get",
+            credentials: "include"
+        })
+        .then(() => {
+            msg.value = ".....";
+            setTimeout(() => {msg.value = "Deleted successfully!"}, 500);
+            loadMeetings();
+        })
+    }
 }
 </script>
 
@@ -81,7 +83,7 @@ function deleteMeeting(id) {
     <div>
         <div v-for="meeting in meetings" :key="meeting['roomName']" class="m-3">
             <a class="p-2 fs-4" :href="meeting['hostRoomUrl'] ? meeting['hostRoomUrl'] : meeting['roomUrl']">{{ meeting["roomName"].slice(1, -6) }}</a>
-            <button class="btn btn-close btn-danger" @click="() => deleteMeeting(meeting['meetingId'])"></button>
+            <button v-if="member == 'admin'" class="btn btn-close btn-danger" @click="() => deleteMeeting(meeting['meetingId'])"></button>
         </div>
     </div>
 </template>

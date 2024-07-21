@@ -31,7 +31,7 @@ function logout() {
 
 <template>
 <header v-if="useRoute().path != '/login'">
-    <nav class="navbar navbar-expand-xl bg-body-secondary fixed-top">
+    <nav class="navbar bg-body-secondary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">TheScienceLab</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -64,6 +64,11 @@ function logout() {
                         <li class="nav-item">
                             <RouterLink to="/videoConference" class="nav-link">
                                 Video Conference
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink to="/uploadWork" class="nav-link">
+                                Upload preparation files
                             </RouterLink>
                         </li>
                         <li class="nav-item">

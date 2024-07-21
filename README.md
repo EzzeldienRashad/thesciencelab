@@ -33,7 +33,7 @@ npm run build
 # Before upload
 
 * FETCH REMOTE info/images FILES !!!!!!!!!!!!!!!!!!!!!!!!!!
-* Change "http://127.0.0.1/thesciencelab" to "https://thesciencelab.infinityfreeapp.com" or "http://localhost"
+* Change "http://127.0.0.1/thesciencelab" to "https://thesciencelab.infinityfreeapp.com"
 
 *info:*
 ini_set('session.cookie_samesite','None');
