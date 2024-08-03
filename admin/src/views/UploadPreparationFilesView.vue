@@ -1,8 +1,8 @@
 <script setup>
-import {ref, watch} from "vue";
+import {ref, inject, watch} from "vue";
 
 const memberName = ref("");
-const member = ref("");
+const member = inject("member");
 const msg = ref("");
 const msgColor = ref("");
 const form = ref(null);
@@ -10,35 +10,22 @@ const files = ref([])
 const members = ref([])
 
 watch(memberName, loadFiles);
-fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
+if (member.value != "admin") {
+    memberName.value = userInfo[1];
+    loadFiles()
+} else {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/printUploadedPreparationFiles.php", {
         method: "get",
         credentials: "include",
     })
-    .then(res => res.text())
-    .then(userInfo => {
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            
-        }
-        member.value = userInfo[0];
-        if (member.value != "admin") {
-            memberName.value = userInfo[1];
-            loadFiles()
-        } else {
-            fetch("http://127.0.0.1/thesciencelab/info/functions/printUploadedPreparationFiles.php", {
-                method: "get",
-                credentials: "include",
-            })
-            .then(res => res.json())
-            .then(res => members.value = res)
-        }
-})
+    .then(res => res.json())
+    .then(res => members.value = res)
+}
 
 function addFile() {
     msgColor.value = "primary";
     msg.value = ".....uploading";
-    fetch("http://127.0.0.1/thesciencelab/info/functions/uploadWork.php", {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/uploadPreparationFiles.php", {
         method: "post",
         credentials: "include",
         body: new FormData(form.value)

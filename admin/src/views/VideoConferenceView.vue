@@ -1,23 +1,10 @@
 <script setup>
-import {ref} from "vue";
+import {ref, inject} from "vue";
 
-const member = ref("");
+const member = inject("member");
 const meetings = ref([])
 const form = ref(null);
 const msg = ref("");
-fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
-        method: "get",
-        credentials: "include",
-    })
-    .then(res => res.text())
-    .then(userInfo => {
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            
-        }
-        member.value = userInfo[0];
-})
 loadMeetings();
 
 function createMeeting() {

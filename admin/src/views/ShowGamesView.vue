@@ -32,8 +32,8 @@ const gamesImages = {
 
 <template>
     <div>
-        <h1 class="text-center pt-2">{{ gradeName }}!</h1>
-        <h4 class="p-2 text-center">Please choose a game</h4>
+        <h1 class="text-center pt-3">{{ gradeName }}</h1>
+        <h4 class="p-2 text-center fs-3">Please choose a game</h4>
         <div class="row row-cols-lg-2 p-2 align-items-end">
             <div v-for="game in games" :key="game">
                 <RouterLink class="d-flex flex-column justify-content-center align-items-center m-1 mb-2 d-inline-block text-decoration-none text-dark" :to="'/' + grade + '/' + game">

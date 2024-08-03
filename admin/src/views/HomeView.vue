@@ -1,85 +1,104 @@
 <script setup>
-import {ref, onUpdated} from "vue";
+import {ref, inject} from "vue";
 import NameCard from "@/components/NameCard.vue";
-import GradeLink from "@/components/GradeLink.vue";
 import { RouterLink } from "vue-router";
-import UploadedQuestionsView from "./UploadedQuestionsView.vue";
-import UploadersView from "./UploadersView.vue";
+import UploadedQuestions from "../components/UploadedQuestions.vue";
+import Uploaders from "../components/Uploaders.vue";
 
-const grades = ref(["grade-4", "grade-5", "grade-6", "1st-prep", "2nd-prep", "3rd-prep", "1st-secondary", "2nd-secondary", "3rd-secondary"]);
-const member = ref("");
-const uploadsData = ref(null);
-const gradesData = ref(null);
-const userDetails = ref([]);
-
-fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
-        method: "get",
-        credentials: "include",
-    })
-    .then(res => res.text())
-    .then(userInfo => {
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            
-        }
-        member.value = userInfo[0];
-        if (member.value != "admin") {
-            fetch("http://127.0.0.1/thesciencelab/info/functions/getMemberInfo.php", {
-                    method: "get",
-                    credentials: "include",
-                })
-                .then(res => res.json())
-                .then(userDetailsArr => userDetails.value = userDetailsArr)
-        }
-    });
-onUpdated(() => {
-    uploadsData.value.style.height = gradesData.value.offsetHeight + "px";
-    if (document.getElementById("uploaders")) document.getElementById("uploaders").style.height = gradesData.value.offsetHeight / 2.1 + "px";
-    if (document.getElementById("uploadedQuestions")) document.getElementById("uploadedQuestions").style.height = gradesData.value.offsetHeight / 2.1 + "px";
-});
+const member = inject("member");
+const documentWidth = inject("documentWidth");
 </script>
 
 <template>
-<section class="d-flex justify-content-between py-2 mb-2 align-items-center border-bottom mx-5">
-    <h1>Welcome to The Science Lab</h1>
-    <img src="/favicon.ico" alt="the science lab logo" height="70"/>
+<section>
+    <div id="bg-image" class="p-3 py-5 text-light">
+        <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>
+        <div class="pt-5" :class="{'w-50': documentWidth > 1000}">
+            <span class="display-2">We make Science fun, interactive, and easy to learn!</span>
+            <br/>
+            <RouterLink to="/selectGrade" class="btn border border-5 rounded-4 border-info mt-5 ms-5 p-3 fs-3 text-light fw-bold">
+                Start uploading Questions &nbsp;
+                <font-awesome-icon class="next-arrow" icon="fa-solid fa-right-long"/>
+            </RouterLink>
+        </div>
+        <br/>
+        <br/>
+    </div>
 </section>
-<section class="d-flex">
-    <section class="p-1 p-sm-2 row gx-0 col-12 col-xl-5 col-xxl-4 d-inline-block" data-cy="grades">
-        <div ref="gradesData">
-            <h2 class="col-12">Grades:</h2>
-            <div v-for="grade in grades" :key="grade" class="col-12 p-2">
-                <GradeLink :grade="grade"/>
-            </div>
+<section class="text-center pt-2">
+    <h2 class="display-2 d-inline-block border-bottom border-3 border-dark-subtle">Our features</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 p-5 g-5 justify-content-around">
+        <div>
+            <RouterLink to="/tests"  class="card m-xl-5 text-decoration-none">
+                <img src="@/assets/images/test.webp" class="card-img-top" alt="online test">
+                <div class="card-body">
+                    <h5 class="card-title">Online Tests</h5>
+                    <p class="card-text">We offer online tests to evaluate students' levels and help them prepare for exams</p>
+                </div>
+                <ul class="list-group list-group-flush fst-italic text-start">
+                    <li class="list-group-item">1- Create a test</li>
+                    <li class="list-group-item">2- Give students the test code</li>
+                    <li class="list-group-item">3- See the students' scores in the dashboard</li>
+                </ul>
+            </RouterLink>
         </div>
-    </section>
-    <section ref="uploadsData" class="p-1 p-sm-2 col-xl-7 col-xxl-8 d-none d-xl-inline-block overflow-scroll">
-        <div v-if="member == 'admin'">
-            <UploadersView id="uploaders" class="overflow-y-scroll overflow-x-hidden border p-2 mb-3 shadow bg-light-subtle border-2"/>
-            <UploadedQuestionsView id="uploadedQuestions" class="overflow-y-scroll overflow-x-hidden border p-2 mt-3 shadow bg-light-subtle border-2"/>
+        <div>
+            <RouterLink to="/videoConference"  class="card m-xl-5 text-decoration-none">
+                <img src="@/assets/images/videoConference.webp" class="card-img-top" alt="video conference">
+                <div class="card-body">
+                    <h5 class="card-title">Video Conference</h5>
+                    <p class="card-text">Meetings are essential for good communication between teachers and arrangement of future plans</p>
+                </div>
+                <ul class="list-group list-group-flush fst-italic text-start">
+                    <li class="list-group-item">1- The admin will create a meeting</li>
+                    <li class="list-group-item">2- Teachers enter using the meeting code</li>
+                    <li class="list-group-item">3- Important plans and future events can be easily discussed</li>
+                </ul>
+            </RouterLink>
         </div>
-        <div v-else-if="userDetails" class="px-5">
-            <h1 dir="rtl" lang="ar" class="text-center p-5">{{ userDetails["name"] }}</h1>
-            <span class="display-6"><strong class="fw-bold">username: </strong> {{ userDetails["username"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">phone number: </strong> {{ userDetails["phone"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">specialization: </strong> {{ userDetails["subject"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">school: </strong> {{ userDetails["school"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">administration: </strong> {{ userDetails["administration"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">code: </strong> {{ userDetails["code"] }}</span>
-            <br/>
-            <span class="display-6"><strong class="fw-bold">national ID: </strong> {{ userDetails["nationalId"] }}</span>
-            <br/>
+        <div>
+            <RouterLink to="/uploadPreparationFiles"  class="card m-xl-5 text-decoration-none">
+                <img src="@/assets/images/preparationFiles.webp" class="card-img-top" alt="uploading preparation files">
+                <div class="card-body">
+                    <h5 class="card-title">Uploading Preparation Files</h5>
+                    <p class="card-text">A new method for showing teachers' work and preparation for the next sessions</p>
+                </div>
+                <ul class="list-group list-group-flush fst-italic text-start">
+                    <li class="list-group-item">1- Write your preparation files</li>
+                    <li class="list-group-item">2- Take a clear photo of the files</li>
+                    <li class="list-group-item">3- Upload the photos for review</li>
+                </ul>
+            </RouterLink>
         </div>
-    </section>
+    </div>
+</section>
+<section class="px-2 px-md-5 row">
+    <div class="border-end border-3 border-dark-subtle col-12 col-sm-6">
+        <h2 class="display-3 d-inline-block pb-md-5">Download Resources</h2>
+        <p class="fs-3 w-75">
+            A collection of helpful books to help teachers know the curriculum better and get new question ideas
+        </p>
+        <RouterLink to="/resources" class="btn rounded-4 btn-info mt-md-5 ms-5 mb-3 mb-md-1 p-3 fs-3 fw-bold"> 
+            Get Now! &nbsp;
+            <font-awesome-icon class="next-arrow" icon="fa-solid fa-right-long"/>
+        </RouterLink>
+    </div>
+    <div class="text-center col-12 col-sm-6">
+        <RouterLink to="/resources">
+            <img src="@/assets/images/books/physics-for-neet.png" class="resources-img" alt="resources"/>
+        </RouterLink>
+    </div>
+</section>
+<section v-if="member == 'admin'" class="mt-5 px-3">
+    <div class="text-center">
+        <h2 class="display-2 d-inline-block border-bottom border-3 border-dark-subtle">Teachers' Statistics</h2>
+    </div>
+    <div>
+        <Uploaders id="uploaders" class="p-2 mb-3 bg-light-subtle"/>
+        <UploadedQuestions id="uploadedQuestions" class="p-2 mt-3 bg-light-subtle"/>
+    </div>
 </section>
 <section id="contributors" lang="ar" dir="rtl" class="p-4 p-sm-3">
-            <h1 class="text-center">منصه بنك الأسئله لمعلمي علوم لغات القليوبيه</h1>
             <div>
                 <h2>تحت رعاية:</h2>
                 <div class="row g-sm-2">
@@ -113,15 +132,21 @@ onUpdated(() => {
         </section>
 </template>
 <style scoped>
-#contributors h1 {
+section #bg-image {
+    background-image: url("@/assets/images/mainBackground.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+h1 {
     font-family: "Reem Kufi Fun", sans-serif;
+    font-size: 50px;
 }
 #contributors h2 {
     font-family: "Amiri", serif;
     font-weight: 400;
     font-style: normal;
 }
-.admin-btn {
-    max-width: 300px;
+.resources-img {
+    max-width: 100%;
 }
 </style>

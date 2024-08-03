@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick } from "vue";
+import { ref, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ControlPanelChoose from "@/components/ControlPanelChoose.vue";
 import ControlPanelComplete from "@/components/ControlPanelComplete.vue";
@@ -13,8 +13,8 @@ const unit = ref("");
 const uploaders = ref({});
 const routeParams = useRoute().params;
 const router = useRouter();
-const member = ref("");
-const username = ref("");
+const member = inject("member");
+const username = inject("username");
 const questions = ref([]);
 const msg = ref("");
 const msgColor = ref("");
@@ -37,21 +37,6 @@ const inheritedVariables = {
     creatingTest
 }
 const currentGame = ref(null);
-
-fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
-    method: "get",
-    credentials: "include",
-})
-    .then(res => res.text())
-    .then(userInfo => {
-        try {
-            userInfo = JSON.parse(userInfo)
-        } catch (e) {
-
-        }
-        member.value = userInfo[0];
-        username.value = userInfo[1];
-    });
 
 function loadQuestions() {
     fetch("http://127.0.0.1/thesciencelab/info/functions/printInfo.php?grade=" + encodeURIComponent(routeParams.grade) +

@@ -18,6 +18,11 @@ const routes = [
         component: () => import("@/views/RegisterView.vue")
     },
     {
+        path: "/selectGrade",
+        name: "selectGrade",
+        component: () => import("@/views/SelectGradeView.vue")
+    },
+    {
         path: "/addInfo",
         name: "addInfo",
         component: () => import("@/views/AddInfoView.vue")
@@ -48,9 +53,9 @@ const routes = [
         component: () => import("@/views/VideoConferenceView.vue")
     },
     {
-        path: "/uploadWork",
-        name: "uploadWork",
-        component: () => import("@/views/UploadWorkView.vue")
+        path: "/uploadPreparationFiles",
+        name: "uploadPreparationFiles",
+        component: () => import("@/views/uploadPreparationFilesView.vue")
     },
     {
         path: "/:grade",

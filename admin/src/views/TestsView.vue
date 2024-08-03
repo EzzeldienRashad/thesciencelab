@@ -1,9 +1,9 @@
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, inject, onMounted} from "vue";
 import removeDashes from "../modules/removeDashes";
 import { onBeforeRouteLeave } from "vue-router";
 
-const member = ref("");
+const member = inject("member");
 const tests = ref([]);
 const currentGame = ref("");
 const questions = ref([]);
@@ -14,30 +14,17 @@ let fetchDevicesInterval;
 getTests()
 
 function getTests() {
-    fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
+    if (member.value == "admin") {
+        fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php", {
             method: "get",
-            credentials: "include",
+            credentials: "include"
         })
-        .then(res => res.text())
-        .then(userInfo => {
-            try {
-                userInfo = JSON.parse(userInfo);
-            } catch (e) {
-                
-            }
-            member.value = userInfo[0];
-            if (member.value == "admin") {
-                fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php", {
-                    method: "get",
-                    credentials: "include"
-                })
-                .then(res => res.json())
-                .then(testsArr => {
-                    tests.value = testsArr
-                })
-            }
-        });
+        .then(res => res.json())
+        .then(testsArr => {
+            tests.value = testsArr
+        })
     }
+}
 function showTest(code) {
     currentGame.value = tests.value[code][0]["game"];
     function fetchDevicesInTest() {
