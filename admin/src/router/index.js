@@ -30,12 +30,12 @@ const routes = [
     {
         path: "/uploaders",
         name: "uploaders",
-        component: () => import("@/views/UploadersView.vue")
+        component: () => import("@/components/Uploaders.vue")
     },
     {
         path: "/uploadedQuestions",
         name: "uploadedQuestions",
-        component: () => import("@/views/UploadedQuestionsView.vue")
+        component: () => import("@/components/UploadedQuestions.vue")
     },
     {
         path: "/resources",
@@ -55,7 +55,7 @@ const routes = [
     {
         path: "/uploadPreparationFiles",
         name: "uploadPreparationFiles",
-        component: () => import("@/views/uploadPreparationFilesView.vue")
+        component: () => import("@/views/UploadPreparationFilesView.vue")
     },
     {
         path: "/:grade",

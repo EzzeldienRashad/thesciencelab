@@ -13,6 +13,7 @@ const navbarCollapse = ref(null);
 
 provide("documentWidth", documentWidth);
 provide("member", member)
+provide("username", username)
 
 watch(() => route.path, () => {
     fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {

@@ -173,11 +173,13 @@ function beginTest(form) {
 </script>
 
 <template>
-    <GradeUnits v-if="!unit" @setUnit="unitValue => { unit = unitValue; loadQuestions() }" />
+    <div v-if="!unit">
+        <GradeUnits @setUnit="unitValue => { unit = unitValue; loadQuestions() }" />
+    </div>
     <div v-else class="p-2 rounded-3">
         <header class="d-flex justify-content-between align-items-center pb-2 border-bottom border-2">
-            <RouterLink to="/" class="text-dark position-absolute top-0 start-0 ms-3 mt-3">
-                <font-awesome-icon icon="fa-solid fa-left-long" size="2x" @click="$event => {
+            <RouterLink to="/" class="text-dark ms-3">
+                <font-awesome-icon icon="fa-solid fa-left-long" size="3x" @click="$event => {
                     if (creatingTest) {
                     $event.stopPropagation();
                     $event.preventDefault();
@@ -201,8 +203,7 @@ function beginTest(form) {
                 </div>
                 <div class="w-100 d-flex justify-content-end">
                     <div v-if="creatingTest" class="w-100 grow-1">
-                        <h2 class="text-center text-primary-emphasis fw-bold test-mode-text">Test Mode</h2>
-                        <h3>Please choose the questions:</h3>
+                        <h2 class="text-center text-primary-emphasis fw-bold test-mode-text">Please Choose the test questions.</h2>
                     </div>
                     <button
                         v-if="(member == useRoute().params.game || member == 'admin' || !useRoute().params.grade.includes('secondary')) && !creatingTest"
