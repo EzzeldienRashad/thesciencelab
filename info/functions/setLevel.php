@@ -11,10 +11,11 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
-if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") {
+if (!isset($_SESSION["subject"])) {
     echo "logout";
     exit;
 }
+if ($isSecondary && $_GET["game"] != $_SESSION["subject"] && $_SESSION["subject"] != "admin") exit;
 if (!isset($_GET["grade"]) || !isset($_GET["game"]) || !isset($_GET["unit"]) || !isset($_GET["questionnum"]) || !isset($_GET["level"])) {
     exit;
 }

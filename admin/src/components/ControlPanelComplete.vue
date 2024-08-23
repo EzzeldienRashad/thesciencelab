@@ -76,7 +76,7 @@ async function exportDocx() {
             <button v-if="question['uploader'].toLowerCase() == username.toLowerCase() || member == 'admin'" class='btn btn-danger btn-close float-end' @click="deleteQuestion(question['id'])" data-cy="delete-btn"></button>
             <div class="p-1 m-1 rounded-2 bg-body-secondary d-none uploader-name" dir="rtl">{{ uploaders[question["id"]] }}</div>
         </div>
-        <div v-if="member == 'admin'" class="d-flex flex-row justify-content-center pt-2 px-1 gap-1" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
+        <div v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && question['uploader'].toLowerCase() == username.toLowerCase()) || member == 'admin'" class="d-flex flex-row justify-content-center pt-2 px-1 gap-1" :class="{'bg-success-subtle': question['level'] == 'easy', 'bg-warning-subtle': question['level'] == 'medium', 'bg-danger-subtle': question['level'] == 'hard'}">
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', question['id'])"/></button>
             <button class="right-mark"><font-awesome-icon :icon="[question['level'] == 'hard' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-danger" @click="() => setLevel('hard', question['id'])"/></button>

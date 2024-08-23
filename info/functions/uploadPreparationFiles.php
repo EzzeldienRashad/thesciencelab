@@ -16,11 +16,12 @@ if (!in_array($_SESSION["subject"], array("science", "physics", "chemistry", "bi
     exit;
 }
 if (isset($_FILES["preparationFile"]) && $_FILES["preparationFile"]["error"] == 0) {
-    if (!in_array(exif_imagetype($_FILES["preparationFile"]["tmp_name"]), array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP, IMAGETYPE_GIF))) {
+    if (!in_array(exif_imagetype($_FILES["preparationFile"]["tmp_name"]), array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP, IMAGETYPE_GIF)) && 
+    !in_array(pathinfo($_FILES["preparationFile"]["name"], PATHINFO_EXTENSION), array("doc", "docx"))) {
         echo "typeerr";
         exit;
     }
-    if ($_FILES["preparationFile"]["size"] > 5 * 1024 * 1024) {
+    if ($_FILES["preparationFile"]["size"] > 10 * 1024 * 1024) {
         echo "big";
         exit;
     }

@@ -11,8 +11,19 @@ const members = ref([])
 
 watch(memberName, loadFiles);
 if (member.value != "admin") {
-    memberName.value = userInfo[1];
-    loadFiles()
+    fetch("http://127.0.0.1/thesciencelab/info/functions/login.php", {
+            method: "get",
+            credentials: "include",
+        })
+        .then(res => res.text())
+        .then(userInfo => {
+            try {
+                userInfo = JSON.parse(userInfo);
+            } catch (e) {
+                
+            }
+            memberName.value = userInfo[1];
+    });
 } else {
     fetch("http://127.0.0.1/thesciencelab/info/functions/printUploadedPreparationFiles.php", {
         method: "get",
@@ -23,8 +34,10 @@ if (member.value != "admin") {
 }
 
 function addFile() {
-    msgColor.value = "primary";
-    msg.value = ".....uploading";
+    msgColor.value = "info";
+    msg.value = "uploading";
+    document.getElementsByClassName("spinner")[0].classList.remove("visually-hidden")
+    document.getElementsByClassName("tick")[0].classList.add("visually-hidden")
     fetch("http://127.0.0.1/thesciencelab/info/functions/uploadPreparationFiles.php", {
         method: "post",
         credentials: "include",
@@ -32,26 +45,30 @@ function addFile() {
     })
     .then(res => res.text())
     .then(res => {
-        switch (res) {
-            case "successful":
-                msgColor.value = "success"
-                setTimeout(() => msg.value = "*added successfully!", 500);
-                msg.value = "added successfully!";
-                loadFiles();
-                break;
-            case "big":
-                msgColor.value = "danger"
-                setTimeout(() => msg.value = "*The image uploaded is too big!", 500);
-                break;
-            case "typeerr":
-                msgColor.value = "danger"
-                setTimeout(() => msg.value = "*Only images are allowed!", 500);
-                break;
-            default:
-                msgColor.value = "danger"
-                setTimeout(() => msg.value = "*An error has occurred!", 500);
-                break;
-        }
+        setTimeout(() => {
+            document.getElementsByClassName("spinner")[0].classList.add("visually-hidden")
+            switch (res) {
+                case "successful":
+                    msgColor.value = "success"
+                    msg.value = "added successfully!";
+                    document.getElementsByClassName("tick")[0].classList.remove("visually-hidden")
+                    msg.value = "added successfully!";
+                    loadFiles();
+                    break;
+                case "big":
+                    msgColor.value = "danger"
+                    msg.value = "The file uploaded is too big!";
+                    break;
+                case "typeerr":
+                    msgColor.value = "danger"
+                    msg.value = "Only images and word files are allowed!";
+                    break;
+                default:
+                    msgColor.value = "danger"
+                    msg.value = "An error has occurred!";
+                    break;
+            }
+        }, 500);
     })
 }
 function loadFiles() {
@@ -66,27 +83,79 @@ function deleteFile(file) {
     if (confirm("Are you sure you want to delete this file")) fetch("http://127.0.0.1/thesciencelab/info/functions/deleteFile.php?username=" + memberName.value + "&uploader=" + memberName.value + "&file=" + file)
     .then(loadFiles);
 }
+function download(dataurl, filename) {
+  const link = document.createElement("a");
+  link.href = dataurl;
+  link.download = filename;
+  link.click();
+}
+
 </script>
 
 <template>
-    <section v-if="memberName" class="p-2">
-        <form v-if="member != 'admin'" ref="form" method="post" type="multipart/form-data">
-            <br/>
-            Upload a file: <input id="fileUpload" type="file" name="preparationFile" @change="addFile()"/>
-            <br/>
-            <span :class="'text-' + msgColor">{{ msg }}</span>
-        </form>
-        <br/>
-        <div class="d-flex flex-column-reverse">
-            <div class="w-100" v-for="file in files" :key="file">
-                <img class="p-2" :src="'http://127.0.0.1/thesciencelab/info/preparationFiles/' + memberName + '/' + file"/>
-                <button @click="deleteFile(file)" class="bg-light border-3 border-danger rounded-2 p-2 text-danger fw-bold">delete</button>
-            </div>
+<section v-if="memberName" class="p-2">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <form v-if="member != 'admin'" ref="form" method="post" type="multipart/form-data" class="bg-white border border-2 text-center text-primary fw-bold fs-4 p-3 rounded-3 shadow">
+                <label for="fileUpload" role="button" class="border border-2 w-100 py-5 mb-2" style="border-style: dashed !important;">
+                    <font-awesome-icon icon="fa-solid fa-cloud-arrow-up" size="3x"/>
+                    <br/>
+                    <br/>
+                    Upload a file
+                </label>
+                <span :class="'text-' + msgColor">
+                    <div class="spinner-border visually-hidden spinner" role="status">
+                        <span class="visually-hidden">Uploading...</span>
+                    </div>
+                    <font-awesome-icon icon="fa-solid fa-check" class="tick visually-hidden"/>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>{{ msg }}</span>
+                </span>
+                <input id="fileUpload" type="file" name="preparationFile" class="visually-hidden" @change="addFile()"/>
+                <br/>
+            </form>
         </div>
-    </section>
-    <section v-else class="p-2 row">
-        <button v-for="memberInfo in members" :key="memberInfo" @click="memberName = memberInfo[0]" class="bg-light p-4 rounded-3 col-6 col-lg-4 col-xl-3">{{ memberInfo[1] }}</button>
-    </section>
+        <div class="col-12 col-lg-6">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#images-tab-pane" type="button" role="tab" aria-controls="images-tab-pane" aria-selected="true">Images</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#word-documents-tab-pane" type="button" role="tab" aria-controls="word-documents-tab-pane" aria-selected="false">Word Documents</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab" tabindex="0">
+                    <div class="d-flex flex-column-reverse">
+                        <div class="w-100" v-for="file in files.filter(file => !['doc', 'docx'].includes(file.split('.').pop()))" :key="file">
+                            <img class="p-2" :src="'http://127.0.0.1/thesciencelab/info/preparationFiles/' + memberName + '/' + file"/>
+                            <button @click="deleteFile(file)" class="text-danger rounded-2 p-2 text-danger fw-bold trash">
+                                <font-awesome-icon icon="fa-solid fa-trash-can" size="2x"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="word-documents-tab-pane" role="tabpanel" aria-labelledby="word-documents-tab" tabindex="0">
+                    <div class="d-flex flex-column-reverse">
+                        <div class="w-100" v-for="file in files.filter(file => ['doc', 'docx'].includes(file.split('.').pop()))" :key="file">
+                            <button @click="download('http://127.0.0.1/thesciencelab/info/preparationFiles/' + memberName + '/' + file, 'file')" class="btn pb-3 m-2 fs-5" style="background-color: #d0f0ff">
+                                <font-awesome-icon icon="fa-solid fa-file-word" size="2x" class="text-primary" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                                {{ file }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-primary-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                            </button>
+                            <button @click="deleteFile(file)" class="text-danger rounded-2 p-2 text-danger fw-bold trash">
+                                <font-awesome-icon icon="fa-solid fa-trash-can" size="2x"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+</section>
+<section v-else class="p-2 row">
+    <button v-for="memberInfo in members" :key="memberInfo" @click="memberName = memberInfo[0]" class="bg-light p-4 rounded-3 col-6 col-lg-4 col-xl-3">{{ memberInfo[1] }}</button>
+</section>
 </template>
 
 <style scoped>
@@ -98,5 +167,13 @@ input[type="file"] {
 } 
 img {
     max-width: min(80%, 1000px);
+}
+button.trash {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
 }
 </style>

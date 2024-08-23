@@ -188,11 +188,11 @@ function beginTest(form) {
             }"/>
             </RouterLink>
             <div class="d-flex flex-wrap-reverse gap-1 ms-2 justify-content-end flex-grow-1">
-                <label for="test" v-if="member == 'admin'" data-cy="createTest"
+                <label for="test" data-cy="createTest"
                     class="btn btn-primary border border-primary border-5"
                     :class="[['btn-primary', 'border-primary'], ['btn-danger', 'border-danger']][Number(creatingTest)]">{{
                         ['Create test', 'cancel test'][Number(creatingTest)] }}</label>
-                <button v-if="member == 'admin' && chosenQuestions.length && creatingTest"
+                <button v-if="chosenQuestions.length && creatingTest"
                     class="btn btn-primary border border-danger border-5" data-bs-toggle="modal"
                     data-bs-target="#testOverlay" data-cy="startTest">Start test!</button>
                 <div v-if="!creatingTest" class="ps-2">

@@ -112,7 +112,7 @@ async function exportDocx() {
 
 <template>
     <div class="table-responsive my-1" v-for="cols in questions" :key="cols" @click="() => {if (creatingTest) $emit('changeChosenQuestions', cols['id'])}" :class="{'chosen': chosenQuestions.includes(cols['id'])}">
-        <tr v-if="member == 'admin'" class="d-flex flex-column pt-2 px-1 gap-1" :class="{'bg-success-subtle': cols['level'] == 'easy', 'bg-warning-subtle': cols['level'] == 'medium', 'bg-danger-subtle': cols['level'] == 'hard'}">
+        <tr v-if="((member == routeParams.game || !routeParams.grade.includes('secondary')) && cols['uploader'].toLowerCase() == username.toLowerCase()) || member == 'admin'" class="d-flex flex-column pt-2 px-1 gap-1" :class="{'bg-success-subtle': cols['level'] == 'easy', 'bg-warning-subtle': cols['level'] == 'medium', 'bg-danger-subtle': cols['level'] == 'hard'}">
             <td colspan="2" class="d-flex justify-content-center gap-2">
                 <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'easy' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-success" @click="() => setLevel('easy', cols['id'])"/></button>
                 <button class="right-mark"><font-awesome-icon :icon="[cols['level'] == 'medium' ? 'fa-solid' : 'fa-regular', 'fa-circle-check']" class="fa-xl text-warning" @click="() => setLevel('medium', cols['id'])"/></button>

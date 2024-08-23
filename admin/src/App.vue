@@ -10,6 +10,7 @@ const documentWidth = ref(document.body.clientWidth);
 const navHeight = ref(50);
 const nav = ref(null);
 const navbarCollapse = ref(null);
+const navbarToggler = ref(null);
 
 provide("documentWidth", documentWidth);
 provide("member", member)
@@ -51,7 +52,9 @@ onBeforeUnmount(() => {
     removeEventListener("resize", assignDocumentWidth);
 });
 function hideNav() {
-    if (navbarCollapse.value.classList.contains("show")) navbarToggler.value.click()
+    if (navbarCollapse.value) {
+        if (navbarCollapse.value.classList.contains("show")) navbarToggler.value.click()
+    }
 }
 </script>
 
@@ -71,7 +74,7 @@ function hideNav() {
                     <li class="nav-item px-1">
                         <RouterLink class="nav-link" to="/">Home</RouterLink>
                     </li>
-                    <li class="nav-item px-1" v-if="member == 'admin'">
+                    <li class="nav-item px-1">
                         <RouterLink to="/tests" class="nav-link" data-cy="runningTests">
                             Running tests
                         </RouterLink>

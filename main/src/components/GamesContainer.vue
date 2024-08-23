@@ -28,7 +28,7 @@ switch (routeParams.game) {
         totalQuestions = questionsLength * 5;
         break;
     case "match":
-        totalQuestions = questions.value.reduce((sum, obj) => sum + Object.keys(obj).length, 0);
+        totalQuestions = questions.value.reduce((sum, obj) => sum + JSON.parse(obj["colA"]).length, 0);
         break;
     default:
         totalQuestions = questionsLength;

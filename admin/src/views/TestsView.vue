@@ -3,7 +3,6 @@ import {ref, inject, onMounted} from "vue";
 import removeDashes from "../modules/removeDashes";
 import { onBeforeRouteLeave } from "vue-router";
 
-const member = inject("member");
 const tests = ref([]);
 const currentGame = ref("");
 const questions = ref([]);
@@ -14,16 +13,14 @@ let fetchDevicesInterval;
 getTests()
 
 function getTests() {
-    if (member.value == "admin") {
-        fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php", {
-            method: "get",
-            credentials: "include"
-        })
-        .then(res => res.json())
-        .then(testsArr => {
-            tests.value = testsArr
-        })
-    }
+    fetch("http://127.0.0.1/thesciencelab/info/functions/beginTest.php", {
+        method: "get",
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(testsArr => {
+        tests.value = testsArr
+    })
 }
 function showTest(code) {
     currentGame.value = tests.value[code][0]["game"];

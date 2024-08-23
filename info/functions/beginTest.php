@@ -11,7 +11,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
-if (!isset($_SESSION["subject"]) || $_SESSION["subject"] != "admin") {
+if (!isset($_SESSION["subject"])) {
     echo "logout";
     exit;
 }
