@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -11,15 +14,30 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
+require "password.php";
+$dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
+$pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 if (!count($_POST)) $_POST = json_decode(file_get_contents("php://input"), true);
 if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology", "physics", "chemistry", "admin", "science"))) {
     echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
+} elseif (isset($_COOKIE["tokenKey"]) && isset($_COOKIE["tokenValue"])) {
+    $tokenStmt = $pdo->prepare("SELECT subject, username, tokenValue FROM if0_36665133_TheScienceLab.Members WHERE tokenKey = ? limit 1");
+    $tokenStmt->execute([$_COOKIE["tokenKey"]]);
+    $userInfo = $tokenStmt->fetch();
+    if (password_verify($_COOKIE["tokenValue"], $userInfo["tokenValue"])) {
+        $_SESSION["subject"] = $userInfo["subject"];
+        $_SESSION["username"] = $userInfo["username"];
+        $tokenKey = bin2hex(random_bytes(16));
+        $tokenValue = bin2hex(random_bytes(16));
+        setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "", "", true, true);
+        setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "", "", true, true);
+        $updateTokenStmt = $pdo->prepare("Update if0_36665133_TheScienceLab.Members set tokenKey = '$tokenKey', tokenValue = '" . password_hash($tokenValue, PASSWORD_DEFAULT) . "' where username = ?");
+        $updateTokenStmt->execute([$_SESSION["username"]]);
+        echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
+    }
 } elseif (isset($_POST["password"]) && isset($_POST["username"])) {
-    require "password.php";
     $maxLoginAttempts = 5;
     $waitTime = "5 minutes";
-    $dsn = "mysql:host=localhost;dbname=if0_36665133_TheScienceLab;charset=utf8;";
-    $pdo = new PDO($dsn, "if0_36665133", $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     $getLoginsStmt = $pdo->query("DELETE FROM if0_36665133_TheScienceLab.FailedLogins where date < '" . date('Y-m-d H:i:s', strtotime(date("Y/m/d H:i:s") . " -5 minutes")) . "'");
     $getLoginsStmt = $pdo->prepare("SELECT id, date FROM if0_36665133_TheScienceLab.FailedLogins where username = ?");
     $getLoginsStmt->execute([$_POST["username"]]);
@@ -48,6 +66,14 @@ function login($pdo) {
     if (password_verify($_POST["password"], $userInfo["password"])) {
         $_SESSION["subject"] = $userInfo["subject"];
         $_SESSION["username"] = $_POST["username"];
+        if (isset($_POST["rememberme"]) && $_POST["rememberme"] == "true") {
+            $tokenKey = bin2hex(random_bytes(16));
+            $tokenValue = bin2hex(random_bytes(16));
+            setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "", "", true, true);
+            setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "", "", true, true);
+            $updateTokenStmt = $pdo->prepare("Update if0_36665133_TheScienceLab.Members set tokenKey = '$tokenKey', tokenValue = '" . password_hash($tokenValue, PASSWORD_DEFAULT) . "' where username = ?");
+            $updateTokenStmt->execute([$_SESSION["username"]]);
+        }
         echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
     } else {
         $logStmt = $pdo->prepare("INSERT INTO if0_36665133_TheScienceLab.FailedLogins (date, username) VALUES ('" . date("Y-m-d H:i:s") . "', ?)");

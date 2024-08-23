@@ -3,8 +3,9 @@ import {ref} from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const passwordField = ref(null);
-const usernameField = ref(null);
+const password = ref("");
+const username = ref("");
+const rememberme = ref(false);
 const error = ref("");
 const showPassword = ref(false);
 
@@ -16,8 +17,9 @@ async function login() {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({
-            "username": usernameField.value.value,
-            "password": passwordField.value.value,
+            "username": username.value,
+            "password": password.value,
+            "rememberme": rememberme.value
         })
     });
     let memberArr = await member.text();
@@ -47,18 +49,21 @@ async function login() {
             <span class="text-danger fs-5">{{ error }}</span>
             <br/>
             <label class="form-label fs-4" for="username">Username: </label>
-            <input type="text" name="username" id="username" ref="usernameField" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username" required/>
+            <input type="text" name="username" id="username" v-model="username" class="form-control p-1 p-sm-3 rounded-4 fs-4 w-100" data-cy="username" required/>
             <br/>
             <label class="form-label fs-4"  for="password">Password: </label>
             <div class="w-100">
                 <div class="input-group">
-                    <input :type="showPassword ? 'text' : 'password'" name="password" id="password" ref="passwordField" class="form-control p-1 p-sm-3 rounded-start-4 fs-4" data-cy="password" required/>
+                    <input :type="showPassword ? 'text' : 'password'" name="password" id="password" v-model="password" class="form-control p-1 p-sm-3 rounded-start-4 fs-4" data-cy="password" required/>
                     <span class="input-group-text rounded-end-4" @click="showPassword = !showPassword">
                         <font-awesome-icon icon="fa-solid fa-eye" v-if="!showPassword" />
                         <font-awesome-icon icon="fa-solid fa-eye-slash" v-if="showPassword" />
                     </span>
                 </div>
             </div>
+            <br/>
+            <input type="checkbox" name="rememberme" id="rememberme" v-model="rememberme" data-cy="rememberme"/>&nbsp;
+            <label class="form-label fs-4" for="rememberme"> remember me</label>
             <br/>
             <input type="submit" value="login" class="btn btn-info fs-3 p-3 rounded-4 fw-bold"/>
         </form>

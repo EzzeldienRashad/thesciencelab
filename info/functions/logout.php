@@ -11,5 +11,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 }
 header("Access-Control-Allow-Credentials: true");
 session_start();
+setcookie("tokenKey", "", time() - 1);
+setcookie("tokenValue", "", time() - 1);
 session_destroy();
 ?>
