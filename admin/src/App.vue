@@ -37,7 +37,11 @@ function logout() {
         method: "get",
         credentials: "include"
     })
-    .then(router.push({name: "login"}));
+    .then(() => {
+        document.cookie = "tokenKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=thesciencelab.infinityfreeapp.com"; 
+        document.cookie = "tokenValue=; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=thesciencelab.infinityfreeapp.com";
+        router.push({name: "login"}); 
+    });
 }
 function assignDocumentWidth() {
     documentWidth.value = document.body.clientWidth;

@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 ini_set('session.cookie_samesite','None');
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_only_cookies', 1);
@@ -29,8 +26,8 @@ if (isset($_SESSION["subject"]) && in_array($_SESSION["subject"], array("biology
         $_SESSION["username"] = $userInfo["username"];
         $tokenKey = bin2hex(random_bytes(16));
         $tokenValue = bin2hex(random_bytes(16));
-        setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "", "", true, true);
-        setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "", "", true, true);
+        setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "/", "thesciencelab.infinityfreeapp.com", true);
+        setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "/", "thesciencelab.infinityfreeapp.com", true);
         $updateTokenStmt = $pdo->prepare("Update if0_36665133_TheScienceLab.Members set tokenKey = '$tokenKey', tokenValue = '" . password_hash($tokenValue, PASSWORD_DEFAULT) . "' where username = ?");
         $updateTokenStmt->execute([$_SESSION["username"]]);
         echo json_encode([$_SESSION["subject"], $_SESSION["username"]]);
@@ -69,8 +66,8 @@ function login($pdo) {
         if (isset($_POST["rememberme"]) && $_POST["rememberme"] == "true") {
             $tokenKey = bin2hex(random_bytes(16));
             $tokenValue = bin2hex(random_bytes(16));
-            setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "", "", true, true);
-            setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "", "", true, true);
+            setcookie("tokenKey", $tokenKey, time() + 60 * 60 * 24 * 30, "/", "thesciencelab.infinityfreeapp.com", true);
+            setcookie("tokenValue", $tokenValue, time() + 60 * 60 * 24 * 30, "/", "thesciencelab.infinityfreeapp.com", true);
             $updateTokenStmt = $pdo->prepare("Update if0_36665133_TheScienceLab.Members set tokenKey = '$tokenKey', tokenValue = '" . password_hash($tokenValue, PASSWORD_DEFAULT) . "' where username = ?");
             $updateTokenStmt->execute([$_SESSION["username"]]);
         }

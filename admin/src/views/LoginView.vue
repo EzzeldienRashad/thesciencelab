@@ -38,7 +38,7 @@ async function login() {
         setTimeout(() => {error.value = "*Wrong username or password!"}, 500);
     } else {
         error.value = "....";
-        setTimeout(() => {error.value = "*An error has occurred!"}, 500);
+        setTimeout(() => {error.value = "*An error has occurred! Please refresh the page."}, 500);
     }
 }
 </script>

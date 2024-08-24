@@ -17,6 +17,7 @@ import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faFileWord } from '@fortawesome/free-solid-svg-icons';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faLeftLong);
@@ -30,6 +31,7 @@ library.add(faCloudArrowUp);
 library.add(faCheck);
 library.add(faTrashCan);
 library.add(faFileWord);
+library.add(faFilePdf);
 library.add(faDownload);
 const app = createApp(App);
 app.use(router);

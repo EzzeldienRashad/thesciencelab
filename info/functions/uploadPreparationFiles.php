@@ -12,7 +12,7 @@ if (isset($_SERVER["HTTP_ORIGIN"])) {
 header("Access-Control-Allow-Credentials: true");
 session_start();
 if (!in_array($_SESSION["subject"], array("science", "physics", "chemistry", "biology", "admin")) || 
-    !isset($_SESSION["username"]) || !isset($_FILES["preparationFile"])) {
+    !isset($_GET["memberName"]) || !isset($_FILES["preparationFile"])) {
     exit;
 }
 if (isset($_FILES["preparationFile"]) && $_FILES["preparationFile"]["error"] == 0) {
@@ -26,8 +26,7 @@ if (isset($_FILES["preparationFile"]) && $_FILES["preparationFile"]["error"] == 
         exit;
     }
     $fileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', time(). "_" . pathinfo($_FILES["preparationFile"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["preparationFile"]["name"], PATHINFO_EXTENSION);
-    if (!is_dir("../preparationFiles/" . $_SESSION["username"])) mkdir("../preparationFiles/" . $_SESSION["username"], 0777);
-    move_uploaded_file($_FILES["preparationFile"]["tmp_name"], "../preparationFiles/" . $_SESSION["username"] . "/" . $fileName);
-    echo "successful";
+    if (!is_dir("../preparationFiles/" . $_GET["memberName"])) mkdir("../preparationFiles/" . $_GET["memberName"], 0777);
+    if (move_uploaded_file($_FILES["preparationFile"]["tmp_name"], "../preparationFiles/" . $_GET["memberName"] . "/" . $fileName)) echo "successful";
 }
 ?>

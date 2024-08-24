@@ -82,6 +82,10 @@ const documentWidth = inject("documentWidth");
             Get Now! &nbsp;
             <font-awesome-icon class="next-arrow" icon="fa-solid fa-right-long"/>
         </RouterLink>
+        <br/>
+        <a href="https://www.facebook.com/share/p/5shkj7auaQE5z1Dy/?mibextid=A7sQZp" class="fs-4">Click here to download more resources!</a>
+        <br/>
+        <br/>
     </div>
     <div class="text-center col-12 col-sm-6">
         <RouterLink to="/resources">

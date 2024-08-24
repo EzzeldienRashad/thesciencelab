@@ -38,7 +38,7 @@ function addFile() {
     msg.value = "uploading";
     document.getElementsByClassName("spinner")[0].classList.remove("visually-hidden")
     document.getElementsByClassName("tick")[0].classList.add("visually-hidden")
-    fetch("http://127.0.0.1/thesciencelab/info/functions/uploadPreparationFiles.php", {
+    fetch("http://127.0.0.1/thesciencelab/info/functions/uploadPreparationFiles.php?memberName=" + memberName.value, {
         method: "post",
         credentials: "include",
         body: new FormData(form.value)
@@ -83,12 +83,6 @@ function deleteFile(file) {
     if (confirm("Are you sure you want to delete this file")) fetch("http://127.0.0.1/thesciencelab/info/functions/deleteFile.php?username=" + memberName.value + "&uploader=" + memberName.value + "&file=" + file)
     .then(loadFiles);
 }
-function download(dataurl, filename) {
-  const link = document.createElement("a");
-  link.href = dataurl;
-  link.download = filename;
-  link.click();
-}
 
 </script>
 
@@ -96,7 +90,7 @@ function download(dataurl, filename) {
 <section v-if="memberName" class="p-2">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <form v-if="member != 'admin'" ref="form" method="post" type="multipart/form-data" class="bg-white border border-2 text-center text-primary fw-bold fs-4 p-3 rounded-3 shadow">
+            <form ref="form" method="post" type="multipart/form-data" class="bg-white border border-2 text-center text-primary fw-bold fs-4 p-3 rounded-3 shadow">
                 <label for="fileUpload" role="button" class="border border-2 w-100 py-5 mb-2" style="border-style: dashed !important;">
                     <font-awesome-icon icon="fa-solid fa-cloud-arrow-up" size="3x"/>
                     <br/>
@@ -115,8 +109,40 @@ function download(dataurl, filename) {
                 <br/>
             </form>
         </div>
-        <div class="col-12 col-lg-6">
-            <ul class="nav nav-tabs" role="tablist">
+        <div class="col-12 col-lg-6 my-2">
+            <div class="row">
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g4plan.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    خرائط الصف الرابع&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g4notebook.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    دفتر الصف الرابع&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g5plan.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    خرائط الصف الخامس&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g5notebook.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    دفتر الصف الخامس&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g6plan.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    خرائظ الصف السادس&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+                <a href="http://127.0.0.1/thesciencelab/info/preparationFiles/g6notebook.pdf" download class="btn pb-3 fs-5 col-12 col-sm-6 rounded-0 border border-2 border-danger" style="background-color: #ffddd0">
+                    <font-awesome-icon icon="fa-solid fa-file-pdf" size="2x" class="text-danger" style="transform: translateY(20%);"/>&nbsp;&nbsp;
+                    دفتر الصف السادس&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-danger-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
+                </a>
+            </div>
+            <ul class="nav nav-tabs mt-2" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#images-tab-pane" type="button" role="tab" aria-controls="images-tab-pane" aria-selected="true">Images</a>
                 </li>
@@ -138,11 +164,11 @@ function download(dataurl, filename) {
                 <div class="tab-pane fade" id="word-documents-tab-pane" role="tabpanel" aria-labelledby="word-documents-tab" tabindex="0">
                     <div class="d-flex flex-column-reverse">
                         <div class="w-100" v-for="file in files.filter(file => ['doc', 'docx'].includes(file.split('.').pop()))" :key="file">
-                            <button @click="download('http://127.0.0.1/thesciencelab/info/preparationFiles/' + memberName + '/' + file, 'file')" class="btn pb-3 m-2 fs-5" style="background-color: #d0f0ff">
+                            <a :href="'http://127.0.0.1/thesciencelab/info/preparationFiles/' + memberName + '/' + file" download class="btn pb-3 m-2 fs-5" style="background-color: #d0f0ff">
                                 <font-awesome-icon icon="fa-solid fa-file-word" size="2x" class="text-primary" style="transform: translateY(20%);"/>&nbsp;&nbsp;
                                 {{ file }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <font-awesome-icon icon="fa-solid fa-download" size="2x" class="text-primary-emphasis" style="transform: translateY(20%) scale(0.8, 0.8);"/>
-                            </button>
+                            </a>
                             <button @click="deleteFile(file)" class="text-danger rounded-2 p-2 text-danger fw-bold trash">
                                 <font-awesome-icon icon="fa-solid fa-trash-can" size="2x"/>
                             </button>
